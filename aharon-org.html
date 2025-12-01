@@ -374,19 +374,21 @@
       box-shadow: var(--shadow-soft);
       overflow: auto;
       max-height: calc(100vh - 210px);
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     .pillars-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 16px;
       align-items: stretch;
       justify-content: center;
     }
 
     .pillar {
-      flex: 1 1 260px;
-      max-width: 340px;
+      flex: 1 1 320px;
+      max-width: 380px;
       background: #ffffff;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-subtle);
