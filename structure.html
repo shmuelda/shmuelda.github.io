@@ -648,6 +648,22 @@
         max-height: none;
       }
     }
+    /* Wide screens: force all 6 pillars into one horizontal row */
+@media (min-width: 1500px) {
+  .chart-shell {
+    max-height: none;              /* avoid vertical clipping on big screens */
+  }
+
+  .pillars-row {
+    flex-wrap: nowrap;             /* no wrapping – all in one row */
+    justify-content: space-between;
+  }
+
+  .pillar {
+    flex: 0 0 calc(100% / 6 - 10px); /* six equal columns with a small gap */
+    max-width: none;
+  }
+}
   </style>
 </head>
 <body>
