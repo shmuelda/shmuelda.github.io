@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Group Org – Yariv Postan</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --bg-alt: #ffffff;
+      --primary: #269abc;
+      --primary-dark: #1a6f86;
+      --primary-soft: rgba(38, 154, 188, 0.08);
+      --accent: #0b0b25;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-subtle: #e5e7eb;
+      --border-strong: #cbd5e1;
+      --shadow-soft: 0 8px 22px rgba(15, 23, 42, 0.12);
+      --shadow-elevated: 0 14px 32px rgba(15, 23, 42, 0.16);
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-pill: 999px;
+      --transition-fast: 160ms ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #ffffff 0, #f4f7fb 55%, #edf2fb 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+    }
+
+    .app-shell {
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .app-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title-pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .title-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .root-card {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 14px 18px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 3px;
+      position: relative;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary-dark);
+      letter-spacing: 0.12em;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #16a34a;
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #ffffff;
+    }
+
+    .root-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .root-name {
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--accent);
+    }
+
+    .root-role {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .root-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .root-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary-soft);
+      padding: 3px 9px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: #f0f9ff;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .root-chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .chart-shell {
+      margin-top: 8px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 18px 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+      overflow-x: hidden;
+      overflow-y: auto;
+      max-height: calc(100vh - 240px);
+    }
+
+    .pillars-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    /* Pillars for each Head of */
+    .pillar {
+      flex: 1 1 260px;
+      max-width: 360px;
+      border-radius: 16px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .pillar:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .pillar-header {
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: linear-gradient(
+        135deg,
+        rgba(38, 154, 188, 0.08),
+        rgba(11, 11, 37, 0.02)
+      );
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .pillar-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .pillar-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .pillar-meta {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .pillar-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px;
+    }
+
+    .pillar-info {
+      font-size: 10px;
+      color: var(--text-muted);
+      padding: 4px 6px;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px dashed var(--border-subtle);
+    }
+
+    .iframe-wrapper {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background: #f9fafb;
+    }
+
+    .iframe-wrapper iframe {
+      display: block;
+      width: 100%;
+      height: 420px; /* adjust as you like */
+      border: none;
+    }
+
+    .open-link {
+      font-size: 10px;
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .open-link a {
+      color: var(--primary-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .open-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Wide screens: force 4 pillars on one row, no horizontal scroll */
+    @media (min-width: 1400px) {
+      .chart-shell {
+        max-height: none;
+      }
+      .pillars-row {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+      }
+      .pillar {
+        flex: 0 0 calc((100% - 36px) / 4); /* 4 pillars, 3 gaps * 12px */
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 16px;
+      }
+      .chart-shell {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+
+    <header class="app-header">
+      <div class="title-group">
+        <div class="title-pill">
+          <span class="title-pill-dot"></span>
+          Group Org – Unified View
+        </div>
+        <div class="title">Organisation Overview</div>
+        <div class="subtitle">
+          Top-level view: Yariv Postan &amp; domain heads, with their cascaded org charts.
+        </div>
+      </div>
+    </header>
+
+    <!-- Top-level manager: Yariv -->
+    <section class="root-card">
+      <div class="avatar">
+        <div class="avatar-inner">YP</div>
+        <div class="avatar-badge">★</div>
+      </div>
+      <div class="root-main">
+        <div class="root-name">Yariv Postan</div>
+        <div class="root-role">Manager of Oren, Aharon, Shmuel &amp; Eran domains</div>
+        <div class="root-meta">
+          <div class="root-chip">
+            <span class="dot"></span>
+            4 Heads of / Domains
+          </div>
+          <div>
+            Customer Services &amp; Unified Client • Cashiers &amp; Payments •
+            Onboarding &amp; Digital Marketing • Additional CS &amp; UC domains
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Combined pillars -->
+    <main class="chart-shell">
+      <div class="pillars-row">
+
+        <!-- Oren pillar -->
+        <article class="pillar">
+          <header class="pillar-header">
+            <div class="pillar-title">Oren</div>
+            <div class="pillar-role">Head of Customer Services &amp; Unified Client</div>
+            <div class="pillar-meta">
+              Based on oren-org.html – full org chart embedded below.
+            </div>
+          </header>
+          <div class="pillar-body">
+            <div class="pillar-info">
+              Includes Customer Services, Unified Client 1 &amp; 2 and related sub-teams as defined in the original org chart.
+            </div>
+            <div class="iframe-wrapper">
+              <iframe
+                src="https://shmuelda.github.io/oren-org.html"
+                title="Oren – Customer Services & Unified Client Org"
+              ></iframe>
+            </div>
+            <div class="open-link">
+              <a href="https://shmuelda.github.io/oren-org.html" target="_blank" rel="noopener noreferrer">
+                Open full page ↗
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Aharon pillar -->
+        <article class="pillar">
+          <header class="pillar-header">
+            <div class="pillar-title">Aharon</div>
+            <div class="pillar-role">Head of WH Customer Offer, Bonus Platform &amp; 888 Tech</div>
+            <div class="pillar-meta">
+              Based on aharon-org.html – full org chart embedded below.
+            </div>
+          </header>
+          <div class="pillar-body">
+            <div class="pillar-info">
+              Covers WH Customer Offer, Bonus Platform, Platform Infra, DBA, CRM 888 and QA Automation 888.
+            </div>
+            <div class="iframe-wrapper">
+              <iframe
+                src="https://shmuelda.github.io/aharon-org.html"
+                title="Aharon – WH Customer Offer & Bonus Platform Org"
+              ></iframe>
+            </div>
+            <div class="open-link">
+              <a href="https://shmuelda.github.io/aharon-org.html" target="_blank" rel="noopener noreferrer">
+                Open full page ↗
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Shmuel pillar -->
+        <article class="pillar">
+          <header class="pillar-header">
+            <div class="pillar-title">Shmuel</div>
+            <div class="pillar-role">Head of Onboarding &amp; Digital Marketing</div>
+            <div class="pillar-meta">
+              Based on shmuel-org.html – full org chart embedded below.
+            </div>
+          </header>
+          <div class="pillar-body">
+            <div class="pillar-info">
+              Funnel &amp; CX Management, Site Infra, Automation &amp; AI, Adtech, and WH Onboarding &amp; CX Management.
+            </div>
+            <div class="iframe-wrapper">
+              <iframe
+                src="https://shmuelda.github.io/shmuel-org.html"
+                title="Shmuel – Onboarding & Digital Marketing Org"
+              ></iframe>
+            </div>
+            <div class="open-link">
+              <a href="https://shmuelda.github.io/shmuel-org.html" target="_blank" rel="noopener noreferrer">
+                Open full page ↗
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Eran pillar -->
+        <article class="pillar">
+          <header class="pillar-header">
+            <div class="pillar-title">Eran</div>
+            <div class="pillar-role">Head of Customer Services &amp; Unified Client (additional domains)</div>
+            <div class="pillar-meta">
+              Based on eran-org.html – full org chart embedded below.
+            </div>
+          </header>
+          <div class="pillar-body">
+            <div class="pillar-info">
+              Additional CS/UC responsibilities and teams as defined in the Eran org chart.
+            </div>
+            <div class="iframe-wrapper">
+              <iframe
+                src="https://shmuelda.github.io/eran-org.html"
+                title="Eran – Org Chart"
+              ></iframe>
+            </div>
+            <div class="open-link">
+              <a href="https://shmuelda.github.io/eran-org.html" target="_blank" rel="noopener noreferrer">
+                Open full page ↗
+              </a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </main>
+  </div>
+</body>
+</html>
