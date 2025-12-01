@@ -874,11 +874,11 @@ const orgData = {
     role: "Head of WH Customer Offer, Bonus Platform & 888 Tech",
     pillarsLabel: "Pillars",
     description:
-      "WH Customer Offer & Bonus Platform • Platform Infra • DBA • CRM 888"
+      "WH Customer Offer & Bonus Platform • Platform Infra • DBA • CRM 888 • QA Automation 888"
   },
 
   pillars: [
-    // 1) WH Customer Offer + Bonus Platform (shared group manager)
+    // 1) WH Customer Offer + Bonus Platform
     {
       id: "wh-bonus",
       name: "WH Customer Offer & Bonus Platform",
@@ -916,11 +916,8 @@ const orgData = {
               nodes: [
                 {
                   title: "WH Customer Offer Team",
-                  role: "",
                   headcount: 6,
                   openCount: 1,
-                  permCount: 3,
-                  clcmContractorCount: 3,
                   note:
                     "6 total: 3 perm + 3 CLCM contractor; 1 open position (backfill for 1 dev who left)"
                 }
@@ -941,11 +938,8 @@ const orgData = {
               nodes: [
                 {
                   title: "Bonus Platform Team",
-                  role: "",
                   headcount: 12,
                   openCount: 0,
-                  permCount: 7,
-                  clcmContractorCount: 5,
                   note: "12 total: 7 perm + 5 CLCM contractor"
                 }
               ]
@@ -955,7 +949,7 @@ const orgData = {
       ]
     },
 
-    // 2) Platform Infra (under 888)
+    // 2) Platform Infra
     {
       id: "platform-infra",
       name: "Platform Infra (888)",
@@ -972,8 +966,7 @@ const orgData = {
               title: "Platform Infra GM",
               role: "Group Manager",
               headcount: 1,
-              openCount: 0,
-              note: "Overall manager for Platform Infra 1 and 2"
+              openCount: 0
             }
           ]
         }
@@ -984,7 +977,7 @@ const orgData = {
           name: "Platform Infra 1",
           lead: {
             name: "Platform Infra 1 TL",
-            title: "Team Lead (included in headcount)"
+            title: "Team Lead"
           },
           groups: [
             {
@@ -992,11 +985,9 @@ const orgData = {
               nodes: [
                 {
                   title: "Platform Infra 1 Team",
-                  role: "",
                   headcount: 8,
                   openCount: 1,
-                  note:
-                    "8 total (incl. TL) + 1 open position (backfill for dev that left)"
+                  note: "8 total (incl. TL) + 1 open position (backfill)"
                 }
               ]
             }
@@ -1007,7 +998,7 @@ const orgData = {
           name: "Platform Infra 2",
           lead: {
             name: "Platform Infra 2 TL",
-            title: "Team Lead (included in headcount)"
+            title: "Team Lead"
           },
           groups: [
             {
@@ -1015,7 +1006,6 @@ const orgData = {
               nodes: [
                 {
                   title: "Platform Infra 2 Team",
-                  role: "",
                   headcount: 7,
                   openCount: 0,
                   note: "7 total (incl. TL)"
@@ -1027,29 +1017,16 @@ const orgData = {
       ]
     },
 
-    // 3) DBA (Sharon + Avida)
+    // 3) DBA — no GM
     {
       id: "dba",
       name: "DBA",
       lead: {
-        name: "DBA Group Manager",
-        title: "Group Manager"
+        name: "Sharon & Avida",
+        title: "DBA Team Leads"
       },
       meta: "Sharon Team • Avida Team",
-      groups: [
-        {
-          label: "DBA Group Manager",
-          nodes: [
-            {
-              title: "DBA GM",
-              role: "Group Manager",
-              headcount: 1,
-              openCount: 0,
-              note: "Overall manager for Sharon and Avida DBA teams"
-            }
-          ]
-        }
-      ],
+      groups: [], // no DBA GM
       innerPillars: [
         {
           id: "dba-sharon",
@@ -1064,12 +1041,9 @@ const orgData = {
               nodes: [
                 {
                   title: "Sharon DBA Team",
-                  role: "",
                   headcount: 8,
                   openCount: 0,
-                  webizCount: 1,
-                  note:
-                    "8 total (incl. TL); 1 FTE is Webiz (vendor/partner resource)"
+                  note: "8 total (incl. TL); 1 is Webiz"
                 }
               ]
             }
@@ -1088,11 +1062,9 @@ const orgData = {
               nodes: [
                 {
                   title: "Avida DBA Team",
-                  role: "",
                   headcount: 7,
                   openCount: 1,
-                  note:
-                    "7 total (incl. TL); 1 open position planned for Webiz"
+                  note: "7 total (incl. TL); 1 open Webiz position"
                 }
               ]
             }
@@ -1101,7 +1073,7 @@ const orgData = {
       ]
     },
 
-    // 4) CRM 888 (CRM1, CRM2, CRM3, '888 4')
+    // 4) CRM 888
     {
       id: "crm-888",
       name: "CRM 888",
@@ -1118,8 +1090,7 @@ const orgData = {
               title: "CRM 888 GM",
               role: "Group Manager",
               headcount: 1,
-              openCount: 0,
-              note: "Overall manager for CRM1, CRM2, CRM3 and 888 4 teams"
+              openCount: 0
             }
           ]
         }
@@ -1138,12 +1109,9 @@ const orgData = {
               nodes: [
                 {
                   title: "CRM 1 Team",
-                  role: "",
                   headcount: 9,
                   openCount: 1,
-                  slsCount: 1,
-                  note:
-                    "9 total (incl. TL and 1 SLS) + 1 open position"
+                  note: "9 FTE (incl. TL and 1 SLS) + 1 open"
                 }
               ]
             }
@@ -1154,20 +1122,17 @@ const orgData = {
           name: "CRM 2 – Webiz",
           lead: {
             name: "CRM 2 TL",
-            title: "Team Lead (Webiz team)"
+            title: "Team Lead (Webiz)"
           },
           groups: [
             {
-              label: "CRM 2 Webiz Team",
+              label: "CRM 2 Team (Webiz)",
               nodes: [
                 {
                   title: "CRM 2 Webiz Team",
-                  role: "",
                   headcount: 4,
                   openCount: 0,
-                  webizCount: 4,
-                  note:
-                    "4 total (incl. TL); Webiz team"
+                  note: "4 total (incl. TL); Webiz team"
                 }
               ]
             }
@@ -1186,12 +1151,10 @@ const orgData = {
               nodes: [
                 {
                   title: "CRM 3 Team",
-                  role: "",
                   headcount: 8,
-                  openCount: 2,
-                  bloomreachCount: 5,
+                  openCount: 0,
                   note:
-                    "8 total; 3 Dev + 2 QA are dedicated to Bloomreach (5 in total). 2 open positions for Webiz (2 dev already counted as Webiz replacement; remaining open is QA Automation)."
+                    "8 total; 3 Dev + 2 QA dedicated to Bloomreach. QA Automation is now tracked separately."
                 }
               ]
             }
@@ -1210,17 +1173,41 @@ const orgData = {
               nodes: [
                 {
                   title: "888 4 Team",
-                  role: "",
                   headcount: 4,
                   openCount: 0,
-                  note:
-                    "Team named '888 4'; assumed 4 FTE including TL (based on name). Adjust headcount here if different."
+                  note: "4 FTE including TL"
                 }
               ]
             }
           ]
         }
       ]
+    },
+
+    // 5) QA Automation 888 — standalone pillar with 4 people + 1 open
+    {
+      id: "qa-automation-888",
+      name: "QA Automation 888",
+      lead: {
+        name: "QA Automation TL",
+        title: "Team Lead"
+      },
+      meta: "Dedicated 888 QA Automation function",
+      groups: [
+        {
+          label: "QA Automation 888 Team",
+          nodes: [
+            {
+              title: "QA Automation 888 Team",
+              headcount: 4,
+              openCount: 1,
+              note:
+                "4 people including TL + 1 open QA Automation position"
+            }
+          ]
+        }
+      ],
+      innerPillars: []
     }
   ]
 };
