@@ -2,17 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Customer Services & Unified Client – Org Chart (Dynamic)</title>
+  <title>Customer Services & Unified Client – Org Chart</title>
   <style>
     :root {
-      /* Evoke-inspired palette */
       --bg: #f4f7fb;
       --bg-alt: #ffffff;
-      --primary: #269abc;        /* Eastern Blue */
+      --primary: #269abc;
       --primary-dark: #1a6f86;
       --primary-soft: rgba(38, 154, 188, 0.08);
-      --accent: #0b0b25;         /* deep navy */
-      --accent-soft: rgba(11, 11, 37, 0.06);
+      --accent: #0b0b25;
       --text-main: #111827;
       --text-muted: #6b7280;
       --border-subtle: #e5e7eb;
@@ -32,8 +30,7 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top, #ffffff 0, #f4f7fb 55%, #edf2fb 100%);
+      background: radial-gradient(circle at top, #ffffff 0, #f4f7fb 55%, #edf2fb 100%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -376,7 +373,7 @@
       margin-top: 8px;
       background: #ffffff;
       border-radius: var(--radius-xl);
-      padding: 18px 16px 18px;
+      padding: 18px 16px;
       border: 1px solid var(--border-subtle);
       box-shadow: var(--shadow-soft);
       overflow: auto;
@@ -392,8 +389,8 @@
     }
 
     .pillar {
-      flex: 1 1 220px;
-      max-width: 280px;
+      flex: 1 1 260px;
+      max-width: 340px;
       background: #ffffff;
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-subtle);
@@ -489,27 +486,6 @@
     .tag-metric {
       font-size: 10px;
       opacity: 0.8;
-    }
-
-    .chip-open {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      border-radius: var(--radius-pill);
-      border: 1px solid #fecaca;
-      padding: 2px 6px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #b91c1c;
-      background: #fef2f2;
-    }
-
-    .chip-open span.dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #dc2626;
     }
 
     .toggle {
@@ -663,12 +639,6 @@
       color: #166534;
     }
 
-    .node-chip.sii {
-      border-color: #fef3c7;
-      background: #fffbeb;
-      color: #92400e;
-    }
-
     .node-chip.open {
       border-color: #fecaca;
       background: #fef2f2;
@@ -684,10 +654,6 @@
 
     .badge-dot.open {
       background: #dc2626;
-    }
-
-    .badge-dot.sii {
-      background: #f59e0b;
     }
 
     .node-count {
@@ -707,8 +673,58 @@
       filter: grayscale(0.3);
     }
 
-    /* Wide screens: all pillars in one row */
-    @media (min-width: 1500px) {
+    /* ===== Inner pillars (option B) ===== */
+    .inner-pillars {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .inner-pillar {
+      border-radius: 12px;
+      border: 1px dashed var(--border-strong);
+      background: #f9fafb;
+      padding: 6px 6px 4px;
+    }
+
+    .inner-pillar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+
+    .inner-pillar-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .inner-pillar-meta {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .inner-pillar-meta strong {
+      color: var(--accent);
+    }
+
+    .inner-pillar .group-label {
+      margin-top: 2px;
+      margin-bottom: 0;
+      font-size: 9px;
+    }
+
+    .inner-pillar .node {
+      margin: 3px 0;
+    }
+
+    /* Wide: 3 pillars in a row nicely spaced */
+    @media (min-width: 1400px) {
       .chart-shell {
         max-height: none;
       }
@@ -719,7 +735,7 @@
       }
 
       .pillar {
-        flex: 0 0 calc(100% / 6 - 10px);
+        flex: 0 0 calc(100% / 3 - 10px);
         max-width: none;
       }
     }
@@ -728,11 +744,9 @@
       body {
         padding: 16px;
       }
-
       .chart-shell {
         max-height: none;
       }
-
       .app-header {
         align-items: flex-start;
       }
@@ -785,10 +799,6 @@
         <span class="pill-dot pill-dot-open"></span>
         Open role
       </div>
-      <div class="legend-item">
-        <span class="pill-dot pill-dot-sii"></span>
-        SII / specialised capacity
-      </div>
     </section>
 
     <section class="totals-bar">
@@ -802,215 +812,194 @@
   </div>
 
   <script>
-    // ===== 1. Org data for the attached chart =====
- const orgData = {
-  head: {
-    name: "Oren",
-    initials: "OR",
-    role: "Head of Customer Services and Unified Client (IL)",
-    pillarsLabel: "Pillars",
-    description:
-      "Customer Services (CR Eagles, CR Dragons, CASAP+BO QA, CASAP+BO DEV) • UC 1 (RO) • UC 2 (RO)"
-  },
-
-  pillars: [
-    {
-      id: "customer-services",
-      name: "Customer Services",
-      lead: { name: "Krzysztof", title: "Customer Services GM (PL)" },
-      meta: "Manages CR Eagles, CR Dragons, CASAP+BO QA and CASAP+BO DEV",
-      groups: [
+    // ===== 1. ORG DATA (3 pillars, inner pillars for Customer Services) =====
+    const orgData = {
+      head: {
+        name: "Oren",
+        initials: "OR",
+        role: "Head of Customer Services and Unified Client (IL)",
+        pillarsLabel: "Pillars",
+        description: "Customer Services (4 inner teams) • UC 1 (RO) • UC 2 (RO)"
+      },
+      pillars: [
         {
-          label: "Customer Services GM",
-          nodes: [
+          id: "customer-services",
+          name: "Customer Services",
+          lead: { name: "Krzysztof", title: "Customer Services GM (PL)" },
+          meta: "CR Eagles (RO) • CR Dragons (PL) • CASAP+BO QA (RO) • CASAP+BO DEV (RO)",
+          groups: [
             {
-              title: "Krzysztof",
-              role: "Customer Services GM (PL)",
-              headcount: 1,
-              siiCount: 0,
-              openCount: 0,
-              note: "Group manager for all Customer Services teams"
+              label: "Customer Services GM",
+              nodes: [
+                {
+                  title: "Krzysztof",
+                  role: "Customer Services GM (PL)",
+                  headcount: 1,
+                  openCount: 0,
+                  note: "Group manager for all Customer Services teams"
+                }
+              ]
+            }
+          ],
+          innerPillars: [
+            {
+              id: "cs-eagles",
+              name: "CR Eagles (RO)",
+              lead: { name: "Robert", title: "TL (RO)" },
+              groups: [
+                {
+                  label: "Team",
+                  nodes: [
+                    { title: "Robert", role: "TL (RO)", headcount: 1 },
+                    { title: "Filip", headcount: 1 },
+                    { title: "Bogdan", headcount: 1 },
+                    { title: "Cristian", headcount: 1 },
+                    { title: "Rares", headcount: 1 },
+                    {
+                      title: "Open Position",
+                      headcount: 0,
+                      openCount: 1,
+                      note: "Open role – CR Eagles (RO)"
+                    },
+                    {
+                      title: "Open Position",
+                      headcount: 0,
+                      openCount: 1,
+                      note: "Open role – CR Eagles (RO)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "cs-dragons",
+              name: "CR Dragons (PL)",
+              lead: { name: "Natalia", title: "TL (PL)" },
+              groups: [
+                {
+                  label: "Team",
+                  nodes: [
+                    { title: "Natalia", role: "TL (PL)", headcount: 1 },
+                    { title: "Jacek", headcount: 1 },
+                    { title: "Tatyana", headcount: 1 },
+                    {
+                      title: "Open Position",
+                      headcount: 0,
+                      openCount: 1,
+                      note: "Open role – CR Dragons (PL)"
+                    },
+                    { title: "Yehor", headcount: 1 },
+                    { title: "Mateusz", headcount: 1 },
+                    { title: "Veronika", headcount: 1 }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "cs-qa",
+              name: "CASAP+BO QA (RO)",
+              lead: { name: "Bogdan", title: "TL QA (RO)" },
+              groups: [
+                {
+                  label: "QA Team",
+                  nodes: [
+                    { title: "Bogdan", role: "TL QA (RO)", headcount: 1 },
+                    { title: "Oana", headcount: 1 },
+                    { title: "Ionut", headcount: 1 },
+                    { title: "Gabriel", headcount: 1 },
+                    { title: "Cristina", headcount: 1 }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "cs-dev",
+              name: "CASAP+BO DEV (RO)",
+              lead: { name: "Iulia", title: "TL (RO)" },
+              groups: [
+                {
+                  label: "Dev Team",
+                  nodes: [
+                    { title: "Iulia", role: "TL (RO)", headcount: 1 },
+                    { title: "Marius", headcount: 1 },
+                    { title: "Chiril", headcount: 1 },
+                    { title: "George", headcount: 1 },
+                    { title: "Andrei Dorobantu", headcount: 1 },
+                    { title: "Cosmin", headcount: 1 }
+                  ]
+                }
+              ]
             }
           ]
         },
         {
-          label: "CR Eagles (RO)",
-          nodes: [
+          id: "uc1",
+          name: "UC 1 (RO)",
+          lead: { name: "Maoz", title: "TL (IL)" },
+          meta: "Unified Client team – IL & RO",
+          groups: [
             {
-              title: "Robert",
-              role: "TL (RO)",
-              headcount: 1,
-              siiCount: 0,
-              openCount: 0,
-              note: "Team Lead – CR Eagles (RO)"
-            },
-            { title: "Filip", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Bogdan", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Cristian", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            {
-              title: "Open Position",
-              role: "",
-              headcount: 0,
-              siiCount: 0,
-              openCount: 1,
-              note: "Open role – CR Eagles (RO)"
-            },
-            { title: "Rares", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            {
-              title: "Open Position",
-              role: "",
-              headcount: 0,
-              siiCount: 0,
-              openCount: 1,
-              note: "Open role – CR Eagles (RO)"
+              label: "UC 1 Team",
+              nodes: [
+                { title: "Maoz", role: "TL (IL)", headcount: 1 },
+                { title: "Demian", role: "(IL)", headcount: 1 },
+                { title: "Liviu", role: "(RO)", headcount: 1 },
+                { title: "Bogdan", role: "(RO)", headcount: 1 },
+                { title: "Costin", role: "(RO)", headcount: 1 },
+                {
+                  title: "Automation Open Position",
+                  role: "(RO)",
+                  headcount: 0,
+                  openCount: 1,
+                  note: "Open automation role – UC 1"
+                }
+              ]
             }
           ]
         },
         {
-          label: "CR Dragons (PL)",
-          nodes: [
+          id: "uc2",
+          name: "UC 2 (RO)",
+          lead: { name: "Razvan", title: "Acting Lead (RO)" },
+          meta: "Unified Client team – RO",
+          groups: [
             {
-              title: "Natalia",
-              role: "TL (PL)",
-              headcount: 1,
-              siiCount: 0,
-              openCount: 0,
-              note: "Team Lead – CR Dragons (PL)"
-            },
-            { title: "Jacek", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Tatyana", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            {
-              title: "Open Position",
-              role: "",
-              headcount: 0,
-              siiCount: 0,
-              openCount: 1,
-              note: "Open role – CR Dragons (PL)"
-            },
-            { title: "Yehor", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Mateusz", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Veronika", role: "", headcount: 1, siiCount: 0, openCount: 0 }
-          ]
-        },
-        {
-          label: "CASAP+BO QA (RO)",
-          nodes: [
-            {
-              title: "Bogdan",
-              role: "TL QA (RO)",
-              headcount: 1,
-              siiCount: 0,
-              openCount: 0,
-              note: "Team Lead – CASAP+BO QA (RO)"
-            },
-            { title: "Oana", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Ionut", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Gabriel", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Cristina", role: "", headcount: 1, siiCount: 0, openCount: 0 }
-          ]
-        },
-        {
-          label: "CASAP+BO DEV (RO)",
-          nodes: [
-            {
-              title: "Iulia",
-              role: "TL (RO)",
-              headcount: 1,
-              siiCount: 0,
-              openCount: 0,
-              note: "Team Lead – CASAP+BO DEV (RO)"
-            },
-            { title: "Marius", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Chiril", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "George", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            {
-              title: "Andrei Dorobantu",
-              role: "",
-              headcount: 1,
-              siiCount: 0,
-              openCount: 0
-            },
-            { title: "Cosmin", role: "", headcount: 1, siiCount: 0, openCount: 0 }
-          ]
-        }
-      ]
-    },
-
-    {
-      id: "uc1",
-      name: "UC 1 (RO)",
-      lead: { name: "Maoz", title: "TL (IL)" },
-      meta: "Unified Client team – IL / RO, reporting directly to Oren",
-      groups: [
-        {
-          label: "UC 1 Team",
-          nodes: [
-            {
-              title: "Maoz",
-              role: "TL (IL)",
-              headcount: 1,
-              siiCount: 0,
-              openCount: 0,
-              note: "Team Lead – UC 1"
-            },
-            { title: "Demian", role: "(IL)", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Liviu", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Bogdan", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Costin", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
-            {
-              title: "Automation Open Position",
-              role: "(RO)",
-              headcount: 0,
-              siiCount: 0,
-              openCount: 1,
-              note: "Open automation role – UC 1"
+              label: "UC 2 Team",
+              nodes: [
+                { title: "Razvan", headcount: 1 },
+                { title: "Florin", headcount: 1 },
+                { title: "Adrian", headcount: 1 },
+                { title: "Daniel", headcount: 1 },
+                { title: "Alex", headcount: 1 }
+              ]
             }
           ]
         }
       ]
-    },
+    };
 
-    {
-      id: "uc2",
-      name: "UC 2 (RO)",
-      lead: { name: "Razvan", title: "Acting lead (RO)" },
-      meta: "Unified Client team – RO, reporting directly to Oren",
-      groups: [
-        {
-          label: "UC 2 Team",
-          nodes: [
-            {
-              title: "Razvan",
-              role: "",
-              headcount: 1,
-              siiCount: 0,
-              openCount: 0,
-              note: "Acts as UC 2 lead"
-            },
-            { title: "Florin", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Adrian", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Daniel", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-            { title: "Alex", role: "", headcount: 1, siiCount: 0, openCount: 0 }
-          ]
-        }
-      ]
-    }
-  ]
-};
-
-
-    // ===== 2. Totals helpers =====
-    function computePillarTotals(pillar) {
+    // ===== 2. Helpers for totals =====
+    function sumGroups(groups = []) {
       let total = 0;
       let openRoles = 0;
-
-      pillar.groups.forEach(group => {
+      groups.forEach(group => {
         group.nodes.forEach(node => {
-          total += (node.headcount || 0) + (node.siiCount || 0);
-          openRoles += node.openCount || 0;
+          total += (node.headcount || 0);
+          openRoles += (node.openCount || 0);
         });
       });
+      return { total, openRoles };
+    }
 
+    function computePillarTotals(pillar) {
+      let { total, openRoles } = sumGroups(pillar.groups || []);
+      if (pillar.innerPillars) {
+        pillar.innerPillars.forEach(inner => {
+          const t = sumGroups(inner.groups || []);
+          total += t.total;
+          openRoles += t.openRoles;
+        });
+      }
       return { total, openRoles };
     }
 
@@ -1068,6 +1057,68 @@
       `;
     }
 
+    function renderGroups(groups) {
+      if (!groups || !groups.length) return "";
+      return groups
+        .map(group => {
+          const nodesHtml = group.nodes
+            .map(node => {
+              const h = node.headcount || 0;
+              const o = node.openCount || 0;
+
+              const chips = [];
+              if (h > 0) {
+                chips.push(`
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    ${h} ${h === 1 ? "Person" : "People"}
+                  </div>
+                `);
+              }
+              if (o > 0) {
+                chips.push(`
+                  <div class="node-chip open">
+                    <span class="badge-dot open"></span>
+                    +${o} Open
+                  </div>
+                `);
+              }
+
+              const metaText =
+                node.note ||
+                (h || o
+                  ? `Headcount: ${h}${o ? ` (${o} open)` : ""}`
+                  : "Listed contact");
+
+              return `
+                <div class="node" data-node>
+                  <div class="node-main">
+                    <div>
+                      <div class="node-title">${node.title}</div>
+                      <div class="node-role">${node.role || ""}</div>
+                    </div>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+                      ${chips.join("")}
+                    </div>
+                  </div>
+                  <div class="node-meta">
+                    <span class="node-count">${metaText}</span>
+                  </div>
+                </div>
+              `;
+            })
+            .join("");
+
+          return `
+            <div class="group">
+              <div class="group-label">${group.label}</div>
+              ${nodesHtml}
+            </div>
+          `;
+        })
+        .join("");
+    }
+
     function renderPillarsRow(data, pillarTotals) {
       const row = document.getElementById("pillarsRow");
       const totalsMap = pillarTotals.reduce((acc, p) => {
@@ -1078,73 +1129,46 @@
       row.innerHTML = data.pillars
         .map(pillar => {
           const t = totalsMap[pillar.id] || { total: 0, openRoles: 0 };
-          const groupsHtml = pillar.groups
-            .map(group => {
-              const nodesHtml = group.nodes
-                .map(node => {
-                  const h = node.headcount || 0;
-                  const s = node.siiCount || 0;
-                  const o = node.openCount || 0;
 
-                  const chips = [];
-                  if (h > 0) {
-                    chips.push(`
-                      <div class="node-chip team">
-                        <span class="badge-dot"></span>
-                        ${h} ${h === 1 ? "Person" : "People"}
-                      </div>
-                    `);
-                  }
-                  if (s > 0) {
-                    chips.push(`
-                      <div class="node-chip sii">
-                        <span class="badge-dot sii"></span>
-                        +${s} SII
-                      </div>
-                    `);
-                  }
-                  if (o > 0) {
-                    chips.push(`
-                      <div class="node-chip open">
-                        <span class="badge-dot open"></span>
-                        +${o} Open
-                      </div>
-                    `);
-                  }
+          let topGroupsHtml = renderGroups(pillar.groups || []);
 
-                  const metaText =
-                    node.note ||
-                    `Headcount: ${h}${s > 0 ? ` + ${s} SII` : ""}${
-                      o > 0 ? ` (${o} open roles)` : ""
-                    }`;
-
+          let innerHtml = "";
+          if (pillar.innerPillars && pillar.innerPillars.length) {
+            innerHtml =
+              '<div class="inner-pillars">' +
+              pillar.innerPillars
+                .map(inner => {
+                  const innerTotals = sumGroups(inner.groups || []);
+                  const innerGroupsHtml = renderGroups(inner.groups || []);
                   return `
-                    <div class="node" data-node>
-                      <div class="node-main">
-                        <div>
-                          <div class="node-title">${node.title}</div>
-                          <div class="node-role">${node.role || ""}</div>
+                    <div class="inner-pillar" data-inner="${inner.id}">
+                      <div class="inner-pillar-header">
+                        <div class="inner-pillar-title">
+                          ${inner.name}
+                          ${
+                            inner.lead && inner.lead.name
+                              ? `<span style="font-weight:400;color:#6b7280;"> – ${inner.lead.name}${inner.lead.title ? ", " + inner.lead.title : ""}</span>`
+                              : ""
+                          }
                         </div>
-                        <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
-                          ${chips.join("")}
+                        <div class="inner-pillar-meta">
+                          <strong>${innerTotals.total}</strong> ppl
+                          ${
+                            innerTotals.openRoles
+                              ? ` • ${innerTotals.openRoles} open`
+                              : ""
+                          }
                         </div>
                       </div>
-                      <div class="node-meta">
-                        <span class="node-count">${metaText}</span>
-                      </div>
+                      ${innerGroupsHtml}
                     </div>
                   `;
                 })
-                .join("");
+                .join("") +
+              "</div>";
+          }
 
-              return `
-                <div class="group">
-                  <div class="group-label">${group.label}</div>
-                  ${nodesHtml}
-                </div>
-              `;
-            })
-            .join("");
+          const childrenHtml = topGroupsHtml + innerHtml;
 
           return `
             <article class="pillar" data-pillar="${pillar.id}">
@@ -1171,7 +1195,7 @@
               </header>
               <div class="pillar-body">
                 <div class="children">
-                  ${groupsHtml}
+                  ${childrenHtml}
                 </div>
               </div>
             </article>
