@@ -1,0 +1,1371 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Onboarding & Digital Marketing – Org Chart</title>
+  <style>
+    :root {
+      /* 888casino-inspired palette */
+      --bg: #02030a;
+      --bg-alt: #050a11;
+      --card: #070d16;
+      --card-alt: #050a10;
+      --accent: #EFFF32;          /* neon yellow/green */
+      --accent-soft: rgba(239, 255, 50, 0.18);
+      --accent-2: #00ff87;        /* electric green */
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --border: #111827;
+      --danger: #ff4b5c;
+      --success: #00ff87;
+      --warning: #fde047;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.75);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --transition-fast: 160ms ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #07131f 0, #02030a 52%, #02030a 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 24px;
+    }
+
+    .app-shell {
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .app-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .title-pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .title-pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0, var(--accent-2) 80%);
+      box-shadow: 0 0 12px rgba(0, 255, 135, 0.9);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 7px 30px 7px 28px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      background: radial-gradient(circle at top left, rgba(239, 255, 50, 0.18), #02030a);
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+      min-width: 210px;
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      opacity: 0.7;
+    }
+
+    .clear-search {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      cursor: pointer;
+      opacity: 0.7;
+      display: none;
+    }
+
+    .search-input:not(:placeholder-shown) ~ .clear-search {
+      display: block;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 7px 11px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: radial-gradient(circle at top left, rgba(0, 255, 135, 0.35), #02030a);
+      color: var(--text);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        border-color var(--transition-fast), background var(--transition-fast);
+      box-shadow: 0 0 0 rgba(15, 23, 42, 0.4);
+    }
+
+    .btn span.icon {
+      font-size: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.85);
+      border-color: rgba(239, 255, 50, 0.8);
+    }
+
+    .btn-secondary {
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.8), #02030a);
+      border-style: dashed;
+    }
+
+    .legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      opacity: 0.85;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: var(--radius-pill);
+      background: rgba(5, 10, 20, 0.95);
+      border: 1px solid rgba(30, 64, 175, 0.7);
+    }
+
+    .pill-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .pill-dot-lead {
+      background: radial-gradient(circle, var(--accent-2) 0, #00e6b0 70%);
+      box-shadow: 0 0 10px rgba(0, 255, 135, 0.9);
+    }
+
+    .pill-dot-open {
+      background: radial-gradient(circle, var(--danger) 0, #ea580c 70%);
+      box-shadow: 0 0 8px rgba(248, 113, 113, 0.9);
+    }
+
+    .pill-dot-team {
+      background: radial-gradient(circle, var(--accent) 0, var(--accent-2) 75%);
+      box-shadow: 0 0 6px rgba(239, 255, 50, 0.9);
+    }
+
+    .pill-dot-sii {
+      background: radial-gradient(circle, var(--warning) 0, #facc15 75%);
+      box-shadow: 0 0 6px rgba(250, 204, 21, 0.9);
+    }
+
+    .root-card {
+      background:
+        radial-gradient(circle at top left, rgba(239, 255, 50, 0.35), #050814);
+      border-radius: 24px;
+      padding: 16px 18px;
+      border: 1px solid rgba(75, 85, 99, 0.8);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: sticky;
+      top: 8px;
+      z-index: 10;
+      backdrop-filter: blur(18px);
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 15% 0, rgba(248, 250, 252, 0.95) 0, rgba(148, 163, 184, 0.18) 36%, transparent 40%),
+        conic-gradient(from 220deg, var(--accent), var(--accent-2), #22d3ee, var(--accent));
+      padding: 3px;
+      position: relative;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 0, #020617, #02030a 75%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: #e5e7eb;
+      letter-spacing: 0.12em;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-2) 0, #059669 70%);
+      border: 2px solid #02030a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+    }
+
+    .root-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .root-name {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .root-role {
+      font-size: 12px;
+      color: #e5e7eb;
+      opacity: 0.92;
+    }
+
+    .root-meta {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .root-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 3px 8px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(3, 7, 18, 0.95);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .root-chip span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0, var(--accent-2) 100%);
+      box-shadow: 0 0 8px rgba(239, 255, 50, 0.9);
+    }
+
+    .totals-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 11px;
+    }
+
+    .totals-pillars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .totals-chip {
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(5, 10, 20, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .totals-chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0, var(--accent-2) 90%);
+      box-shadow: 0 0 6px rgba(239, 255, 50, 0.9);
+    }
+
+    .totals-main {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(239, 255, 50, 0.9);
+      background: radial-gradient(circle at top left, rgba(239, 255, 50, 0.18), #020617);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .totals-main strong {
+      color: var(--accent);
+    }
+
+    .chart-shell {
+      margin-top: 8px;
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), #02030a);
+      border-radius: 22px;
+      padding: 18px 16px 18px;
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      box-shadow: var(--shadow-soft);
+      overflow: auto;
+      max-height: calc(100vh - 200px);
+    }
+
+    .pillars-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .pillar {
+      flex: 1 1 220px;
+      max-width: 280px;
+      background: radial-gradient(circle at top, var(--accent-soft), var(--card-alt));
+      border-radius: 18px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .pillar::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0 0, rgba(239, 255, 50, 0.24), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(0, 255, 135, 0.28), transparent 60%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .pillar:hover {
+      transform: translateY(-3px);
+      border-color: rgba(239, 255, 50, 0.9);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.85);
+    }
+
+    .pillar-header {
+      position: relative;
+      padding: 11px 12px 8px;
+      border-bottom: 1px solid rgba(30, 64, 175, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .pillar-total {
+      align-self: flex-start;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(239, 255, 50, 0.9);
+      background: rgba(3, 7, 18, 0.95);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 1px;
+    }
+
+    .pillar-total span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0, var(--accent-2) 90%);
+      box-shadow: 0 0 6px rgba(239, 255, 50, 0.9);
+    }
+
+    .pillar-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      padding-right: 30px;
+    }
+
+    .pillar-tagline {
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag-person {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 7px;
+      border-radius: var(--radius-pill);
+      background: rgba(3, 7, 18, 0.92);
+      font-size: 10px;
+    }
+
+    .tag-person span.badge {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent-2) 0, #00e6b0 70%);
+      box-shadow: 0 0 8px rgba(0, 255, 135, 0.9);
+    }
+
+    .tag-metric {
+      font-size: 10px;
+      opacity: 0.85;
+    }
+
+    .chip-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(248, 113, 113, 0.7);
+      padding: 2px 6px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #fecaca;
+      background: rgba(127, 29, 29, 0.8);
+    }
+
+    .chip-open span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--danger) 0, #ea580c 70%);
+      box-shadow: 0 0 6px rgba(248, 113, 113, 0.9);
+    }
+
+    .toggle {
+      position: absolute;
+      right: 8px;
+      top: 10px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(3, 7, 18, 0.95);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast),
+        border-color var(--transition-fast);
+    }
+
+    .toggle:hover {
+      background: #020617;
+      transform: translateY(-1px);
+      border-color: rgba(239, 255, 50, 0.85);
+    }
+
+    .toggle[data-open="true"] {
+      background: radial-gradient(circle, var(--accent-2) 0, #059669);
+      border-color: rgba(190, 242, 100, 0.9);
+      color: #020617;
+    }
+
+    .pillar-body {
+      position: relative;
+      padding: 6px 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .children {
+      max-height: 460px;
+      overflow: hidden;
+      transition: max-height 220ms ease-out, opacity 180ms ease-out;
+      opacity: 1;
+    }
+
+    .children.collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    .group-label {
+      margin: 4px 2px 2px;
+      padding: 2px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 9px;
+      color: var(--muted);
+      opacity: 0.85;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .group-label::before {
+      content: "";
+      width: 14px;
+      height: 1px;
+      background: linear-gradient(to right, rgba(148, 163, 184, 0.25), rgba(239, 255, 50, 0.8));
+      border-radius: 99px;
+    }
+
+    .node {
+      border-radius: 12px;
+      padding: 6px 7px;
+      margin: 3px 2px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: radial-gradient(circle at top left, rgba(3, 7, 18, 0.98), rgba(3, 7, 18, 0.95));
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+        border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .node::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(239, 255, 50, 0.15), transparent 55%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast);
+    }
+
+    .node:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.85);
+      border-color: rgba(239, 255, 50, 0.9);
+    }
+
+    .node:hover::before {
+      opacity: 1;
+    }
+
+    .node-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .node-title {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .node-role {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .node-meta {
+      font-size: 9px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    .node-chip {
+      padding: 2px 6px;
+      border-radius: var(--radius-pill);
+      font-size: 9px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      background: rgba(3, 7, 18, 0.96);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .node-chip.team {
+      border-color: rgba(239, 255, 50, 0.9);
+      color: #fef9c3;
+    }
+
+    .node-chip.sii {
+      border-color: rgba(250, 204, 21, 0.9);
+      color: #fef9c3;
+    }
+
+    .node-chip.open {
+      border-color: rgba(248, 113, 113, 0.9);
+      color: #fecaca;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--accent-2) 0, #059669 70%);
+      box-shadow: 0 0 6px rgba(0, 255, 135, 0.9);
+    }
+
+    .badge-dot.open {
+      background: radial-gradient(circle, var(--danger) 0, #ea580c 70%);
+      box-shadow: 0 0 6px rgba(248, 113, 113, 0.9);
+    }
+
+    .badge-dot.sii {
+      background: radial-gradient(circle, var(--warning) 0, #facc15 70%);
+      box-shadow: 0 0 6px rgba(250, 204, 21, 0.9);
+    }
+
+    .node-count {
+      font-size: 9px;
+      opacity: 0.85;
+    }
+
+    .search-hit {
+      border-color: rgba(251, 191, 36, 0.95) !important;
+      box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.95), 0 0 18px rgba(251, 191, 36, 0.7) !important;
+    }
+
+    .search-fade {
+      opacity: 0.15;
+      filter: grayscale(0.4);
+    }
+
+    /* Wide screens: keep all 6 pillars in one row */
+    @media (min-width: 1500px) {
+      .chart-shell {
+        max-height: none;
+      }
+
+      .pillars-row {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+      }
+
+      .pillar {
+        flex: 0 0 calc(100% / 6 - 10px);
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 16px;
+      }
+      .root-card {
+        position: static;
+      }
+      .chart-shell {
+        max-height: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="title-group">
+        <div class="title-pill">
+          <span class="title-pill-dot"></span>
+          Onboarding &amp; Digital Marketing – Org Map
+        </div>
+        <div class="title">Organisation Overview</div>
+      </div>
+
+      <div class="controls">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            id="search"
+            class="search-input"
+            type="text"
+            placeholder="Search by name, role, pillar…"
+            autocomplete="off"
+          />
+          <span id="clearSearch" class="clear-search">✕</span>
+        </div>
+
+        <button id="toggleAllBtn" class="btn btn-secondary" type="button">
+          <span class="icon">▾</span>
+          Toggle all pillars
+        </button>
+      </div>
+    </header>
+
+    <section class="legend">
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-lead"></span>
+        Lead / GM / TL
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-team"></span>
+        Team headcount
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-open"></span>
+        Open role
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-sii"></span>
+        SII / specialised capacity
+      </div>
+    </section>
+
+    <section class="root-card">
+      <div class="avatar">
+        <div class="avatar-inner">SD</div>
+        <div class="avatar-badge">★</div>
+      </div>
+      <div class="root-main">
+        <div class="root-name">Shmuel Daniel</div>
+        <div class="root-role">Head of Onboarding &amp; Digital Marketing</div>
+        <div class="root-meta">
+          <div class="root-chip">
+            <span class="dot"></span>
+            6 Operational Pillars
+          </div>
+          <div>
+            Funnel &amp; CX • Site Infra • Automation / AI • Adtech • WH Onboarding • WH CX
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="totals-bar">
+      <div class="totals-pillars">
+        <div class="totals-chip">
+          <span class="dot"></span>
+          Funnel &amp; CX: <strong>30</strong>
+        </div>
+        <div class="totals-chip">
+          <span class="dot"></span>
+          Site Infra: <strong>1</strong>
+        </div>
+        <div class="totals-chip">
+          <span class="dot"></span>
+          Automation &amp; AI: <strong>3</strong>
+        </div>
+        <div class="totals-chip">
+          <span class="dot"></span>
+          Adtech: <strong>3</strong>
+        </div>
+        <div class="totals-chip">
+          <span class="dot"></span>
+          WH Onboarding: <strong>25</strong>
+        </div>
+        <div class="totals-chip">
+          <span class="dot"></span>
+          WH CX: <strong>3</strong>
+        </div>
+      </div>
+      <div class="totals-main">
+        Total headcount (excl. open roles): <strong>65</strong>
+      </div>
+    </section>
+
+    <main class="chart-shell" id="orgChart">
+      <div class="pillars-row">
+        <!-- 1. Funnel & CX Management -->
+        <article class="pillar" data-pillar="funnel-cx">
+          <header class="pillar-header">
+            <div class="pillar-total">
+              <span class="dot"></span>
+              Total: 30
+            </div>
+            <div class="pillar-title">
+              Funnel &amp; Customer Experience (CX) Management
+            </div>
+            <div class="pillar-tagline">
+              <span class="tag-person">
+                <span class="badge"></span>
+                Led by: <strong>Oana R</strong>, Funnel &amp; CX GM
+              </span>
+              <span class="tag-metric">4 Funnel TLs • SLS Team</span>
+            </div>
+            <button class="toggle" type="button" data-open="true" aria-label="Collapse pillar">
+              ▴
+            </button>
+          </header>
+          <div class="pillar-body">
+            <div class="children">
+              <div class="group-label">Direct teams</div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">SLS Team</div>
+                    <div class="node-role">Direct Team reporting to Oana R</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    2 People
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">2 specialists focused on SLS</span>
+                </div>
+              </div>
+
+              <div class="group-label">Funnel Team Leaders</div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Moshe S</div>
+                    <div class="node-role">Funnel 1 TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    6 People
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Manages 6 People</span>
+                </div>
+              </div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Marian C</div>
+                    <div class="node-role">Funnel 2 TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    5 People
+                  </div>
+                  <div class="node-chip sii">
+                    <span class="badge-dot sii"></span>
+                    +3 SII
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Manages 5 People + 3 SII</span>
+                </div>
+              </div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Adrian I</div>
+                    <div class="node-role">Funnel 3 TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    9 People
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Manages 9 People</span>
+                </div>
+              </div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Open Position</div>
+                    <div class="node-role">CX 888 TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    5 People
+                  </div>
+                  <div class="node-chip open">
+                    <span class="badge-dot open"></span>
+                    Hiring
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Future: CX 888 TL managing 5 People</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. Site Infrastructure (separate pillar) -->
+        <article class="pillar" data-pillar="site-infra">
+          <header class="pillar-header">
+            <div class="pillar-total">
+              <span class="dot"></span>
+              Total: 1
+            </div>
+            <div class="pillar-title">Site Infrastructure</div>
+            <div class="pillar-tagline">
+              <span class="tag-person">
+                <span class="badge"></span>
+                Function owner: <strong>Liron W</strong>
+              </span>
+              <span class="tag-metric">Platform &amp; site foundations</span>
+            </div>
+            <button class="toggle" type="button" data-open="true">
+              ▴
+            </button>
+          </header>
+          <div class="pillar-body">
+            <div class="children">
+              <div class="group-label">Site Infra Function</div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Liron W</div>
+                    <div class="node-role">Site Infra</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    1 Person
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Owns Site Infrastructure</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Automation & AI (separate pillar) -->
+        <article class="pillar" data-pillar="automation-ai">
+          <header class="pillar-header">
+            <div class="pillar-total">
+              <span class="dot"></span>
+              Total: 3
+            </div>
+            <div class="pillar-title">Automation &amp; AI</div>
+            <div class="pillar-tagline">
+              <span class="tag-person">
+                <span class="badge"></span>
+                Led by: <strong>Cosmin L</strong>, Automation &amp; AI TL
+              </span>
+              <span class="tag-metric">Automation &amp; AI team</span>
+            </div>
+            <button class="toggle" type="button" data-open="true">
+              ▴
+            </button>
+          </header>
+          <div class="pillar-body">
+            <div class="children">
+              <div class="group-label">Automation &amp; AI Team</div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Cosmin L</div>
+                    <div class="node-role">Automation &amp; AI TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    3 People
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Leads Automation &amp; AI team (3 People)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. Adtech -->
+        <article class="pillar" data-pillar="adtech">
+          <header class="pillar-header">
+            <div class="pillar-total">
+              <span class="dot"></span>
+              Total: 3
+            </div>
+            <div class="pillar-title">Adtech</div>
+            <div class="pillar-tagline">
+              <span class="tag-person">
+                <span class="badge"></span>
+                Led by: <strong>Sabin B</strong>, Adtech TL
+              </span>
+              <span class="tag-metric">Ad technology &amp; tooling</span>
+            </div>
+            <button class="toggle" type="button" data-open="true">
+              ▴
+            </button>
+          </header>
+          <div class="pillar-body">
+            <div class="children">
+              <div class="group-label">Adtech Team</div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Sabin B</div>
+                    <div class="node-role">Adtech TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    3 People
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Manages 3 People</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. WH Onboarding (without WH CX) -->
+        <article class="pillar" data-pillar="wh-onboarding">
+          <header class="pillar-header">
+            <div class="pillar-total">
+              <span class="dot"></span>
+              Total: 25
+            </div>
+            <div class="pillar-title">WH Onboarding Management</div>
+            <div class="pillar-tagline">
+              <span class="tag-person">
+                <span class="badge"></span>
+                General Manager: <strong>Marcin I</strong>, WH Onboarding GM
+              </span>
+              <span class="tag-metric">Principals • Onboarding TLs • SII capacity</span>
+            </div>
+            <button class="toggle" type="button" data-open="true">
+              ▴
+            </button>
+          </header>
+          <div class="pillar-body">
+            <div class="children">
+              <div class="group-label">WH Onboarding teams (reporting to GM)</div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">WH Onboarding Principals</div>
+                    <div class="node-role">Senior WH Onboarding principals</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    2 People
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">2 WH Onboarding Principals</span>
+                </div>
+              </div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Bart</div>
+                    <div class="node-role">WH Volcanics TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    5 People
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Manages 5 People</span>
+                </div>
+              </div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Open Position</div>
+                    <div class="node-role">Customer Ver TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    9 People
+                  </div>
+                  <div class="node-chip sii">
+                    <span class="badge-dot sii"></span>
+                    +1 SII SCV
+                  </div>
+                  <div class="node-chip open">
+                    <span class="badge-dot open"></span>
+                    Hiring
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">
+                    Future: Customer Verification TL (9 People + 1 SII SCV)
+                  </span>
+                </div>
+              </div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Vasyl S</div>
+                    <div class="node-role">WH Onboarding TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    4 People
+                  </div>
+                  <div class="node-chip sii">
+                    <span class="badge-dot sii"></span>
+                    +4 SII CLCM
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">Manages 4 People + 4 SII CLCM</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6. WH CX (separate pillar with Michal Z) -->
+        <article class="pillar" data-pillar="wh-cx">
+          <header class="pillar-header">
+            <div class="pillar-total">
+              <span class="dot"></span>
+              Total: 3
+            </div>
+            <div class="pillar-title">WH CX Management</div>
+            <div class="pillar-tagline">
+              <span class="tag-person">
+                <span class="badge"></span>
+                Led by: <strong>Michal Z</strong>, WH CX TL
+              </span>
+              <span class="tag-metric">CX team &amp; open roles</span>
+            </div>
+            <button class="toggle" type="button" data-open="true">
+              ▴
+            </button>
+          </header>
+          <div class="pillar-body">
+            <div class="children">
+              <div class="group-label">WH CX Team</div>
+
+              <div class="node" data-node>
+                <div class="node-main">
+                  <div>
+                    <div class="node-title">Michal Z</div>
+                    <div class="node-role">WH CX TL</div>
+                  </div>
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    3 People
+                  </div>
+                  <div class="node-chip open">
+                    <span class="badge-dot open"></span>
+                    +3 Open
+                  </div>
+                </div>
+                <div class="node-meta">
+                  <span class="node-count">WH CX team: 3 People + 3 open positions</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (function () {
+      const toggles = document.querySelectorAll(".toggle");
+      const searchInput = document.getElementById("search");
+      const clearSearch = document.getElementById("clearSearch");
+      const toggleAllBtn = document.getElementById("toggleAllBtn");
+      const orgChart = document.getElementById("orgChart");
+
+      toggles.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const pillar = btn.closest(".pillar");
+          const children = pillar.querySelector(".children");
+          const isOpen = btn.getAttribute("data-open") === "true";
+
+          if (isOpen) {
+            children.classList.add("collapsed");
+            btn.setAttribute("data-open", "false");
+            btn.textContent = "▾";
+          } else {
+            children.classList.remove("collapsed");
+            btn.setAttribute("data-open", "true");
+            btn.textContent = "▴";
+          }
+        });
+      });
+
+      toggleAllBtn.addEventListener("click", () => {
+        const allChildren = document.querySelectorAll(".pillar .children");
+        const openStates = Array.from(document.querySelectorAll(".toggle")).map((t) =>
+          t.getAttribute("data-open")
+        );
+        const allOpen = openStates.every((s) => s === "true");
+        const newStateOpen = !allOpen;
+
+        allChildren.forEach((ch) =>
+          ch.classList.toggle("collapsed", !newStateOpen)
+        );
+        document.querySelectorAll(".toggle").forEach((btn) => {
+          btn.setAttribute("data-open", newStateOpen ? "true" : "false");
+          btn.textContent = newStateOpen ? "▴" : "▾";
+        });
+      });
+
+      function normalise(str) {
+        return str
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "");
+      }
+
+      function applySearchFilter(query) {
+        const nodes = orgChart.querySelectorAll("[data-node], .pillar");
+        const trimmed = query.trim();
+
+        if (!trimmed) {
+          nodes.forEach((el) => {
+            el.classList.remove("search-hit", "search-fade");
+          });
+          return;
+        }
+
+        const q = normalise(trimmed);
+        const hits = [];
+
+        nodes.forEach((el) => {
+          const text = normalise(el.textContent || "");
+          const isHit = text.includes(q);
+          if (isHit) hits.push(el);
+        });
+
+        if (!hits.length) {
+          nodes.forEach((el) => {
+            el.classList.remove("search-hit");
+            el.classList.add("search-fade");
+          });
+          return;
+        }
+
+        nodes.forEach((el) => {
+          el.classList.remove("search-hit", "search-fade");
+        });
+
+        const hitSet = new Set(hits);
+        nodes.forEach((el) => {
+          if (hitSet.has(el)) {
+            el.classList.add("search-hit");
+          } else {
+            el.classList.add("search-fade");
+          }
+        });
+
+        hits.forEach((hit) => {
+          const pillar = hit.closest(".pillar");
+          if (!pillar) return;
+          const children = pillar.querySelector(".children");
+          const toggle = pillar.querySelector(".toggle");
+          if (children && children.classList.contains("collapsed")) {
+            children.classList.remove("collapsed");
+            toggle.setAttribute("data-open", "true");
+            toggle.textContent = "▴";
+          }
+        });
+      }
+
+      searchInput.addEventListener("input", (e) => {
+        applySearchFilter(e.target.value);
+      });
+
+      clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        applySearchFilter("");
+        searchInput.focus();
+      });
+
+      orgChart.querySelectorAll("[data-node]").forEach((node) => {
+        node.addEventListener("click", () => {
+          node.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
