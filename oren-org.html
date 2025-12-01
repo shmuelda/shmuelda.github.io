@@ -803,228 +803,252 @@
 
   <script>
     // ===== 1. Org data for the attached chart =====
-    const orgData = {
-      head: {
-        name: "Oren",
-        initials: "OR",
-        role: "Head of Customer Services and Unified Client (IL)",
-        pillarsLabel: "Teams",
-        description:
-          "CR Eagles (RO) • CR Dragons (PL) • CASAP+BO QA (RO) • CASAP+BO DEV (RO) • UC 2 (RO) • UC 1 (RO)"
-      },
-      pillars: [
+ const orgData = {
+  head: {
+    name: "Oren",
+    initials: "OR",
+    role: "Head of Customer Services and Unified Client (IL)",
+    pillarsLabel: "Teams",
+    description:
+      "Customer Services Group (via Krzysztof – CR Eagles, CR Dragons, CASAP+BO QA, CASAP+BO DEV) and Unified Client (UC 1, UC 2)"
+  },
+
+  // NEW: explicit group manager layer
+  groupManagers: [
+    {
+      id: "krzysztof",
+      name: "Krzysztof",
+      initials: "K",
+      role: "Customer Services GM (PL)",
+      managesPillars: ["cr-eagles", "cr-dragons", "casap-bo-qa", "casap-bo-dev"]
+    }
+  ],
+
+  pillars: [
+    {
+      id: "cr-eagles",
+      name: "CR Eagles (RO)",
+      reportsTo: "krzysztof", // <– reports to Customer Services GM
+      lead: { name: "Robert", title: "TL (RO)" },
+      meta: "Customer Services – Eagles team reporting via Krzysztof (PL)",
+      groups: [
         {
-          id: "cr-eagles",
-          name: "CR Eagles (RO)",
-          lead: { name: "Robert", title: "TL (RO)" },
-          meta: "Customer Services – Eagles team reporting via Krzysztof (PL)",
-          groups: [
+          label: "Team Lead",
+          nodes: [
             {
-              label: "Team Lead",
-              nodes: [
-                {
-                  title: "Robert",
-                  role: "TL (RO)",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 0,
-                  note: "Team Lead – CR Eagles (RO)"
-                }
-              ]
+              title: "Robert",
+              role: "TL (RO)",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 0,
+              note: "Team Lead – CR Eagles (RO)"
+            }
+          ]
+        },
+        {
+          label: "Team",
+          nodes: [
+            { title: "Filip", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Bogdan", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Cristian", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            {
+              title: "Open Position",
+              role: "",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 1,
+              note: "Open role – CR Eagles (RO)"
             },
+            { title: "Rares", role: "", headcount: 1, siiCount: 0, openCount: 0 },
             {
-              label: "Team",
-              nodes: [
-                { title: "Filip", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Bogdan", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Cristian", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                {
-                  title: "Open Position",
-                  role: "",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 1,
-                  note: "Open role – CR Eagles (RO)"
-                },
-                { title: "Rares", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                {
-                  title: "Open Position",
-                  role: "",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 1,
-                  note: "Open role – CR Eagles (RO)"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: "cr-dragons",
-          name: "CR Dragons (PL)",
-          lead: { name: "Natalia", title: "TL (PL)" },
-          meta: "Customer Services – Dragons team reporting via Krzysztof (PL)",
-          groups: [
-            {
-              label: "Team Lead",
-              nodes: [
-                {
-                  title: "Natalia",
-                  role: "TL (PL)",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 0,
-                  note: "Team Lead – CR Dragons (PL)"
-                }
-              ]
-            },
-            {
-              label: "Team",
-              nodes: [
-                { title: "Jacek", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Tatyana", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                {
-                  title: "Open Position",
-                  role: "",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 1,
-                  note: "Open role – CR Dragons (PL)"
-                },
-                { title: "Yehor", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Mateusz", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Veronika", role: "", headcount: 1, siiCount: 0, openCount: 0 }
-              ]
-            }
-          ]
-        },
-        {
-          id: "casap-bo-qa",
-          name: "CASAP+BO QA (RO)",
-          lead: { name: "Bogdan", title: "TL QA (RO)" },
-          meta: "QA team reporting via Krzysztof (PL)",
-          groups: [
-            {
-              label: "Team Lead",
-              nodes: [
-                {
-                  title: "Bogdan",
-                  role: "TL QA (RO)",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 0,
-                  note: "Team Lead – CASAP+BO QA (RO)"
-                }
-              ]
-            },
-            {
-              label: "Team",
-              nodes: [
-                { title: "Oana", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Ionut", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Gabriel", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Cristina", role: "", headcount: 1, siiCount: 0, openCount: 0 }
-              ]
-            }
-          ]
-        },
-        {
-          id: "casap-bo-dev",
-          name: "CASAP+BO DEV (RO)",
-          lead: { name: "Iulia", title: "TL (RO)" },
-          meta: "Development team reporting via Krzysztof (PL)",
-          groups: [
-            {
-              label: "Team Lead",
-              nodes: [
-                {
-                  title: "Iulia",
-                  role: "TL (RO)",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 0,
-                  note: "Team Lead – CASAP+BO DEV (RO)"
-                }
-              ]
-            },
-            {
-              label: "Team",
-              nodes: [
-                { title: "Marius", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Chiril", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "George", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                {
-                  title: "Andrei Dorobantu",
-                  role: "",
-                  headcount: 1,
-                  siiCount: 0,
-                  openCount: 0
-                },
-                { title: "Cosmin", role: "", headcount: 1, siiCount: 0, openCount: 0 }
-              ]
-            }
-          ]
-        },
-        {
-          id: "uc2",
-          name: "UC 2 (RO)",
-          lead: { name: "Razvan", title: "Team Lead (RO)" }, // inferred
-          meta: "Unified Client team – RO",
-          groups: [
-            {
-              label: "Team",
-              nodes: [
-                {
-                  title: "Razvan",
-                  role: "",
-                  headcount: 1,
-                  siiCount: 0,
-                  openCount: 0,
-                  note: "Acts as UC 2 lead"
-                },
-                { title: "Florin", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Adrian", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Daniel", role: "", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Alex", role: "", headcount: 1, siiCount: 0, openCount: 0 }
-              ]
-            }
-          ]
-        },
-        {
-          id: "uc1",
-          name: "UC 1 (RO)",
-          lead: { name: "Maoz", title: "TL (IL)" },
-          meta: "Unified Client team – IL / RO, reporting directly to Oren",
-          groups: [
-            {
-              label: "Team",
-              nodes: [
-                {
-                  title: "Maoz",
-                  role: "TL (IL)",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 0,
-                  note: "Team Lead – UC 1"
-                },
-                { title: "Demian", role: "(IL)", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Liviu", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Bogdan", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
-                { title: "Costin", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
-                {
-                  title: "Automation Open Position",
-                  role: "(RO)",
-                  headcount: 0,
-                  siiCount: 0,
-                  openCount: 1,
-                  note: "Open automation role – UC 1"
-                }
-              ]
+              title: "Open Position",
+              role: "",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 1,
+              note: "Open role – CR Eagles (RO)"
             }
           ]
         }
       ]
-    };
+    },
+
+    {
+      id: "cr-dragons",
+      name: "CR Dragons (PL)",
+      reportsTo: "krzysztof",
+      lead: { name: "Natalia", title: "TL (PL)" },
+      meta: "Customer Services – Dragons team reporting via Krzysztof (PL)",
+      groups: [
+        {
+          label: "Team Lead",
+          nodes: [
+            {
+              title: "Natalia",
+              role: "TL (PL)",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 0,
+              note: "Team Lead – CR Dragons (PL)"
+            }
+          ]
+        },
+        {
+          label: "Team",
+          nodes: [
+            { title: "Jacek", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Tatyana", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            {
+              title: "Open Position",
+              role: "",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 1,
+              note: "Open role – CR Dragons (PL)"
+            },
+            { title: "Yehor", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Mateusz", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Veronika", role: "", headcount: 1, siiCount: 0, openCount: 0 }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "casap-bo-qa",
+      name: "CASAP+BO QA (RO)",
+      reportsTo: "krzysztof",
+      lead: { name: "Bogdan", title: "TL QA (RO)" },
+      meta: "QA team reporting via Krzysztof (PL)",
+      groups: [
+        {
+          label: "Team Lead",
+          nodes: [
+            {
+              title: "Bogdan",
+              role: "TL QA (RO)",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 0,
+              note: "Team Lead – CASAP+BO QA (RO)"
+            }
+          ]
+        },
+        {
+          label: "Team",
+          nodes: [
+            { title: "Oana", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Ionut", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Gabriel", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Cristina", role: "", headcount: 1, siiCount: 0, openCount: 0 }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "casap-bo-dev",
+      name: "CASAP+BO DEV (RO)",
+      reportsTo: "krzysztof",
+      lead: { name: "Iulia", title: "TL (RO)" },
+      meta: "Development team reporting via Krzysztof (PL)",
+      groups: [
+        {
+          label: "Team Lead",
+          nodes: [
+            {
+              title: "Iulia",
+              role: "TL (RO)",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 0,
+              note: "Team Lead – CASAP+BO DEV (RO)"
+            }
+          ]
+        },
+        {
+          label: "Team",
+          nodes: [
+            { title: "Marius", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Chiril", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "George", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            {
+              title: "Andrei Dorobantu",
+              role: "",
+              headcount: 1,
+              siiCount: 0,
+              openCount: 0
+            },
+            { title: "Cosmin", role: "", headcount: 1, siiCount: 0, openCount: 0 }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "uc2",
+      name: "UC 2 (RO)",
+      reportsTo: "oren", // directly to Oren
+      lead: { name: "Razvan", title: "Acting lead (RO)" },
+      meta: "Unified Client team – RO",
+      groups: [
+        {
+          label: "Team",
+          nodes: [
+            {
+              title: "Razvan",
+              role: "",
+              headcount: 1,
+              siiCount: 0,
+              openCount: 0,
+              note: "Acts as UC 2 lead"
+            },
+            { title: "Florin", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Adrian", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Daniel", role: "", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Alex", role: "", headcount: 1, siiCount: 0, openCount: 0 }
+          ]
+        }
+      ]
+    },
+
+    {
+      id: "uc1",
+      name: "UC 1 (RO)",
+      reportsTo: "oren", // directly to Oren
+      lead: { name: "Maoz", title: "TL (IL)" },
+      meta: "Unified Client team – IL / RO, reporting directly to Oren",
+      groups: [
+        {
+          label: "Team",
+          nodes: [
+            {
+              title: "Maoz",
+              role: "TL (IL)",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 0,
+              note: "Team Lead – UC 1"
+            },
+            { title: "Demian", role: "(IL)", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Liviu", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Bogdan", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
+            { title: "Costin", role: "(RO)", headcount: 1, siiCount: 0, openCount: 0 },
+            {
+              title: "Automation Open Position",
+              role: "(RO)",
+              headcount: 0,
+              siiCount: 0,
+              openCount: 1,
+              note: "Open automation role – UC 1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
 
     // ===== 2. Totals helpers =====
     function computePillarTotals(pillar) {
