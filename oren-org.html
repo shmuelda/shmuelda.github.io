@@ -215,10 +215,6 @@
       background: #dc2626;
     }
 
-    .pill-dot-sii {
-      background: #f59e0b;
-    }
-
     .root-card {
       background: #ffffff;
       border-radius: var(--radius-xl);
@@ -673,7 +669,7 @@
       filter: grayscale(0.3);
     }
 
-    /* ===== Inner pillars (option B) ===== */
+    /* ===== Inner pillars (stacked, collapsible, scrollable) ===== */
     .inner-pillars {
       margin-top: 6px;
       display: flex;
@@ -685,7 +681,7 @@
       border-radius: 12px;
       border: 1px dashed var(--border-strong);
       background: #f9fafb;
-      padding: 6px 6px 4px;
+      padding: 5px 6px 4px;
     }
 
     .inner-pillar-header {
@@ -693,13 +689,23 @@
       justify-content: space-between;
       align-items: center;
       gap: 6px;
-      margin-bottom: 2px;
+    }
+
+    .inner-header-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
     .inner-pillar-title {
       font-size: 11px;
       font-weight: 600;
       color: var(--accent);
+    }
+
+    .inner-pillar-sub {
+      font-size: 10px;
+      color: var(--text-muted);
     }
 
     .inner-pillar-meta {
@@ -713,6 +719,53 @@
       color: var(--accent);
     }
 
+    .inner-toggle {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      margin-left: 4px;
+      transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+      color: var(--text-muted);
+    }
+
+    .inner-toggle:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+    }
+
+    .inner-toggle[data-open="true"] {
+      background: #f0f9ff;
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .inner-children {
+      max-height: 260px;
+      overflow-y: auto;
+      transition: max-height 200ms ease-out, opacity 150ms ease-out;
+      opacity: 1;
+      margin-top: 4px;
+    }
+
+    .inner-children.collapsed {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
     .inner-pillar .group-label {
       margin-top: 2px;
       margin-bottom: 0;
@@ -723,7 +776,7 @@
       margin: 3px 0;
     }
 
-    /* Wide: 3 pillars in a row nicely spaced */
+    /* Wide: 3 pillars in a row */
     @media (min-width: 1400px) {
       .chart-shell {
         max-height: none;
@@ -812,21 +865,21 @@
   </div>
 
   <script>
-    // ===== 1. ORG DATA (3 pillars, inner pillars for Customer Services) =====
+    // ===== 1. ORG DATA =====
     const orgData = {
       head: {
         name: "Oren",
         initials: "OR",
         role: "Head of Customer Services and Unified Client (IL)",
         pillarsLabel: "Pillars",
-        description: "Customer Services (4 inner teams) • UC 1 (RO) • UC 2 (RO)"
+        description: "Customer Services (via Krzysztof: 4 teams) • UC 1 (RO) • UC 2 (RO)"
       },
       pillars: [
         {
           id: "customer-services",
           name: "Customer Services",
           lead: { name: "Krzysztof", title: "Customer Services GM (PL)" },
-          meta: "CR Eagles (RO) • CR Dragons (PL) • CASAP+BO QA (RO) • CASAP+BO DEV (RO)",
+          meta: "Manages CR Eagles, CR Dragons, CASAP+BO QA, CASAP+BO DEV",
           groups: [
             {
               label: "Customer Services GM",
@@ -978,7 +1031,7 @@
       ]
     };
 
-    // ===== 2. Helpers for totals =====
+    // ===== 2. Totals helpers =====
     function sumGroups(groups = []) {
       let total = 0;
       let openRoles = 0;
@@ -1130,7 +1183,7 @@
         .map(pillar => {
           const t = totalsMap[pillar.id] || { total: 0, openRoles: 0 };
 
-          let topGroupsHtml = renderGroups(pillar.groups || []);
+          const gmGroupsHtml = renderGroups(pillar.groups || []);
 
           let innerHtml = "";
           if (pillar.innerPillars && pillar.innerPillars.length) {
@@ -1143,24 +1196,26 @@
                   return `
                     <div class="inner-pillar" data-inner="${inner.id}">
                       <div class="inner-pillar-header">
-                        <div class="inner-pillar-title">
-                          ${inner.name}
+                        <div class="inner-header-main">
+                          <div class="inner-pillar-title">${inner.name}</div>
                           ${
                             inner.lead && inner.lead.name
-                              ? `<span style="font-weight:400;color:#6b7280;"> – ${inner.lead.name}${inner.lead.title ? ", " + inner.lead.title : ""}</span>`
+                              ? `<div class="inner-pillar-sub">${inner.lead.name}${inner.lead.title ? " – " + inner.lead.title : ""}</div>`
                               : ""
                           }
                         </div>
                         <div class="inner-pillar-meta">
-                          <strong>${innerTotals.total}</strong> ppl
-                          ${
-                            innerTotals.openRoles
-                              ? ` • ${innerTotals.openRoles} open`
-                              : ""
+                          <strong>${innerTotals.total}</strong> ppl${
+                            innerTotals.openRoles ? ` • ${innerTotals.openRoles} open` : ""
                           }
                         </div>
+                        <button class="inner-toggle" type="button" data-open="true" aria-label="Collapse team">
+                          ▴
+                        </button>
                       </div>
-                      ${innerGroupsHtml}
+                      <div class="inner-children">
+                        ${innerGroupsHtml}
+                      </div>
                     </div>
                   `;
                 })
@@ -1168,7 +1223,7 @@
               "</div>";
           }
 
-          const childrenHtml = topGroupsHtml + innerHtml;
+          const childrenHtml = gmGroupsHtml + innerHtml;
 
           return `
             <article class="pillar" data-pillar="${pillar.id}">
@@ -1207,11 +1262,13 @@
     // ===== 4. Interactions =====
     function initInteractions() {
       const toggles = document.querySelectorAll(".toggle");
+      const innerToggles = document.querySelectorAll(".inner-toggle");
       const searchInput = document.getElementById("search");
       const clearSearch = document.getElementById("clearSearch");
       const toggleAllBtn = document.getElementById("toggleAllBtn");
       const orgChart = document.getElementById("orgChart");
 
+      // Outer pillar toggles
       toggles.forEach(btn => {
         btn.addEventListener("click", () => {
           const pillar = btn.closest(".pillar");
@@ -1230,6 +1287,26 @@
         });
       });
 
+      // Inner (team) toggles
+      innerToggles.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const wrapper = btn.closest(".inner-pillar");
+          const children = wrapper.querySelector(".inner-children");
+          const isOpen = btn.getAttribute("data-open") === "true";
+
+          if (isOpen) {
+            children.classList.add("collapsed");
+            btn.setAttribute("data-open", "false");
+            btn.textContent = "▾";
+          } else {
+            children.classList.remove("collapsed");
+            btn.setAttribute("data-open", "true");
+            btn.textContent = "▴";
+          }
+        });
+      });
+
+      // Toggle all pillars (and inner pillars)
       toggleAllBtn.addEventListener("click", () => {
         const allChildren = document.querySelectorAll(".pillar .children");
         const openStates = Array.from(document.querySelectorAll(".toggle")).map(t =>
@@ -1242,6 +1319,15 @@
           ch.classList.toggle("collapsed", !newStateOpen)
         );
         document.querySelectorAll(".toggle").forEach(btn => {
+          btn.setAttribute("data-open", newStateOpen ? "true" : "false");
+          btn.textContent = newStateOpen ? "▴" : "▾";
+        });
+
+        const allInnerChildren = document.querySelectorAll(".inner-children");
+        allInnerChildren.forEach(ch =>
+          ch.classList.toggle("collapsed", !newStateOpen)
+        );
+        document.querySelectorAll(".inner-toggle").forEach(btn => {
           btn.setAttribute("data-open", newStateOpen ? "true" : "false");
           btn.textContent = newStateOpen ? "▴" : "▾";
         });
@@ -1295,15 +1381,28 @@
           }
         });
 
+        // Ensure matching nodes' pillars and inner teams are expanded
         hits.forEach(hit => {
           const pillar = hit.closest(".pillar");
-          if (!pillar) return;
-          const children = pillar.querySelector(".children");
-          const toggle = pillar.querySelector(".toggle");
-          if (children && children.classList.contains("collapsed")) {
-            children.classList.remove("collapsed");
-            toggle.setAttribute("data-open", "true");
-            toggle.textContent = "▴";
+          if (pillar) {
+            const children = pillar.querySelector(".children");
+            const toggle = pillar.querySelector(".toggle");
+            if (children && children.classList.contains("collapsed")) {
+              children.classList.remove("collapsed");
+              toggle.setAttribute("data-open", "true");
+              toggle.textContent = "▴";
+            }
+          }
+
+          const inner = hit.closest(".inner-pillar");
+          if (inner) {
+            const innerChildren = inner.querySelector(".inner-children");
+            const innerToggle = inner.querySelector(".inner-toggle");
+            if (innerChildren && innerChildren.classList.contains("collapsed")) {
+              innerChildren.classList.remove("collapsed");
+              innerToggle.setAttribute("data-open", "true");
+              innerToggle.textContent = "▴";
+            }
           }
         });
       }
