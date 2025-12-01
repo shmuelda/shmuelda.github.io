@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Services & Unified Client – Org Chart</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --bg-alt: #ffffff;
+      --primary: #269abc;
+      --primary-dark: #1a6f86;
+      --primary-soft: rgba(38, 154, 188, 0.08);
+      --accent: #0b0b25;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-subtle: #e5e7eb;
+      --border-strong: #cbd5e1;
+      --shadow-soft: 0 8px 22px rgba(15, 23, 42, 0.12);
+      --shadow-elevated: 0 14px 32px rgba(15, 23, 42, 0.16);
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-pill: 999px;
+      --transition-fast: 160ms ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #ffffff 0, #f4f7fb 55%, #edf2fb 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+    }
+
+    .app-shell {
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .app-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title-pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .title-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 7px 30px 7px 30px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 13px;
+      outline: none;
+      min-width: 210px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    .clear-search {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      cursor: pointer;
+      opacity: 0.6;
+      display: none;
+    }
+
+    .search-input:not(:placeholder-shown) ~ .clear-search {
+      display: block;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      padding: 7px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast);
+      box-shadow: 0 8px 18px rgba(38, 154, 188, 0.35);
+    }
+
+    .btn span.icon {
+      font-size: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.25);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--primary-dark);
+      border-style: solid;
+      border-color: var(--border-strong);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      background: #f5fbff;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      color: var(--text-muted);
+    }
+
+    .pill-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .pill-dot-lead {
+      background: var(--primary);
+    }
+
+    .pill-dot-team {
+      background: #16a34a;
+    }
+
+    .pill-dot-open {
+      background: #dc2626;
+    }
+
+    .root-card {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 14px 18px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 3px;
+      position: relative;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary-dark);
+      letter-spacing: 0.12em;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #16a34a;
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #ffffff;
+    }
+
+    .root-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .root-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--accent);
+    }
+
+    .root-role {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .root-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .root-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary-soft);
+      padding: 3px 9px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: #f0f9ff;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .root-chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .totals-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .totals-pillars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .totals-chip {
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .totals-chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .totals-main {
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      background: #f0f9ff;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary-dark);
+    }
+
+    .totals-main strong {
+      color: var(--accent);
+    }
+
+    .chart-shell {
+      margin-top: 8px;
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 18px 16px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      overflow: auto;
+      max-height: calc(100vh - 210px);
+    }
+
+    .pillars-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .pillar {
+      flex: 1 1 260px;
+      max-width: 340px;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .pillar:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .pillar-header {
+      position: relative;
+      padding: 11px 12px 9px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: linear-gradient(
+        135deg,
+        rgba(38, 154, 188, 0.08),
+        rgba(11, 11, 37, 0.02)
+      );
+    }
+
+    .pillar-total {
+      align-self: flex-start;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pillar-total span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .pillar-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      padding-right: 30px;
+      color: var(--accent);
+    }
+
+    .pillar-tagline {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag-person {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      font-size: 10px;
+    }
+
+    .tag-person span.badge {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .tag-metric {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    .toggle {
+      position: absolute;
+      right: 8px;
+      top: 10px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      cursor: pointer;
+      transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+      color: var(--text-muted);
+    }
+
+    .toggle:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: var(--primary);
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .toggle[data-open="true"] {
+      background: #f0f9ff;
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .pillar-body {
+      position: relative;
+      padding: 6px 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .children {
+      max-height: 460px;
+      overflow: hidden;
+      transition: max-height 220ms ease-out, opacity 160ms ease-out;
+      opacity: 1;
+    }
+
+    .children.collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    .group-label {
+      margin: 4px 2px 2px;
+      padding: 2px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 9px;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .group-label::before {
+      content: "";
+      width: 14px;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        rgba(148, 163, 184, 0.45),
+        rgba(38, 154, 188, 0.9)
+      );
+      border-radius: 99px;
+    }
+
+    .node {
+      border-radius: 12px;
+      padding: 6px 7px;
+      margin: 3px 2px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .node:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+      border-color: var(--primary);
+      background: #f9fafb;
+    }
+
+    .node-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .node-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .node-role {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .node-meta {
+      font-size: 9px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    .node-chip {
+      padding: 2px 6px;
+      border-radius: var(--radius-pill);
+      font-size: 9px;
+      border: 1px solid var(--border-subtle);
+      background: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .node-chip.team {
+      border-color: #d1fae5;
+      background: #ecfdf5;
+      color: #166534;
+    }
+
+    .node-chip.open {
+      border-color: #fecaca;
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .badge-dot.open {
+      background: #dc2626;
+    }
+
+    .node-count {
+      font-size: 9px;
+      opacity: 0.85;
+    }
+
+    .search-hit {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 1px rgba(38, 154, 188, 0.5),
+        0 0 14px rgba(38, 154, 188, 0.35) !important;
+      background: #eff6ff;
+    }
+
+    .search-fade {
+      opacity: 0.25;
+      filter: grayscale(0.3);
+    }
+
+    /* ===== Inner pillars (stacked, collapsible, scrollable) ===== */
+    .inner-pillars {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .inner-pillar {
+      border-radius: 12px;
+      border: 1px dashed var(--border-strong);
+      background: #f9fafb;
+      padding: 5px 6px 4px;
+    }
+
+    .inner-pillar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .inner-header-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .inner-pillar-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .inner-pillar-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .inner-pillar-meta {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .inner-pillar-meta strong {
+      color: var(--accent);
+    }
+
+    .inner-toggle {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      margin-left: 4px;
+      transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+      color: var(--text-muted);
+    }
+
+    .inner-toggle:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+    }
+
+    .inner-toggle[data-open="true"] {
+      background: #f0f9ff;
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .inner-children {
+      max-height: 260px;
+      overflow-y: auto;
+      transition: max-height 200ms ease-out, opacity 150ms ease-out;
+      opacity: 1;
+      margin-top: 4px;
+    }
+
+    .inner-children.collapsed {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .inner-pillar .group-label {
+      margin-top: 2px;
+      margin-bottom: 0;
+      font-size: 9px;
+    }
+
+    .inner-pillar .node {
+      margin: 3px 0;
+    }
+
+    /* Wide: 3 pillars in a row */
+    @media (min-width: 1400px) {
+      .chart-shell {
+        max-height: none;
+      }
+
+      .pillars-row {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+      }
+
+      .pillar {
+        flex: 0 0 calc(100% / 3 - 10px);
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 16px;
+      }
+      .chart-shell {
+        max-height: none;
+      }
+      .app-header {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="title-group">
+        <div class="title-pill">
+          <span class="title-pill-dot"></span>
+          Customer Services &amp; Unified Client – Org Map
+        </div>
+        <div class="title">Organisation Overview</div>
+      </div>
+
+      <div class="controls">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            id="search"
+            class="search-input"
+            type="text"
+            placeholder="Search by name, role, pillar…"
+            autocomplete="off"
+          />
+          <span id="clearSearch" class="clear-search">✕</span>
+        </div>
+
+        <button id="toggleAllBtn" class="btn btn-secondary" type="button">
+          <span class="icon">▾</span>
+          Toggle all pillars
+        </button>
+      </div>
+    </header>
+
+    <section id="rootCard" class="root-card"></section>
+
+    <section class="legend">
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-lead"></span>
+        Lead / GM / TL
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-team"></span>
+        Team headcount
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-open"></span>
+        Open role
+      </div>
+    </section>
+
+    <section class="totals-bar">
+      <div id="pillarTotals" class="totals-pillars"></div>
+      <div id="globalTotal" class="totals-main"></div>
+    </section>
+
+    <main class="chart-shell" id="orgChart">
+      <div id="pillarsRow" class="pillars-row"></div>
+    </main>
+  </div>
+
+  <script>
+    // ===== 1. ORG DATA =====
+
+const orgData = {
+  head: {
+    name: "Aharon",
+    initials: "AS",
+    role: "Head of WH Customer Offer, Bonus Platform & 888 Tech",
+    pillarsLabel: "Pillars",
+    description:
+      "WH Customer Offer & Bonus Platform • Platform Infra • DBA • CRM 888"
+  },
+
+  pillars: [
+    // 1) WH Customer Offer + Bonus Platform (shared group manager)
+    {
+      id: "wh-bonus",
+      name: "WH Customer Offer & Bonus Platform",
+      lead: {
+        name: "Group Manager",
+        title: "GM (also TL for WH Customer Offer)"
+      },
+      meta: "WH Customer Offer (CO) • Bonus Platform",
+      groups: [
+        {
+          label: "Domain Group Manager",
+          nodes: [
+            {
+              title: "Group Manager",
+              role: "GM (CO & Bonus Platform) and TL for CO team",
+              headcount: 1,
+              openCount: 0,
+              note:
+                "Single group manager across WH Customer Offer and Bonus Platform, also acting as TL in CO team"
+            }
+          ]
+        }
+      ],
+      innerPillars: [
+        {
+          id: "wh-customer-offer",
+          name: "WH Customer Offer",
+          lead: {
+            name: "CO TL",
+            title: "Team Lead (same as Group Manager)"
+          },
+          groups: [
+            {
+              label: "WH Customer Offer Team",
+              nodes: [
+                {
+                  title: "WH Customer Offer Team",
+                  role: "",
+                  headcount: 6,
+                  openCount: 1,
+                  permCount: 3,
+                  clcmContractorCount: 3,
+                  note:
+                    "6 total: 3 perm + 3 CLCM contractor; 1 open position (backfill for 1 dev who left)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "bonus-platform",
+          name: "Bonus Platform",
+          lead: {
+            name: "Bonus Platform TL",
+            title: "Team Lead"
+          },
+          groups: [
+            {
+              label: "Bonus Platform Team",
+              nodes: [
+                {
+                  title: "Bonus Platform Team",
+                  role: "",
+                  headcount: 12,
+                  openCount: 0,
+                  permCount: 7,
+                  clcmContractorCount: 5,
+                  note: "12 total: 7 perm + 5 CLCM contractor"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    // 2) Platform Infra (under 888)
+    {
+      id: "platform-infra",
+      name: "Platform Infra (888)",
+      lead: {
+        name: "Platform Infra Group Manager",
+        title: "Group Manager"
+      },
+      meta: "Platform Infra 1 • Platform Infra 2",
+      groups: [
+        {
+          label: "Platform Infra Group Manager",
+          nodes: [
+            {
+              title: "Platform Infra GM",
+              role: "Group Manager",
+              headcount: 1,
+              openCount: 0,
+              note: "Overall manager for Platform Infra 1 and 2"
+            }
+          ]
+        }
+      ],
+      innerPillars: [
+        {
+          id: "platform-infra-1",
+          name: "Platform Infra 1",
+          lead: {
+            name: "Platform Infra 1 TL",
+            title: "Team Lead (included in headcount)"
+          },
+          groups: [
+            {
+              label: "Platform Infra 1 Team",
+              nodes: [
+                {
+                  title: "Platform Infra 1 Team",
+                  role: "",
+                  headcount: 8,
+                  openCount: 1,
+                  note:
+                    "8 total (incl. TL) + 1 open position (backfill for dev that left)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "platform-infra-2",
+          name: "Platform Infra 2",
+          lead: {
+            name: "Platform Infra 2 TL",
+            title: "Team Lead (included in headcount)"
+          },
+          groups: [
+            {
+              label: "Platform Infra 2 Team",
+              nodes: [
+                {
+                  title: "Platform Infra 2 Team",
+                  role: "",
+                  headcount: 7,
+                  openCount: 0,
+                  note: "7 total (incl. TL)"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    // 3) DBA (Sharon + Avida)
+    {
+      id: "dba",
+      name: "DBA",
+      lead: {
+        name: "DBA Group Manager",
+        title: "Group Manager"
+      },
+      meta: "Sharon Team • Avida Team",
+      groups: [
+        {
+          label: "DBA Group Manager",
+          nodes: [
+            {
+              title: "DBA GM",
+              role: "Group Manager",
+              headcount: 1,
+              openCount: 0,
+              note: "Overall manager for Sharon and Avida DBA teams"
+            }
+          ]
+        }
+      ],
+      innerPillars: [
+        {
+          id: "dba-sharon",
+          name: "Sharon Team",
+          lead: {
+            name: "Sharon",
+            title: "DBA TL"
+          },
+          groups: [
+            {
+              label: "Sharon DBA Team",
+              nodes: [
+                {
+                  title: "Sharon DBA Team",
+                  role: "",
+                  headcount: 8,
+                  openCount: 0,
+                  webizCount: 1,
+                  note:
+                    "8 total (incl. TL); 1 FTE is Webiz (vendor/partner resource)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "dba-avida",
+          name: "Avida Team",
+          lead: {
+            name: "Avida",
+            title: "DBA TL"
+          },
+          groups: [
+            {
+              label: "Avida DBA Team",
+              nodes: [
+                {
+                  title: "Avida DBA Team",
+                  role: "",
+                  headcount: 7,
+                  openCount: 1,
+                  note:
+                    "7 total (incl. TL); 1 open position planned for Webiz"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    // 4) CRM 888 (CRM1, CRM2, CRM3, '888 4')
+    {
+      id: "crm-888",
+      name: "CRM 888",
+      lead: {
+        name: "CRM 888 Group Manager",
+        title: "Group Manager"
+      },
+      meta: "CRM1 • CRM2 • CRM3 • 888 4",
+      groups: [
+        {
+          label: "CRM 888 Group Manager",
+          nodes: [
+            {
+              title: "CRM 888 GM",
+              role: "Group Manager",
+              headcount: 1,
+              openCount: 0,
+              note: "Overall manager for CRM1, CRM2, CRM3 and 888 4 teams"
+            }
+          ]
+        }
+      ],
+      innerPillars: [
+        {
+          id: "crm1",
+          name: "CRM 1",
+          lead: {
+            name: "CRM 1 TL",
+            title: "Team Lead"
+          },
+          groups: [
+            {
+              label: "CRM 1 Team",
+              nodes: [
+                {
+                  title: "CRM 1 Team",
+                  role: "",
+                  headcount: 9,
+                  openCount: 1,
+                  slsCount: 1,
+                  note:
+                    "9 total (incl. TL and 1 SLS) + 1 open position"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "crm2",
+          name: "CRM 2 – Webiz",
+          lead: {
+            name: "CRM 2 TL",
+            title: "Team Lead (Webiz team)"
+          },
+          groups: [
+            {
+              label: "CRM 2 Webiz Team",
+              nodes: [
+                {
+                  title: "CRM 2 Webiz Team",
+                  role: "",
+                  headcount: 4,
+                  openCount: 0,
+                  webizCount: 4,
+                  note:
+                    "4 total (incl. TL); Webiz team"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "crm3",
+          name: "CRM 3",
+          lead: {
+            name: "CRM 3 TL",
+            title: "Team Lead"
+          },
+          groups: [
+            {
+              label: "CRM 3 Team",
+              nodes: [
+                {
+                  title: "CRM 3 Team",
+                  role: "",
+                  headcount: 8,
+                  openCount: 2,
+                  bloomreachCount: 5,
+                  note:
+                    "8 total; 3 Dev + 2 QA are dedicated to Bloomreach (5 in total). 2 open positions for Webiz (2 dev already counted as Webiz replacement; remaining open is QA Automation)."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "crm-8884",
+          name: "888 4",
+          lead: {
+            name: "888 4 TL",
+            title: "Team Lead"
+          },
+          groups: [
+            {
+              label: "888 4 Team",
+              nodes: [
+                {
+                  title: "888 4 Team",
+                  role: "",
+                  headcount: 4,
+                  openCount: 0,
+                  note:
+                    "Team named '888 4'; assumed 4 FTE including TL (based on name). Adjust headcount here if different."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+
+    // ===== 2. Totals helpers =====
+    function sumGroups(groups = []) {
+      let total = 0;
+      let openRoles = 0;
+      groups.forEach(group => {
+        group.nodes.forEach(node => {
+          total += (node.headcount || 0);
+          openRoles += (node.openCount || 0);
+        });
+      });
+      return { total, openRoles };
+    }
+
+    function computePillarTotals(pillar) {
+      let { total, openRoles } = sumGroups(pillar.groups || []);
+      if (pillar.innerPillars) {
+        pillar.innerPillars.forEach(inner => {
+          const t = sumGroups(inner.groups || []);
+          total += t.total;
+          openRoles += t.openRoles;
+        });
+      }
+      return { total, openRoles };
+    }
+
+    function computeAllTotals(data) {
+      let globalTotal = 0;
+      const pillarTotals = data.pillars.map(p => {
+        const t = computePillarTotals(p);
+        globalTotal += t.total;
+        return { id: p.id, name: p.name, total: t.total, openRoles: t.openRoles };
+      });
+      return { globalTotal, pillarTotals };
+    }
+
+    // ===== 3. Rendering =====
+    function renderRootCard(data) {
+      const rootCard = document.getElementById("rootCard");
+      const pillarsCount = data.pillars.length;
+
+      rootCard.innerHTML = `
+        <div class="avatar">
+          <div class="avatar-inner">${data.head.initials}</div>
+          <div class="avatar-badge">★</div>
+        </div>
+        <div class="root-main">
+          <div class="root-name">${data.head.name}</div>
+          <div class="root-role">${data.head.role}</div>
+          <div class="root-meta">
+            <div class="root-chip">
+              <span class="dot"></span>
+              ${pillarsCount} ${data.head.pillarsLabel}
+            </div>
+            <div>${data.head.description}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTotalsBar(pillarTotals, globalTotal) {
+      const pillarTotalsContainer = document.getElementById("pillarTotals");
+      const globalTotalContainer = document.getElementById("globalTotal");
+
+      pillarTotalsContainer.innerHTML = pillarTotals
+        .map(
+          p => `
+          <div class="totals-chip">
+            <span class="dot"></span>
+            ${p.name}: <strong>${p.total}</strong>
+          </div>
+        `
+        )
+        .join("");
+
+      globalTotalContainer.innerHTML = `
+        Total headcount (excl. open roles): <strong>${globalTotal}</strong>
+      `;
+    }
+
+    function renderGroups(groups) {
+      if (!groups || !groups.length) return "";
+      return groups
+        .map(group => {
+          const nodesHtml = group.nodes
+            .map(node => {
+              const h = node.headcount || 0;
+              const o = node.openCount || 0;
+
+              const chips = [];
+              if (h > 0) {
+                chips.push(`
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    ${h} ${h === 1 ? "Person" : "People"}
+                  </div>
+                `);
+              }
+              if (o > 0) {
+                chips.push(`
+                  <div class="node-chip open">
+                    <span class="badge-dot open"></span>
+                    +${o} Open
+                  </div>
+                `);
+              }
+
+              const metaText =
+                node.note ||
+                (h || o
+                  ? `Headcount: ${h}${o ? ` (${o} open)` : ""}`
+                  : "Listed contact");
+
+              return `
+                <div class="node" data-node>
+                  <div class="node-main">
+                    <div>
+                      <div class="node-title">${node.title}</div>
+                      <div class="node-role">${node.role || ""}</div>
+                    </div>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+                      ${chips.join("")}
+                    </div>
+                  </div>
+                  <div class="node-meta">
+                    <span class="node-count">${metaText}</span>
+                  </div>
+                </div>
+              `;
+            })
+            .join("");
+
+          return `
+            <div class="group">
+              <div class="group-label">${group.label}</div>
+              ${nodesHtml}
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function renderPillarsRow(data, pillarTotals) {
+      const row = document.getElementById("pillarsRow");
+      const totalsMap = pillarTotals.reduce((acc, p) => {
+        acc[p.id] = p;
+        return acc;
+      }, {});
+
+      row.innerHTML = data.pillars
+        .map(pillar => {
+          const t = totalsMap[pillar.id] || { total: 0, openRoles: 0 };
+
+          const gmGroupsHtml = renderGroups(pillar.groups || []);
+
+          let innerHtml = "";
+          if (pillar.innerPillars && pillar.innerPillars.length) {
+            innerHtml =
+              '<div class="inner-pillars">' +
+              pillar.innerPillars
+                .map(inner => {
+                  const innerTotals = sumGroups(inner.groups || []);
+                  const innerGroupsHtml = renderGroups(inner.groups || []);
+                  return `
+                    <div class="inner-pillar" data-inner="${inner.id}">
+                      <div class="inner-pillar-header">
+                        <div class="inner-header-main">
+                          <div class="inner-pillar-title">${inner.name}</div>
+                          ${
+                            inner.lead && inner.lead.name
+                              ? `<div class="inner-pillar-sub">${inner.lead.name}${inner.lead.title ? " – " + inner.lead.title : ""}</div>`
+                              : ""
+                          }
+                        </div>
+                        <div class="inner-pillar-meta">
+                          <strong>${innerTotals.total}</strong> ppl${
+                            innerTotals.openRoles ? ` • ${innerTotals.openRoles} open` : ""
+                          }
+                        </div>
+                        <button class="inner-toggle" type="button" data-open="true" aria-label="Collapse team">
+                          ▴
+                        </button>
+                      </div>
+                      <div class="inner-children">
+                        ${innerGroupsHtml}
+                      </div>
+                    </div>
+                  `;
+                })
+                .join("") +
+              "</div>";
+          }
+
+          const childrenHtml = gmGroupsHtml + innerHtml;
+
+          return `
+            <article class="pillar" data-pillar="${pillar.id}">
+              <header class="pillar-header">
+                <div class="pillar-total">
+                  <span class="dot"></span>
+                  Total: ${t.total}
+                </div>
+                <div class="pillar-title">${pillar.name}</div>
+                <div class="pillar-tagline">
+                  <span class="tag-person">
+                    <span class="badge"></span>
+                    ${
+                      pillar.lead && pillar.lead.name
+                        ? `Led by: <strong>${pillar.lead.name}</strong>${pillar.lead.title ? ", " + pillar.lead.title : ""}`
+                        : "No direct lead listed"
+                    }
+                  </span>
+                  <span class="tag-metric">${pillar.meta || ""}</span>
+                </div>
+                <button class="toggle" type="button" data-open="true" aria-label="Collapse pillar">
+                  ▴
+                </button>
+              </header>
+              <div class="pillar-body">
+                <div class="children">
+                  ${childrenHtml}
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    // ===== 4. Interactions =====
+    function initInteractions() {
+      const toggles = document.querySelectorAll(".toggle");
+      const innerToggles = document.querySelectorAll(".inner-toggle");
+      const searchInput = document.getElementById("search");
+      const clearSearch = document.getElementById("clearSearch");
+      const toggleAllBtn = document.getElementById("toggleAllBtn");
+      const orgChart = document.getElementById("orgChart");
+
+      // Outer pillar toggles
+      toggles.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const pillar = btn.closest(".pillar");
+          const children = pillar.querySelector(".children");
+          const isOpen = btn.getAttribute("data-open") === "true";
+
+          if (isOpen) {
+            children.classList.add("collapsed");
+            btn.setAttribute("data-open", "false");
+            btn.textContent = "▾";
+          } else {
+            children.classList.remove("collapsed");
+            btn.setAttribute("data-open", "true");
+            btn.textContent = "▴";
+          }
+        });
+      });
+
+      // Inner (team) toggles
+      innerToggles.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const wrapper = btn.closest(".inner-pillar");
+          const children = wrapper.querySelector(".inner-children");
+          const isOpen = btn.getAttribute("data-open") === "true";
+
+          if (isOpen) {
+            children.classList.add("collapsed");
+            btn.setAttribute("data-open", "false");
+            btn.textContent = "▾";
+          } else {
+            children.classList.remove("collapsed");
+            btn.setAttribute("data-open", "true");
+            btn.textContent = "▴";
+          }
+        });
+      });
+
+      // Toggle all pillars (and inner pillars)
+      toggleAllBtn.addEventListener("click", () => {
+        const allChildren = document.querySelectorAll(".pillar .children");
+        const openStates = Array.from(document.querySelectorAll(".toggle")).map(t =>
+          t.getAttribute("data-open")
+        );
+        const allOpen = openStates.every(s => s === "true");
+        const newStateOpen = !allOpen;
+
+        allChildren.forEach(ch =>
+          ch.classList.toggle("collapsed", !newStateOpen)
+        );
+        document.querySelectorAll(".toggle").forEach(btn => {
+          btn.setAttribute("data-open", newStateOpen ? "true" : "false");
+          btn.textContent = newStateOpen ? "▴" : "▾";
+        });
+
+        const allInnerChildren = document.querySelectorAll(".inner-children");
+        allInnerChildren.forEach(ch =>
+          ch.classList.toggle("collapsed", !newStateOpen)
+        );
+        document.querySelectorAll(".inner-toggle").forEach(btn => {
+          btn.setAttribute("data-open", newStateOpen ? "true" : "false");
+          btn.textContent = newStateOpen ? "▴" : "▾";
+        });
+      });
+
+      function normalise(str) {
+        return str
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "");
+      }
+
+      function applySearchFilter(query) {
+        const nodes = orgChart.querySelectorAll("[data-node], .pillar");
+        const trimmed = query.trim();
+
+        if (!trimmed) {
+          nodes.forEach(el => {
+            el.classList.remove("search-hit", "search-fade");
+          });
+          return;
+        }
+
+        const q = normalise(trimmed);
+        const hits = [];
+
+        nodes.forEach(el => {
+          const text = normalise(el.textContent || "");
+          const isHit = text.includes(q);
+          if (isHit) hits.push(el);
+        });
+
+        if (!hits.length) {
+          nodes.forEach(el => {
+            el.classList.remove("search-hit");
+            el.classList.add("search-fade");
+          });
+          return;
+        }
+
+        nodes.forEach(el => {
+          el.classList.remove("search-hit", "search-fade");
+        });
+
+        const hitSet = new Set(hits);
+        nodes.forEach(el => {
+          if (hitSet.has(el)) {
+            el.classList.add("search-hit");
+          } else {
+            el.classList.add("search-fade");
+          }
+        });
+
+        // Ensure matching nodes' pillars and inner teams are expanded
+        hits.forEach(hit => {
+          const pillar = hit.closest(".pillar");
+          if (pillar) {
+            const children = pillar.querySelector(".children");
+            const toggle = pillar.querySelector(".toggle");
+            if (children && children.classList.contains("collapsed")) {
+              children.classList.remove("collapsed");
+              toggle.setAttribute("data-open", "true");
+              toggle.textContent = "▴";
+            }
+          }
+
+          const inner = hit.closest(".inner-pillar");
+          if (inner) {
+            const innerChildren = inner.querySelector(".inner-children");
+            const innerToggle = inner.querySelector(".inner-toggle");
+            if (innerChildren && innerChildren.classList.contains("collapsed")) {
+              innerChildren.classList.remove("collapsed");
+              innerToggle.setAttribute("data-open", "true");
+              innerToggle.textContent = "▴";
+            }
+          }
+        });
+      }
+
+      searchInput.addEventListener("input", e => {
+        applySearchFilter(e.target.value);
+      });
+
+      clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        applySearchFilter("");
+        searchInput.focus();
+      });
+
+      orgChart.querySelectorAll("[data-node]").forEach(node => {
+        node.addEventListener("click", () => {
+          node.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+    }
+
+    // ===== 5. Init =====
+    (function init() {
+      const { globalTotal, pillarTotals } = computeAllTotals(orgData);
+      renderRootCard(orgData);
+      renderTotalsBar(pillarTotals, globalTotal);
+      renderPillarsRow(orgData, pillarTotals);
+      initInteractions();
+    })();
+  </script>
+</body>
+</html>
