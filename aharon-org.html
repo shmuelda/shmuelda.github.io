@@ -39,10 +39,10 @@
     }
 
     .app-shell {
-  max-width: 1800px;
-  margin: 0 auto;
-  width: 100%;
-}
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+    }
 
     .app-header {
       display: flex;
@@ -362,50 +362,45 @@
       color: var(--accent);
     }
 
-   .chart-shell {
-  margin-top: 8px;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 18px 16px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
-
-  /* IMPORTANT: no horizontal scroll, allow vertical scroll */
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  /* so the list of pillars scrolls inside, not off-screen */
-  max-height: calc(100vh - 220px);
-}
+    .chart-shell {
+      margin-top: 8px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 18px 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
+      overflow-x: hidden;
+      overflow-y: auto;
+      max-height: calc(100vh - 220px);
+    }
 
     .pillars-row,
-.pillar-row,
-.pillars-container {
-  display: flex;
-  flex-wrap: wrap;           /* << makes extra pillars go to a new row */
-  justify-content: center;
-  align-items: stretch;
-  gap: 12px;
-}
+    .pillar-row,
+    .pillars-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 12px;
+    }
 
-   .pillar {
-  flex: 1 1 280px;           /* grow + shrink + wrap */
-  max-width: 360px;          /* don’t let one pillar get too wide */
-  box-sizing: border-box;
-}
+    /* thinner, more compact pillars by default */
+    .pillar {
+      flex: 1 1 240px;
+      max-width: 300px;
+      box-sizing: border-box;
+    }
 
-/* Safety: nothing inside a pillar can force horizontal scroll */
-.pillar * {
-  max-width: 100%;
-  box-sizing: border-box;
-}
+    .pillar * {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
 
-/* If anything earlier used white-space: nowrap; kill it */
-.org-chart,
-.pillars-row,
-.pillar {
-  white-space: normal !important;
-}
+    .org-chart,
+    .pillars-row,
+    .pillar {
+      white-space: normal !important;
+    }
 
     .pillar:hover {
       transform: translateY(-3px);
@@ -674,7 +669,6 @@
       filter: grayscale(0.3);
     }
 
-    /* ===== Inner pillars (stacked, collapsible, scrollable) ===== */
     .inner-pillars {
       margin-top: 6px;
       display: flex;
@@ -781,19 +775,17 @@
       margin: 3px 0;
     }
 
-    /* Wide: 3 pillars in a row */
+    /* Wide screens: force 5 pillars per row, no horizontal scroll */
     @media (min-width: 1400px) {
       .chart-shell {
         max-height: none;
       }
-
       .pillars-row {
         flex-wrap: nowrap;
         justify-content: space-between;
       }
-
       .pillar {
-        flex: 0 0 calc(100% / 3 - 10px);
+        flex: 0 0 calc((100% - 48px) / 5); /* 5 pillars, 4 gaps * 12px */
         max-width: none;
       }
     }
@@ -821,7 +813,6 @@
         </div>
         <div class="title">Organisation Overview</div>
       </div>
-
       <div class="controls">
         <div class="search-box">
           <span class="search-icon">🔍</span>
@@ -834,7 +825,6 @@
           />
           <span id="clearSearch" class="clear-search">✕</span>
         </div>
-
         <button id="toggleAllBtn" class="btn btn-secondary" type="button">
           <span class="icon">▾</span>
           Toggle all pillars
@@ -871,352 +861,339 @@
 
   <script>
     // ===== 1. ORG DATA =====
-
-const orgData = {
-  head: {
-    name: "Aharon",
-    initials: "AS",
-    role: "Head of WH Customer Offer, Bonus Platform & 888 Tech",
-    pillarsLabel: "Pillars",
-    description:
-      "WH Customer Offer & Bonus Platform • Platform Infra • DBA • CRM 888 • QA Automation 888"
-  },
-
-  pillars: [
-    // 1) WH Customer Offer + Bonus Platform
-    {
-      id: "wh-bonus",
-      name: "WH Customer Offer & Bonus Platform",
-      lead: {
-        name: "Group Manager",
-        title: "GM (also TL for WH Customer Offer)"
+    const orgData = {
+      head: {
+        name: "Aharon",
+        initials: "AS",
+        role: "Head of WH Customer Offer, Bonus Platform & 888 Tech",
+        pillarsLabel: "Pillars",
+        description:
+          "WH Customer Offer & Bonus Platform • Platform Infra • DBA • CRM 888 • QA Automation 888"
       },
-      meta: "WH Customer Offer (CO) • Bonus Platform",
-      groups: [
+      pillars: [
         {
-          label: "Domain Group Manager",
-          nodes: [
-            {
-              title: "Group Manager",
-              role: "GM (CO & Bonus Platform) and TL for CO team",
-              headcount: 1,
-              openCount: 0,
-              note:
-                "Single group manager across WH Customer Offer and Bonus Platform, also acting as TL in CO team"
-            }
-          ]
-        }
-      ],
-      innerPillars: [
-        {
-          id: "wh-customer-offer",
-          name: "WH Customer Offer",
+          id: "wh-bonus",
+          name: "WH Customer Offer & Bonus Platform",
           lead: {
-            name: "CO TL",
-            title: "Team Lead (same as Group Manager)"
+            name: "Group Manager",
+            title: "GM (also TL for WH Customer Offer)"
           },
+          meta: "WH Customer Offer (CO) • Bonus Platform",
           groups: [
             {
-              label: "WH Customer Offer Team",
+              label: "Domain Group Manager",
               nodes: [
                 {
-                  title: "WH Customer Offer Team",
-                  headcount: 6,
-                  openCount: 1,
-                  note:
-                    "6 total: 3 perm + 3 CLCM contractor; 1 open position (backfill for 1 dev who left)"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: "bonus-platform",
-          name: "Bonus Platform",
-          lead: {
-            name: "Bonus Platform TL",
-            title: "Team Lead"
-          },
-          groups: [
-            {
-              label: "Bonus Platform Team",
-              nodes: [
-                {
-                  title: "Bonus Platform Team",
-                  headcount: 12,
-                  openCount: 0,
-                  note: "12 total: 7 perm + 5 CLCM contractor"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-
-    // 2) Platform Infra
-    {
-      id: "platform-infra",
-      name: "Platform Infra (888)",
-      lead: {
-        name: "Platform Infra Group Manager",
-        title: "Group Manager"
-      },
-      meta: "Platform Infra 1 • Platform Infra 2",
-      groups: [
-        {
-          label: "Platform Infra Group Manager",
-          nodes: [
-            {
-              title: "Platform Infra GM",
-              role: "Group Manager",
-              headcount: 1,
-              openCount: 0
-            }
-          ]
-        }
-      ],
-      innerPillars: [
-        {
-          id: "platform-infra-1",
-          name: "Platform Infra 1",
-          lead: {
-            name: "Platform Infra 1 TL",
-            title: "Team Lead"
-          },
-          groups: [
-            {
-              label: "Platform Infra 1 Team",
-              nodes: [
-                {
-                  title: "Platform Infra 1 Team",
-                  headcount: 8,
-                  openCount: 1,
-                  note: "8 total (incl. TL) + 1 open position (backfill)"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: "platform-infra-2",
-          name: "Platform Infra 2",
-          lead: {
-            name: "Platform Infra 2 TL",
-            title: "Team Lead"
-          },
-          groups: [
-            {
-              label: "Platform Infra 2 Team",
-              nodes: [
-                {
-                  title: "Platform Infra 2 Team",
-                  headcount: 7,
-                  openCount: 0,
-                  note: "7 total (incl. TL)"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-
-    // 3) DBA — no GM
-    {
-      id: "dba",
-      name: "DBA",
-      lead: {
-        name: "Sharon & Avida",
-        title: "DBA Team Leads"
-      },
-      meta: "Sharon Team • Avida Team",
-      groups: [], // no DBA GM
-      innerPillars: [
-        {
-          id: "dba-sharon",
-          name: "Sharon Team",
-          lead: {
-            name: "Sharon",
-            title: "DBA TL"
-          },
-          groups: [
-            {
-              label: "Sharon DBA Team",
-              nodes: [
-                {
-                  title: "Sharon DBA Team",
-                  headcount: 8,
-                  openCount: 0,
-                  note: "8 total (incl. TL); 1 is Webiz"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: "dba-avida",
-          name: "Avida Team",
-          lead: {
-            name: "Avida",
-            title: "DBA TL"
-          },
-          groups: [
-            {
-              label: "Avida DBA Team",
-              nodes: [
-                {
-                  title: "Avida DBA Team",
-                  headcount: 7,
-                  openCount: 1,
-                  note: "7 total (incl. TL); 1 open Webiz position"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-
-    // 4) CRM 888
-    {
-      id: "crm-888",
-      name: "CRM 888",
-      lead: {
-        name: "CRM 888 Group Manager",
-        title: "Group Manager"
-      },
-      meta: "CRM1 • CRM2 • CRM3 • 888 4",
-      groups: [
-        {
-          label: "CRM 888 Group Manager",
-          nodes: [
-            {
-              title: "CRM 888 GM",
-              role: "Group Manager",
-              headcount: 1,
-              openCount: 0
-            }
-          ]
-        }
-      ],
-      innerPillars: [
-        {
-          id: "crm1",
-          name: "CRM 1",
-          lead: {
-            name: "CRM 1 TL",
-            title: "Team Lead"
-          },
-          groups: [
-            {
-              label: "CRM 1 Team",
-              nodes: [
-                {
-                  title: "CRM 1 Team",
-                  headcount: 9,
-                  openCount: 1,
-                  note: "9 FTE (incl. TL and 1 SLS) + 1 open"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: "crm2",
-          name: "CRM 2 – Webiz",
-          lead: {
-            name: "CRM 2 TL",
-            title: "Team Lead (Webiz)"
-          },
-          groups: [
-            {
-              label: "CRM 2 Team (Webiz)",
-              nodes: [
-                {
-                  title: "CRM 2 Webiz Team",
-                  headcount: 4,
-                  openCount: 0,
-                  note: "4 total (incl. TL); Webiz team"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          id: "crm3",
-          name: "CRM 3",
-          lead: {
-            name: "CRM 3 TL",
-            title: "Team Lead"
-          },
-          groups: [
-            {
-              label: "CRM 3 Team",
-              nodes: [
-                {
-                  title: "CRM 3 Team",
-                  headcount: 8,
+                  title: "Group Manager",
+                  role: "GM (CO & Bonus Platform) and TL for CO team",
+                  headcount: 1,
                   openCount: 0,
                   note:
-                    "8 total; 3 Dev + 2 QA dedicated to Bloomreach. QA Automation is now tracked separately."
+                    "Single group manager across WH Customer Offer and Bonus Platform, also acting as TL in CO team"
+                }
+              ]
+            }
+          ],
+          innerPillars: [
+            {
+              id: "wh-customer-offer",
+              name: "WH Customer Offer",
+              lead: {
+                name: "CO TL",
+                title: "Team Lead (same as Group Manager)"
+              },
+              groups: [
+                {
+                  label: "WH Customer Offer Team",
+                  nodes: [
+                    {
+                      title: "WH Customer Offer Team",
+                      headcount: 6,
+                      openCount: 1,
+                      note:
+                        "6 total: 3 perm + 3 CLCM contractor; 1 open position (backfill for 1 dev who left)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "bonus-platform",
+              name: "Bonus Platform",
+              lead: {
+                name: "Bonus Platform TL",
+                title: "Team Lead"
+              },
+              groups: [
+                {
+                  label: "Bonus Platform Team",
+                  nodes: [
+                    {
+                      title: "Bonus Platform Team",
+                      headcount: 12,
+                      openCount: 0,
+                      note: "12 total: 7 perm + 5 CLCM contractor"
+                    }
+                  ]
                 }
               ]
             }
           ]
         },
         {
-          id: "crm-8884",
-          name: "888 4",
+          id: "platform-infra",
+          name: "Platform Infra (888)",
           lead: {
-            name: "888 4 TL",
-            title: "Team Lead"
+            name: "Platform Infra Group Manager",
+            title: "Group Manager"
           },
+          meta: "Platform Infra 1 • Platform Infra 2",
           groups: [
             {
-              label: "888 4 Team",
+              label: "Platform Infra Group Manager",
               nodes: [
                 {
-                  title: "888 4 Team",
-                  headcount: 4,
-                  openCount: 0,
-                  note: "4 FTE including TL"
+                  title: "Platform Infra GM",
+                  role: "Group Manager",
+                  headcount: 1,
+                  openCount: 0
+                }
+              ]
+            }
+          ],
+          innerPillars: [
+            {
+              id: "platform-infra-1",
+              name: "Platform Infra 1",
+              lead: {
+                name: "Platform Infra 1 TL",
+                title: "Team Lead"
+              },
+              groups: [
+                {
+                  label: "Platform Infra 1 Team",
+                  nodes: [
+                    {
+                      title: "Platform Infra 1 Team",
+                      headcount: 8,
+                      openCount: 1,
+                      note: "8 total (incl. TL) + 1 open position (backfill)"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "platform-infra-2",
+              name: "Platform Infra 2",
+              lead: {
+                name: "Platform Infra 2 TL",
+                title: "Team Lead"
+              },
+              groups: [
+                {
+                  label: "Platform Infra 2 Team",
+                  nodes: [
+                    {
+                      title: "Platform Infra 2 Team",
+                      headcount: 7,
+                      openCount: 0,
+                      note: "7 total (incl. TL)"
+                    }
+                  ]
                 }
               ]
             }
           ]
-        }
-      ]
-    },
-
-    // 5) QA Automation 888 — standalone pillar with 4 people + 1 open
-    {
-      id: "qa-automation-888",
-      name: "QA Automation 888",
-      lead: {
-        name: "QA Automation TL",
-        title: "Team Lead"
-      },
-      meta: "Dedicated 888 QA Automation function",
-      groups: [
+        },
         {
-          label: "QA Automation 888 Team",
-          nodes: [
+          id: "dba",
+          name: "DBA",
+          lead: {
+            name: "Sharon & Avida",
+            title: "DBA Team Leads"
+          },
+          meta: "Sharon Team • Avida Team",
+          groups: [],
+          innerPillars: [
             {
-              title: "QA Automation 888 Team",
-              headcount: 4,
-              openCount: 1,
-              note:
-                "4 people including TL + 1 open QA Automation position"
+              id: "dba-sharon",
+              name: "Sharon Team",
+              lead: {
+                name: "Sharon",
+                title: "DBA TL"
+              },
+              groups: [
+                {
+                  label: "Sharon DBA Team",
+                  nodes: [
+                    {
+                      title: "Sharon DBA Team",
+                      headcount: 8,
+                      openCount: 0,
+                      note: "8 total (incl. TL); 1 is Webiz"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "dba-avida",
+              name: "Avida Team",
+              lead: {
+                name: "Avida",
+                title: "DBA TL"
+              },
+              groups: [
+                {
+                  label: "Avida DBA Team",
+                  nodes: [
+                    {
+                      title: "Avida DBA Team",
+                      headcount: 7,
+                      openCount: 1,
+                      note: "7 total (incl. TL); 1 open Webiz position"
+                    }
+                  ]
+                }
+              ]
             }
           ]
+        },
+        {
+          id: "crm-888",
+          name: "CRM 888",
+          lead: {
+            name: "CRM 888 Group Manager",
+            title: "Group Manager"
+          },
+          meta: "CRM1 • CRM2 • CRM3 • 888 4",
+          groups: [
+            {
+              label: "CRM 888 Group Manager",
+              nodes: [
+                {
+                  title: "CRM 888 GM",
+                  role: "Group Manager",
+                  headcount: 1,
+                  openCount: 0
+                }
+              ]
+            }
+          ],
+          innerPillars: [
+            {
+              id: "crm1",
+              name: "CRM 1",
+              lead: {
+                name: "CRM 1 TL",
+                title: "Team Lead"
+              },
+              groups: [
+                {
+                  label: "CRM 1 Team",
+                  nodes: [
+                    {
+                      title: "CRM 1 Team",
+                      headcount: 9,
+                      openCount: 1,
+                      note: "9 FTE (incl. TL and 1 SLS) + 1 open"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "crm2",
+              name: "CRM 2 – Webiz",
+              lead: {
+                name: "CRM 2 TL",
+                title: "Team Lead (Webiz)"
+              },
+              groups: [
+                {
+                  label: "CRM 2 Team (Webiz)",
+                  nodes: [
+                    {
+                      title: "CRM 2 Webiz Team",
+                      headcount: 4,
+                      openCount: 0,
+                      note: "4 total (incl. TL); Webiz team"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "crm3",
+              name: "CRM 3",
+              lead: {
+                name: "CRM 3 TL",
+                title: "Team Lead"
+              },
+              groups: [
+                {
+                  label: "CRM 3 Team",
+                  nodes: [
+                    {
+                      title: "CRM 3 Team",
+                      headcount: 8,
+                      openCount: 0,
+                      note:
+                        "8 total; 3 Dev + 2 QA dedicated to Bloomreach. QA Automation is now tracked separately."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              id: "crm-8884",
+              name: "888 4",
+              lead: {
+                name: "888 4 TL",
+                title: "Team Lead"
+              },
+              groups: [
+                {
+                  label: "888 4 Team",
+                  nodes: [
+                    {
+                      title: "888 4 Team",
+                      headcount: 4,
+                      openCount: 0,
+                      note: "4 FTE including TL"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "qa-automation-888",
+          name: "QA Automation 888",
+          lead: {
+            name: "QA Automation TL",
+            title: "Team Lead"
+          },
+          meta: "Dedicated 888 QA Automation function",
+          groups: [
+            {
+              label: "QA Automation 888 Team",
+              nodes: [
+                {
+                  title: "QA Automation 888 Team",
+                  headcount: 4,
+                  openCount: 1,
+                  note: "4 people including TL + 1 open QA Automation position"
+                }
+              ]
+            }
+          ],
+          innerPillars: []
         }
-      ],
-      innerPillars: []
-    }
-  ]
-};
-
+      ]
+    };
 
     // ===== 2. Totals helpers =====
     function sumGroups(groups = []) {
@@ -1224,8 +1201,8 @@ const orgData = {
       let openRoles = 0;
       groups.forEach(group => {
         group.nodes.forEach(node => {
-          total += (node.headcount || 0);
-          openRoles += (node.openCount || 0);
+          total += node.headcount || 0;
+          openRoles += node.openCount || 0;
         });
       });
       return { total, openRoles };
@@ -1257,7 +1234,6 @@ const orgData = {
     function renderRootCard(data) {
       const rootCard = document.getElementById("rootCard");
       const pillarsCount = data.pillars.length;
-
       rootCard.innerHTML = `
         <div class="avatar">
           <div class="avatar-inner">${data.head.initials}</div>
@@ -1455,7 +1431,6 @@ const orgData = {
       const toggleAllBtn = document.getElementById("toggleAllBtn");
       const orgChart = document.getElementById("orgChart");
 
-      // Outer pillar toggles
       toggles.forEach(btn => {
         btn.addEventListener("click", () => {
           const pillar = btn.closest(".pillar");
@@ -1474,7 +1449,6 @@ const orgData = {
         });
       });
 
-      // Inner (team) toggles
       innerToggles.forEach(btn => {
         btn.addEventListener("click", () => {
           const wrapper = btn.closest(".inner-pillar");
@@ -1493,7 +1467,6 @@ const orgData = {
         });
       });
 
-      // Toggle all pillars (and inner pillars)
       toggleAllBtn.addEventListener("click", () => {
         const allChildren = document.querySelectorAll(".pillar .children");
         const openStates = Array.from(document.querySelectorAll(".toggle")).map(t =>
@@ -1568,7 +1541,6 @@ const orgData = {
           }
         });
 
-        // Ensure matching nodes' pillars and inner teams are expanded
         hits.forEach(hit => {
           const pillar = hit.closest(".pillar");
           if (pillar) {
@@ -1611,7 +1583,6 @@ const orgData = {
       });
     }
 
-    // ===== 5. Init =====
     (function init() {
       const { globalTotal, pillarTotals } = computeAllTotals(orgData);
       renderRootCard(orgData);
