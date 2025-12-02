@@ -206,21 +206,10 @@
       border-radius: 50%;
     }
 
-    .pill-dot-lead {
-      background: var(--primary);
-    }
-
-    .pill-dot-team {
-      background: #16a34a;
-    }
-
-    .pill-dot-open {
-      background: #dc2626;
-    }
-
-    .pill-dot-sii {
-      background: #f59e0b;
-    }
+    .pill-dot-lead { background: var(--primary); }
+    .pill-dot-team { background: #16a34a; }
+    .pill-dot-open { background: #dc2626; }
+    .pill-dot-sii  { background: #f59e0b; }
 
     .root-card {
       background: #ffffff;
@@ -663,12 +652,6 @@
       color: #166534;
     }
 
-    .node-chip.sii {
-      border-color: #fef3c7;
-      background: #fffbeb;
-      color: #92400e;
-    }
-
     .node-chip.open {
       border-color: #fecaca;
       background: #fef2f2;
@@ -684,10 +667,6 @@
 
     .badge-dot.open {
       background: #dc2626;
-    }
-
-    .badge-dot.sii {
-      background: #f59e0b;
     }
 
     .node-count {
@@ -712,12 +691,10 @@
       .chart-shell {
         max-height: none;
       }
-
       .pillars-row {
         flex-wrap: nowrap;
         justify-content: space-between;
       }
-
       .pillar {
         flex: 0 0 calc(100% / 6 - 10px);
         max-width: none;
@@ -728,11 +705,9 @@
       body {
         padding: 16px;
       }
-
       .chart-shell {
         max-height: none;
       }
-
       .app-header {
         align-items: flex-start;
       }
@@ -747,9 +722,7 @@
           <span class="title-pill-dot"></span>
           Onboarding &amp; Digital Marketing – Org Map
         </div>
-        
       </div>
-
       <div class="controls">
         <div class="search-box">
           <span class="search-icon">🔍</span>
@@ -762,7 +735,6 @@
           />
           <span id="clearSearch" class="clear-search">✕</span>
         </div>
-
         <button id="toggleAllBtn" class="btn btn-secondary" type="button">
           <span class="icon">▾</span>
           Toggle all pillars
@@ -785,10 +757,6 @@
         <span class="pill-dot pill-dot-open"></span>
         Open role
       </div>
-      <div class="legend-item">
-        <span class="pill-dot pill-dot-sii"></span>
-        SII / specialised capacity
-      </div>
     </section>
 
     <section class="totals-bar">
@@ -802,166 +770,107 @@
   </div>
 
   <script>
-    // === 1. Org structure: edit only this object to change the chart ===
-   const orgData = {
-  head: {
-    name: "Shmuel Daniel",
-    initials: "SD",
-    role: "Head of Onboarding & Digital Marketing",
-    pillarsLabel: "Domains",
-    description: "Funnel 888 • Site Infra • CX WH • WH Onboarding • WH Volcanics • WH Customer Verification"
-  },
-
-  pillars: [
-    // ---------------------------
-    // 1. FUNNEL 888 (OANA R)
-    // ---------------------------
-    {
-      id: "funnel-888",
-      name: "Funnel 888",
-      headOf: "Oana R",
-      headRole: "Group Manager – Funnel 888",
-      totalFilled: 31,   // 7 + 8 + 8 + 1 + 3 + 2 + 2
-      totalOpen: 0,
-
-      teams: [
-        { name: "Funnel 1", count: 7 },
-        { name: "Funnel 2", count: 8 },
-        { name: "Funnel 3", count: 8 },
-        { name: "SLS", count: 1 },
-        { name: "CX 888", count: 3 },
+    // === 1. Org structure: this is the source of truth ===
+    const orgData = {
+      head: {
+        name: "Shmuel Daniel",
+        initials: "SD",
+        role: "Head of Onboarding & Digital Marketing",
+        pillarsLabel: "Domains",
+        description:
+          "Funnel 888 • Site Infra • CX WH • WH Onboarding • WH Volcanics • WH Customer Verification"
+      },
+      pillars: [
+        {
+          id: "funnel-888",
+          name: "Funnel 888",
+          headOf: "Oana R",
+          headRole: "Group Manager – Funnel 888",
+          teams: [
+            { name: "Funnel 1", count: 7 },
+            { name: "Funnel 2", count: 8 },
+            { name: "Funnel 3", count: 8 },
+            { name: "SLS", count: 1 },
+            { name: "CX 888", count: 3 }
+            // If you later want Automation / Adtech visible as separate "teams" under Funnel,
+            // you can add:
+            // { name: "Automation – Cosmin L", count: 2 },
+            // { name: "Adtech (moved under Funnel 888)", count: 2 }
+          ]
+        },
+        {
+          id: "site-infra",
+          name: "Site Infrastructure",
+          headOf: "Liron",
+          headRole: "Site Infra Lead",
+          teams: [
+            { name: "Site Infra Team", count: 1 }
+          ]
+        },
+        {
+          id: "cx-wh",
+          name: "CX WH",
+          headOf: "",
+          headRole: "",
+          teams: [
+            { name: "CX WH Team", count: 4 }
+          ]
+        },
+        {
+          id: "wh-onboarding",
+          name: "WH Onboarding",
+          headOf: "Vasyl",
+          headRole: "WH Onboarding TL",
+          teams: [
+            { name: "WH Onboarding Team", count: 5 }
+          ]
+        },
+        {
+          id: "wh-volcanics",
+          name: "WH Volcanics",
+          headOf: "",
+          headRole: "Team Leader",
+          teams: [
+            { name: "WH Volcanics Team", count: 7 }
+          ]
+        },
+        {
+          id: "wh-customer-verification",
+          name: "WH Customer Verification",
+          headOf: "Marcin",
+          headRole: "Team Leader",
+          teams: [
+            { name: "Customer Verification Team", count: 9 }
+          ]
+        }
       ]
-    },
+    };
 
-    // ---------------------------
-    // 2. SITE INFRA
-    // ---------------------------
-    {
-      id: "site-infra",
-      name: "Site Infrastructure",
-      headOf: "Liron",
-      headRole: "Site Infra Lead",
-      totalFilled: 1, // you can update
-      totalOpen: 0,
-
-      teams: [
-        { name: "Site Infra Team", count: 1 }
-      ]
-    },
-
-    // ---------------------------
-    // 3. CX WH
-    // ---------------------------
-    {
-      id: "cx-wh",
-      name: "CX WH",
-      headOf: "",
-      headRole: "",
-      totalFilled: 4,
-      totalOpen: 0,
-
-      teams: [
-        { name: "CX WH Team", count: 4 }
-      ]
-    },
-
-    // ---------------------------
-    // 4. WH ONBOARDING
-    // ---------------------------
-    {
-      id: "wh-onboarding",
-      name: "WH Onboarding",
-      headOf: "Vasyl",
-      headRole: "WH Onboarding TL",
-      totalFilled: 5,
-      totalOpen: 0,
-
-      teams: [
-        { name: "WH Onboarding Team", count: 5 }
-      ]
-    },
-
-    // ---------------------------
-    // 5. WH VOLCANICS
-    // ---------------------------
-    {
-      id: "wh-volcanics",
-      name: "WH Volcanics",
-      headOf: "",
-      headRole: "Team Leader",
-      totalFilled: 7,
-      totalOpen: 0,
-
-      teams: [
-        { name: "WH Volcanics Team", count: 7 }
-      ]
-    },
-
-    // ---------------------------
-    // 6. WH CUSTOMER VERIFICATION
-    // ---------------------------
-    {
-      id: "wh-customer-verification",
-      name: "WH Customer Verification",
-      headOf: "Marcin",
-      headRole: "Team Leader",
-      totalFilled: 9,
-      totalOpen: 0,
-
-      teams: [
-        { name: "Customer Verification Team", count: 9 }
-      ]
-    }
-
-     // ---------------------------
-    // 7. Automation
-    // ---------------------------
-    {
-      id: "automation-infra",
-      name: "Site Infrastructure",
-      headOf: "Cosmin L",
-      headRole: "Automation Lead",
-      totalFilled: 2, // you can update
-      totalOpen: 0,
-
-      teams: [
-        { name: "automation-infra", count: 2 }
-      ]
-    },
-  ]
-};
-
-
-    // === 2. Helpers to compute totals from orgData ===
-    function computePillarTotals(pillar) {
-      let total = 0;
-      let openRoles = 0;
-
-      pillar.groups.forEach(group => {
-        group.nodes.forEach(node => {
-          total += (node.headcount || 0) + (node.siiCount || 0);
-          openRoles += node.openCount || 0;
-        });
-      });
-
-      return { total, openRoles };
-    }
-
+    // === 2. Totals helpers (based on simple teams) ===
     function computeAllTotals(data) {
       let globalTotal = 0;
       const pillarTotals = data.pillars.map(p => {
-        const t = computePillarTotals(p);
-        globalTotal += t.total;
-        return { id: p.id, name: p.name, total: t.total, openRoles: t.openRoles };
+        let total = 0;
+        let openRoles = 0;
+        (p.teams || []).forEach(team => {
+          total += team.count || 0;
+          openRoles += team.openCount || 0;
+        });
+        globalTotal += total;
+        return {
+          id: p.id,
+          name: p.name,
+          total,
+          openRoles
+        };
       });
       return { globalTotal, pillarTotals };
     }
 
-    // === 3. Rendering functions ===
-    function renderRootCard(data, totals) {
+    // === 3. Rendering ===
+    function renderRootCard(data) {
       const rootCard = document.getElementById("rootCard");
       const pillarsCount = data.pillars.length;
-
       rootCard.innerHTML = `
         <div class="avatar">
           <div class="avatar-inner">${data.head.initials}</div>
@@ -990,7 +899,7 @@
           p => `
           <div class="totals-chip">
             <span class="dot"></span>
-            ${p.name}: <strong>${p.total}</strong>
+            ${p.name}: <strong>${p.total}</strong>${p.openRoles ? ` (+${p.openRoles} open)` : ""}
           </div>
         `
         )
@@ -1003,101 +912,88 @@
 
     function renderPillarsRow(data, pillarTotals) {
       const row = document.getElementById("pillarsRow");
-
       const pillarTotalsMap = pillarTotals.reduce((acc, p) => {
         acc[p.id] = p;
         return acc;
       }, {});
 
-      const pillarHtml = data.pillars
+      const html = data.pillars
         .map(pillar => {
           const t = pillarTotalsMap[pillar.id] || { total: 0, openRoles: 0 };
-          const groupsHtml = pillar.groups
-            .map(group => {
-              const nodesHtml = group.nodes
-                .map(node => {
-                  const h = node.headcount || 0;
-                  const s = node.siiCount || 0;
-                  const o = node.openCount || 0;
+          const teams = pillar.teams || [];
 
-                  const chips = [];
-                  if (h > 0) {
-                    chips.push(`
-                      <div class="node-chip team">
-                        <span class="badge-dot"></span>
-                        ${h} ${h === 1 ? "Person" : "People"}
-                      </div>
-                    `);
-                  }
-                  if (s > 0) {
-                    chips.push(`
-                      <div class="node-chip sii">
-                        <span class="badge-dot sii"></span>
-                        +${s} SII
-                      </div>
-                    `);
-                  }
-                  if (o > 0) {
-                    chips.push(`
-                      <div class="node-chip open">
-                        <span class="badge-dot open"></span>
-                        +${o} Open
-                      </div>
-                    `);
-                  }
+          const nodesHtml = teams
+            .map(team => {
+              const h = team.count || 0;
+              const o = team.openCount || 0;
+              const chips = [];
 
-                  const metaText =
-                    node.note ||
-                    `Headcount: ${h}${s > 0 ? ` + ${s} SII` : ""}${
-                      o > 0 ? ` (${o} open roles)` : ""
-                    }`;
+              if (h > 0) {
+                chips.push(`
+                  <div class="node-chip team">
+                    <span class="badge-dot"></span>
+                    ${h} ${h === 1 ? "Person" : "People"}
+                  </div>
+                `);
+              }
 
-                  return `
-                    <div class="node" data-node>
-                      <div class="node-main">
-                        <div>
-                          <div class="node-title">${node.title}</div>
-                          <div class="node-role">${node.role}</div>
-                        </div>
-                        <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
-                          ${chips.join("")}
-                        </div>
-                      </div>
-                      <div class="node-meta">
-                        <span class="node-count">${metaText}</span>
-                      </div>
-                    </div>
-                  `;
-                })
-                .join("");
+              if (o > 0) {
+                chips.push(`
+                  <div class="node-chip open">
+                    <span class="badge-dot open"></span>
+                    +${o} Open
+                  </div>
+                `);
+              }
+
+              const metaText =
+                `Headcount: ${h}` + (o > 0 ? ` (${o} open)` : "");
 
               return `
-                <div class="group">
-                  <div class="group-label">${group.label}</div>
-                  ${nodesHtml}
+                <div class="node" data-node>
+                  <div class="node-main">
+                    <div>
+                      <div class="node-title">${team.name}</div>
+                      <div class="node-role"></div>
+                    </div>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+                      ${chips.join("")}
+                    </div>
+                  </div>
+                  <div class="node-meta">
+                    <span class="node-count">${metaText}</span>
+                  </div>
                 </div>
               `;
             })
             .join("");
+
+          const groupsHtml = teams.length
+            ? `
+              <div class="group">
+                <div class="group-label">Teams</div>
+                ${nodesHtml}
+              </div>
+            `
+            : "";
+
+          const leadText = pillar.headOf
+            ? `Led by: <strong>${pillar.headOf}</strong>${pillar.headRole ? ", " + pillar.headRole : ""}`
+            : "No direct lead listed";
 
           return `
             <article class="pillar" data-pillar="${pillar.id}">
               <header class="pillar-header">
                 <div class="pillar-total">
                   <span class="dot"></span>
-                  Total: ${t.total}
+                  Total: ${t.total}${t.openRoles ? ` (+${t.openRoles} open)` : ""}
                 </div>
                 <div class="pillar-title">${pillar.name}</div>
                 <div class="pillar-tagline">
                   <span class="tag-person">
                     <span class="badge"></span>
-                    ${
-                      pillar.lead && pillar.lead.name
-                        ? `Led by: <strong>${pillar.lead.name}</strong>${pillar.lead.title ? ", " + pillar.lead.title : ""}`
-                        : "No direct lead listed"
-                    }
+                    ${leadText}
                   </span>
-                  <span class="tag-metric">${pillar.meta || ""}</span>
                 </div>
                 <button class="toggle" type="button" data-open="true" aria-label="Collapse pillar">
                   ▴
@@ -1113,23 +1009,25 @@
         })
         .join("");
 
-      row.innerHTML = pillarHtml;
+      row.innerHTML = html;
     }
 
-    // === 4. Interactions: toggle pillars & search ===
+    // === 4. Interactions ===
     function initInteractions() {
-      const toggles = document.querySelectorAll(".toggle");
       const searchInput = document.getElementById("search");
       const clearSearch = document.getElementById("clearSearch");
       const toggleAllBtn = document.getElementById("toggleAllBtn");
       const orgChart = document.getElementById("orgChart");
 
+      // Need to select toggles AFTER pillars are rendered
+      const toggles = document.querySelectorAll(".toggle");
+
+      // Pillar toggles
       toggles.forEach(btn => {
         btn.addEventListener("click", () => {
           const pillar = btn.closest(".pillar");
           const children = pillar.querySelector(".children");
           const isOpen = btn.getAttribute("data-open") === "true";
-
           if (isOpen) {
             children.classList.add("collapsed");
             btn.setAttribute("data-open", "false");
@@ -1142,18 +1040,19 @@
         });
       });
 
+      // Toggle all pillars
       toggleAllBtn.addEventListener("click", () => {
         const allChildren = document.querySelectorAll(".pillar .children");
-        const openStates = Array.from(document.querySelectorAll(".toggle")).map(t =>
+        const allToggles = document.querySelectorAll(".toggle");
+        const openStates = Array.from(allToggles).map(t =>
           t.getAttribute("data-open")
         );
         const allOpen = openStates.every(s => s === "true");
         const newStateOpen = !allOpen;
-
         allChildren.forEach(ch =>
           ch.classList.toggle("collapsed", !newStateOpen)
         );
-        document.querySelectorAll(".toggle").forEach(btn => {
+        allToggles.forEach(btn => {
           btn.setAttribute("data-open", newStateOpen ? "true" : "false");
           btn.textContent = newStateOpen ? "▴" : "▾";
         });
@@ -1179,7 +1078,6 @@
 
         const q = normalise(trimmed);
         const hits = [];
-
         nodes.forEach(el => {
           const text = normalise(el.textContent || "");
           const isHit = text.includes(q);
@@ -1207,7 +1105,7 @@
           }
         });
 
-        // Ensure any matching node's pillar is expanded
+        // Ensure matching nodes' pillars are expanded
         hits.forEach(hit => {
           const pillar = hit.closest(".pillar");
           if (!pillar) return;
@@ -1238,10 +1136,10 @@
       });
     }
 
-    // === 5. Bootstrapping ===
+    // === 5. Init ===
     (function init() {
       const { globalTotal, pillarTotals } = computeAllTotals(orgData);
-      renderRootCard(orgData, { globalTotal, pillarTotals });
+      renderRootCard(orgData);
       renderTotalsBar(pillarTotals, globalTotal);
       renderPillarsRow(orgData, pillarTotals);
       initInteractions();
