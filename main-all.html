@@ -298,6 +298,59 @@
       background: var(--primary);
     }
 
+    /* Totals bar */
+    .totals-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 11px;
+    }
+
+    .totals-pillars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .totals-chip {
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .totals-chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .totals-main {
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      background: #f0f9ff;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary-dark);
+    }
+
+    .totals-main strong {
+      color: var(--accent);
+    }
+
     .chart-shell {
       margin-top: 8px;
       background: #ffffff;
@@ -307,7 +360,7 @@
       box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
       overflow-x: hidden;
       overflow-y: auto;
-      max-height: calc(100vh - 260px);
+      max-height: calc(100vh - 300px);
     }
 
     .pillars-row {
@@ -356,6 +409,28 @@
         rgba(38, 154, 188, 0.08),
         rgba(11, 11, 37, 0.02)
       );
+    }
+
+    .pillar-total {
+      align-self: flex-start;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pillar-total span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
     }
 
     .pillar-title {
@@ -734,6 +809,11 @@
       </div>
     </section>
 
+    <section class="totals-bar">
+      <div id="pillarTotals" class="totals-pillars"></div>
+      <div id="globalTotal" class="totals-main"></div>
+    </section>
+
     <main class="chart-shell" id="orgChart">
       <div id="pillarsRow" class="pillars-row"></div>
     </main>
@@ -741,6 +821,7 @@
 
   <script>
     // ========= 1. ORG DATA: Yariv (Core) with 5 domains =========
+    // headcount = filled roles, openCount = open positions
     const orgData = {
       head: {
         name: "Yariv Postan",
@@ -765,7 +846,9 @@
                   title: "Oren",
                   role: "Head of Customer Services & Unified Client",
                   note:
-                    "Owns global Customer Services tech and Unified Client (UC) product"
+                    "Owns global Customer Services tech and Unified Client (UC) product",
+                  headcount: 1,
+                  openCount: 0
                 }
               ]
             },
@@ -776,7 +859,9 @@
                   title: "Open detailed CS & UC org chart",
                   role: "oren-org.html",
                   note: "Full org for Customer Services & Unified Client",
-                  link: "oren-org.html"
+                  link: "oren-org.html",
+                  headcount: 0,
+                  openCount: 0
                 }
               ]
             }
@@ -791,26 +876,10 @@
                 {
                   label: "Team Leaders",
                   nodes: [
-                    {
-                      title: "Robert",
-                      role: "CR Eagles TL (RO)",
-                      note: "Owns CR Eagles team"
-                    },
-                    {
-                      title: "Natalia",
-                      role: "CR Dragons TL (PL)",
-                      note: "Owns CR Dragons team"
-                    },
-                    {
-                      title: "Bogdan",
-                      role: "CASAP+BO QA TL (RO)",
-                      note: "Owns QA team"
-                    },
-                    {
-                      title: "Iulia",
-                      role: "CASAP+BO DEV TL (RO)",
-                      note: "Owns DEV team"
-                    }
+                    { title: "Robert", role: "CR Eagles TL (RO)", note: "Owns CR Eagles team", headcount: 1, openCount: 0 },
+                    { title: "Natalia", role: "CR Dragons TL (PL)", note: "Owns CR Dragons team", headcount: 1, openCount: 0 },
+                    { title: "Bogdan", role: "CASAP+BO QA TL (RO)", note: "Owns QA team", headcount: 1, openCount: 0 },
+                    { title: "Iulia", role: "CASAP+BO DEV TL (RO)", note: "Owns DEV team", headcount: 1, openCount: 0 }
                   ]
                 }
               ]
@@ -827,7 +896,9 @@
                     {
                       title: "UC2 Squad",
                       role: "Unified Client 2",
-                      note: "Razvan TL with FE/BE devs & QA"
+                      note: "Razvan TL with FE/BE devs & QA",
+                      headcount: 0,
+                      openCount: 0
                     }
                   ]
                 }
@@ -846,7 +917,9 @@
                       title: "UC1 Squad",
                       role: "Unified Client 1",
                       note:
-                        "Maoz TL (IL) with dev teams in RO; includes Automation open position"
+                        "Maoz TL (IL) with dev teams in RO; includes automation open position",
+                      headcount: 0,
+                      openCount: 1
                     }
                   ]
                 }
@@ -869,7 +942,9 @@
                   title: "Aharon",
                   role: "Head of WH Customer Offer & 888 Platform",
                   note:
-                    "Owns WH Customer Offer & Bonus Platform, Platform Infra, DBA, CRM 888 and QA Automation 888"
+                    "Owns WH Customer Offer & Bonus Platform, Platform Infra, DBA, CRM 888 and QA Automation 888",
+                  headcount: 1,
+                  openCount: 0
                 }
               ]
             },
@@ -880,7 +955,9 @@
                   title: "Open detailed Aharon org chart",
                   role: "aharon-org.html",
                   note: "Full org for WH Customer Offer & 888 Platform",
-                  link: "aharon-org.html"
+                  link: "aharon-org.html",
+                  headcount: 0,
+                  openCount: 0
                 }
               ]
             }
@@ -898,12 +975,16 @@
                       title: "WH Customer Offer Team",
                       role: "CO squad",
                       note:
-                        "Mix of perm and CLCM contractors; CO TL also acts as domain GM"
+                        "6 total: 3 perm + 3 CLCM contractors; 1 open position (backfill for 1 dev who left)",
+                      headcount: 6,
+                      openCount: 1
                     },
                     {
                       title: "Bonus Platform Team",
                       role: "Bonus Platform",
-                      note: "7 perm + 5 CLCM contractor across FE/BE"
+                      note: "12 total: 7 perm + 5 CLCM contractor",
+                      headcount: 12,
+                      openCount: 0
                     }
                   ]
                 }
@@ -920,12 +1001,16 @@
                     {
                       title: "Platform Infra 1",
                       role: "Team incl. TL",
-                      note: "Core platform infra squad + 1 open position"
+                      note: "8 total (incl. TL) + 1 open position (backfill)",
+                      headcount: 8,
+                      openCount: 1
                     },
                     {
                       title: "Platform Infra 2",
                       role: "Team incl. TL",
-                      note: "Second infra squad"
+                      note: "7 total (incl. TL)",
+                      headcount: 7,
+                      openCount: 0
                     }
                   ]
                 }
@@ -942,12 +1027,16 @@
                     {
                       title: "Sharon Team",
                       role: "DBA TL",
-                      note: "8 total incl. TL; 1 is Webiz"
+                      note: "8 total (incl. TL); 1 is Webiz",
+                      headcount: 8,
+                      openCount: 0
                     },
                     {
                       title: "Avida Team",
                       role: "DBA TL",
-                      note: "7 total incl. TL; 1 open Webiz position"
+                      note: "7 total (incl. TL); 1 open Webiz position",
+                      headcount: 7,
+                      openCount: 1
                     }
                   ]
                 }
@@ -964,22 +1053,31 @@
                     {
                       title: "CRM1",
                       role: "Team incl. TL & SLS",
-                      note: "9 FTE + 1 open role"
+                      note: "9 FTE (incl. TL and 1 SLS) + 1 open",
+                      headcount: 9,
+                      openCount: 1
                     },
                     {
                       title: "CRM2 Webiz",
                       role: "Webiz team",
-                      note: "4 FTE incl. TL – Webiz delivery"
+                      note: "4 total (incl. TL); Webiz team",
+                      headcount: 4,
+                      openCount: 0
                     },
                     {
                       title: "CRM3",
                       role: "Dev & QA",
-                      note: "3 Dev + 2 QA dedicated to Bloomreach"
+                      note:
+                        "8 total; 3 Dev + 2 QA dedicated to Bloomreach (QA Automation tracked separately)",
+                      headcount: 8,
+                      openCount: 0
                     },
                     {
                       title: "888 4",
                       role: "Team incl. TL",
-                      note: "4 FTE"
+                      note: "4 FTE including TL",
+                      headcount: 4,
+                      openCount: 0
                     }
                   ]
                 }
@@ -996,7 +1094,9 @@
                     {
                       title: "QA Automation 888 Team",
                       role: "QA Automation",
-                      note: "4 people incl. TL + 1 open QA Automation position"
+                      note: "4 people including TL + 1 open QA Automation position",
+                      headcount: 4,
+                      openCount: 1
                     }
                   ]
                 }
@@ -1019,7 +1119,9 @@
                   title: "Shmuel Daniel",
                   role: "Head of Onboarding & Digital Marketing",
                   note:
-                    "Owns funnels, CX, site infra & automation, adtech and WH onboarding & CX"
+                    "Owns funnels, CX, site infra & automation, adtech and WH onboarding & CX",
+                  headcount: 1,
+                  openCount: 0
                 }
               ]
             },
@@ -1030,7 +1132,9 @@
                   title: "Open detailed Shmuel org chart",
                   role: "shmuel-org.html",
                   note: "Full org for Onboarding & Digital Marketing",
-                  link: "shmuel-org.html"
+                  link: "shmuel-org.html",
+                  headcount: 0,
+                  openCount: 0
                 }
               ]
             }
@@ -1047,27 +1151,37 @@
                     {
                       title: "SLS Team",
                       role: "SLS (2 people)",
-                      note: "Direct team reporting to Oana"
+                      note: "Direct team reporting to Oana",
+                      headcount: 2,
+                      openCount: 0
                     },
                     {
-                      title: "Moshe S",
+                      title: "Funnel 1 – Moshe S",
                       role: "Funnel 1 TL",
-                      note: "Manages Funnel 1 squad (6 people)"
+                      note: "Manages Funnel 1 squad (6 people)",
+                      headcount: 6,
+                      openCount: 0
                     },
                     {
-                      title: "Marian C",
+                      title: "Funnel 2 – Marian C",
                       role: "Funnel 2 TL",
-                      note: "Manages 5 people + 3 SII"
+                      note: "Manages 5 people + 3 SII",
+                      headcount: 8,
+                      openCount: 0
                     },
                     {
-                      title: "Adrian I",
+                      title: "Funnel 3 – Adrian I",
                       role: "Funnel 3 TL",
-                      note: "Manages 9 people"
+                      note: "Manages 9 people",
+                      headcount: 9,
+                      openCount: 0
                     },
                     {
-                      title: "Open Position",
+                      title: "CX 888 TL (Open)",
                       role: "CX 888 TL",
-                      note: "Will manage 5 people for CX 888"
+                      note: "Will manage 5 people",
+                      headcount: 0,
+                      openCount: 1
                     }
                   ]
                 }
@@ -1084,7 +1198,9 @@
                     {
                       title: "Site Infrastructure",
                       role: "Core site stack",
-                      note: "Owns web runtime, performance and tooling"
+                      note: "Owns web runtime, performance and tooling",
+                      headcount: 0,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1101,7 +1217,9 @@
                     {
                       title: "Automation & AI Team",
                       role: "Automation & AI",
-                      note: "Cosmin TL managing dedicated AI/automation squad"
+                      note: "Cosmin TL managing dedicated AI/automation squad (3 people)",
+                      headcount: 3,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1118,7 +1236,9 @@
                     {
                       title: "Adtech Squad",
                       role: "Ad technology",
-                      note: "Sabin TL managing 3 people"
+                      note: "Sabin TL managing 3 people",
+                      headcount: 3,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1134,28 +1254,38 @@
                   nodes: [
                     {
                       title: "WH Onboarding Principals",
-                      role: "Principals (2 people)",
-                      note: "Senior onboarding principals"
+                      role: "Principals",
+                      note: "2 senior onboarding principals",
+                      headcount: 2,
+                      openCount: 0
                     },
                     {
-                      title: "Bart",
+                      title: "Bart – WH Volcanics TL",
                       role: "WH Volcanics TL",
-                      note: "Manages 5 people"
+                      note: "Manages 5 people",
+                      headcount: 5,
+                      openCount: 0
                     },
                     {
-                      title: "Open Position",
+                      title: "Customer Ver TL (Open)",
                       role: "Customer Ver TL",
-                      note: "Will manage 9 people + 1 SII SCV"
+                      note: "Will manage 9 people + 1 SII SCV",
+                      headcount: 0,
+                      openCount: 1
                     },
                     {
-                      title: "Michel Z",
+                      title: "Michel Z – WH CX TL",
                       role: "WH CX TL",
-                      note: "Manages 3 people + 3 open positions"
+                      note: "Manages 3 people + 3 open positions",
+                      headcount: 3,
+                      openCount: 3
                     },
                     {
-                      title: "Vasyl S",
+                      title: "Vasyl S – WH Onboarding TL",
                       role: "WH Onboarding TL",
-                      note: "Manages 4 people + 4 SII CLCM"
+                      note: "Manages 4 people + 4 SII CLCM",
+                      headcount: 8,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1178,7 +1308,9 @@
                   title: "Eran",
                   role: "Head of Payments & Cashier",
                   note:
-                    "Owns cashier experiences, PSP integrations, TLS, modernization, WH and fraud"
+                    "Owns cashier experiences, PSP integrations, TLS, modernization, WH and fraud",
+                  headcount: 1,
+                  openCount: 0
                 }
               ]
             },
@@ -1189,7 +1321,9 @@
                   title: "Open detailed Payments & Cashier org chart",
                   role: "eran-org.html",
                   note: "Full org for Payments & Cashier",
-                  link: "eran-org.html"
+                  link: "eran-org.html",
+                  headcount: 0,
+                  openCount: 0
                 }
               ]
             }
@@ -1206,7 +1340,9 @@
                     {
                       title: "Cashier 1",
                       role: "Cashier squad",
-                      note: "6 people focusing on core cashier flows"
+                      note: "6 people focusing on core cashier flows",
+                      headcount: 6,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1223,7 +1359,9 @@
                     {
                       title: "Cashier 2",
                       role: "Cashier squad",
-                      note: "8 people, extended cashier journeys"
+                      note: "8 people, extended cashier journeys",
+                      headcount: 8,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1240,7 +1378,9 @@
                     {
                       title: "Unified Cashier",
                       role: "UC squad",
-                      note: "7 people – cross-brand unified cashier"
+                      note: "7 people – cross-brand unified cashier",
+                      headcount: 7,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1257,7 +1397,9 @@
                     {
                       title: "PSP",
                       role: "Payment Service Providers",
-                      note: "4 people – PSP integrations"
+                      note: "4 people – PSP integrations",
+                      headcount: 4,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1274,7 +1416,9 @@
                     {
                       title: "TLS",
                       role: "Tech leadership squad",
-                      note: "4 core + 1 Webiz contractor"
+                      note: "4 core + 1 Webiz contractor",
+                      headcount: 4,
+                      openCount: 1
                     }
                   ]
                 }
@@ -1291,7 +1435,9 @@
                     {
                       title: "Modernization",
                       role: "Modernization squad",
-                      note: "6 people – platform modernization"
+                      note: "6 people – platform modernization",
+                      headcount: 6,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1308,7 +1454,9 @@
                     {
                       title: "WH Payments",
                       role: "WH-specific squad",
-                      note: "4 people"
+                      note: "4 people",
+                      headcount: 4,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1325,7 +1473,9 @@
                     {
                       title: "Fraud",
                       role: "Fraud squad",
-                      note: "5 people – fraud tooling and controls"
+                      note: "5 people – fraud tooling and controls",
+                      headcount: 5,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1348,7 +1498,9 @@
                   title: "Gabriela",
                   role: "Head of Responsible Gaming Domain",
                   note:
-                    "Owns Responsible Gaming technology in RO & PL (RG teams and Customer Protection Group)"
+                    "Owns Responsible Gaming technology in RO & PL (RG teams and Customer Protection Group)",
+                  headcount: 1,
+                  openCount: 0
                 }
               ]
             },
@@ -1359,7 +1511,9 @@
                   title: "Open detailed RG org chart",
                   role: "rg-org.html",
                   note: "Full org for RG Domain",
-                  link: "rg-org.html"
+                  link: "rg-org.html",
+                  headcount: 0,
+                  openCount: 0
                 }
               ]
             }
@@ -1376,12 +1530,16 @@
                     {
                       title: "RG1 DEV",
                       role: ".NET / FE DEV",
-                      note: "Bianca, Andrei and others – incl. Poland SII FE"
+                      note: "3 devs + 1 open FE dev (Poland SII)",
+                      headcount: 3,
+                      openCount: 1
                     },
                     {
                       title: "RG1 QA & Webiz",
                       role: "QA / SM / Webiz",
-                      note: "Cristina (QA/SM), Anca, Daria, Ruzanna (Webiz QA)"
+                      note: "QA/SM + QA + QA + 1 Webiz QA (total 4)",
+                      headcount: 4,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1398,12 +1556,16 @@
                     {
                       title: "RG2 DEV",
                       role: ".NET / FE DEV",
-                      note: "Alexandru, Gabriel, Marius, Stefan"
+                      note: "4 devs (.NET / FE)",
+                      headcount: 4,
+                      openCount: 0
                     },
                     {
                       title: "RG2 QA & Webiz",
                       role: "QA / Webiz",
-                      note: "Liviu, Alexandru, Vlad, Naira (Webiz QA/SM)"
+                      note: "3 QA + 1 Webiz QA/SM (total 4)",
+                      headcount: 4,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1420,12 +1582,16 @@
                     {
                       title: "RG3 DEV",
                       role: ".NET DEV + RO SII",
-                      note: "Larisa + RO SII dev; 1 open dev role"
+                      note: "2 devs + 1 open dev",
+                      headcount: 2,
+                      openCount: 1
                     },
                     {
                       title: "RG3 QA",
                       role: "QA",
-                      note: "Ovidiu, Alina"
+                      note: "2 QA",
+                      headcount: 2,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1442,12 +1608,16 @@
                     {
                       title: "RG4 DEV (RO SII)",
                       role: ".NET DEV RO SII",
-                      note: "Tudor, Ovidiu, Mircea, Laurentiu, Ali"
+                      note: "5 devs",
+                      headcount: 5,
+                      openCount: 0
                     },
                     {
                       title: "RG4 QA (RO SII)",
                       role: "QA RO SII",
-                      note: "Vlad, Cristian, Gabriel"
+                      note: "3 QA",
+                      headcount: 3,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1464,18 +1634,24 @@
                     {
                       title: "Modernization DEV",
                       role: "DEV",
-                      note: "Merdin, Viorel – RO SII devs"
+                      note: "2 RO SII devs",
+                      headcount: 2,
+                      openCount: 0
                     },
                     {
                       title: "QA & TLS",
                       role: "QA / TLS",
-                      note: "Ciprian (QA), Cristian Balta & Madalin-Mihai (TLS)"
+                      note: "1 QA + 2 TLS (total 3)",
+                      headcount: 3,
+                      openCount: 0
                     },
                     {
                       title: "QA Automation",
                       role: "QA Automation",
                       note:
-                        "Open QA Automation role + Alexandru Dumitru & Cristian Istrate (RO SII)"
+                        "2 RO SII QA Automation + 1 open QA Automation role",
+                      headcount: 2,
+                      openCount: 1
                     }
                   ]
                 }
@@ -1493,12 +1669,16 @@
                       title: "Mikolaj Stanozak",
                       role: "EM / Group Manager",
                       note:
-                        "Group manager for Customer Protection, Code Busters & RG Cross Team"
+                        "Group manager for Customer Protection, Code Busters & RG Cross Team",
+                      headcount: 1,
+                      openCount: 0
                     },
                     {
                       title: "Mateusz",
                       role: "Principal Engineer",
-                      note: "Principal engineer in RG domain"
+                      note: "Principal engineer in RG domain",
+                      headcount: 1,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1516,12 +1696,16 @@
                       title: "Customer Protection Dev",
                       role: "FE / SFE / Java DEV",
                       note:
-                        "Mix of FE, SFE and Java devs (incl. Poland SII contractors)"
+                        "8 devs (mix of FE, SFE and Java incl. Poland SII contractors)",
+                      headcount: 8,
+                      openCount: 0
                     },
                     {
                       title: "Customer Protection SSDIT",
                       role: "SSDIT",
-                      note: "Kajal, Dominik, Adrian – SSDIT"
+                      note: "3 SSDIT",
+                      headcount: 3,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1538,12 +1722,16 @@
                     {
                       title: "Code Busters Dev",
                       role: "SFE DEV",
-                      note: "Pavlo, Marcin, Damian, Jakub – SFE devs"
+                      note: "4 SFE devs",
+                      headcount: 4,
+                      openCount: 0
                     },
                     {
                       title: "Code Busters SSDIT",
                       role: "SSDIT",
-                      note: "Artur – SSDIT"
+                      note: "1 SSDIT",
+                      headcount: 1,
+                      openCount: 0
                     }
                   ]
                 }
@@ -1560,17 +1748,23 @@
                     {
                       title: "RG Cross Dev",
                       role: ".NET / FE DEV (Poland SII)",
-                      note: "Pawel, Darek, Milosz, Grzegorz, Jakub"
+                      note: "5 devs",
+                      headcount: 5,
+                      openCount: 0
                     },
                     {
                       title: "RG Cross QA",
                       role: "QA / QA Auto",
-                      note: "Adam (QA), Filip (QA Auto)"
+                      note: "2 QA / QA Auto",
+                      headcount: 2,
+                      openCount: 0
                     },
                     {
                       title: "Open DEV/QA SSDIT",
                       role: "DEV / QA SSDIT (Open)",
-                      note: "Open Poland SII role"
+                      note: "Open Poland SII role",
+                      headcount: 0,
+                      openCount: 1
                     }
                   ]
                 }
@@ -1581,7 +1775,44 @@
       ]
     };
 
-    // ========= 2. Rendering helpers =========
+    // ========= 2. Totals helpers =========
+    function sumGroups(groups = []) {
+      let total = 0;
+      let openRoles = 0;
+      groups.forEach(group => {
+        group.nodes.forEach(node => {
+          total += node.headcount || 0;
+          openRoles += node.openCount || 0;
+        });
+      });
+      return { total, openRoles };
+    }
+
+    function computePillarTotals(pillar) {
+      let { total, openRoles } = sumGroups(pillar.groups || []);
+      if (pillar.innerPillars) {
+        pillar.innerPillars.forEach(inner => {
+          const t = sumGroups(inner.groups || []);
+          total += t.total;
+          openRoles += t.openRoles;
+        });
+      }
+      return { total, openRoles };
+    }
+
+    function computeAllTotals(data) {
+      let globalFilled = 0;
+      let globalOpen = 0;
+      const pillarTotals = data.pillars.map(p => {
+        const t = computePillarTotals(p);
+        globalFilled += t.total;
+        globalOpen += t.openRoles;
+        return { id: p.id, name: p.name, total: t.total, openRoles: t.openRoles };
+      });
+      return { globalFilled, globalOpen, pillarTotals };
+    }
+
+    // ========= 3. Rendering =========
     function renderRootCard(data) {
       const rootCard = document.getElementById("rootCard");
       const pillarsCount = data.pillars.length;
@@ -1604,6 +1835,28 @@
       `;
     }
 
+    function renderTotalsBar(pillarTotals, globalFilled, globalOpen) {
+      const pillarTotalsContainer = document.getElementById("pillarTotals");
+      const globalTotalContainer = document.getElementById("globalTotal");
+
+      pillarTotalsContainer.innerHTML = pillarTotals
+        .map(
+          p => `
+          <div class="totals-chip">
+            <span class="dot"></span>
+            ${p.name}: <strong>${p.total}</strong>${p.openRoles ? ` (+${p.openRoles} open)` : ""}
+          </div>
+        `
+        )
+        .join("");
+
+      globalTotalContainer.innerHTML = `
+        Total filled roles: <strong>${globalFilled}</strong>${
+          globalOpen ? ` • Open positions: <strong>${globalOpen}</strong>` : ""
+        }
+      `;
+    }
+
     function renderGroups(groups) {
       if (!groups || !groups.length) return "";
       return groups
@@ -1615,6 +1868,13 @@
                 ? `<a href="${node.link}" target="_blank" style="color:inherit;text-decoration:underline;">${node.title}</a>`
                 : node.title;
 
+              const filled = node.headcount || 0;
+              const open = node.openCount || 0;
+              let metaText = node.note || "";
+              if (!metaText && (filled || open)) {
+                metaText = `Headcount: ${filled}${open ? ` (+${open} open)` : ""}`;
+              }
+
               return `
                 <div class="node" data-node>
                   <div class="node-main">
@@ -1622,9 +1882,21 @@
                       <div class="node-title">${titleHtml}</div>
                       <div class="node-role">${node.role || ""}</div>
                     </div>
+                    <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+                      ${
+                        filled
+                          ? `<div class="node-chip"><span class="badge-dot"></span>${filled}</div>`
+                          : ""
+                      }
+                      ${
+                        open
+                          ? `<div class="node-chip" style="border-color:#fecaca;background:#fef2f2;"><span class="badge-dot" style="background:#dc2626;"></span>+${open}</div>`
+                          : ""
+                      }
+                    </div>
                   </div>
                   <div class="node-meta">
-                    <span class="node-count">${node.note || ""}</span>
+                    <span class="node-count">${metaText}</span>
                   </div>
                 </div>
               `;
@@ -1641,10 +1913,16 @@
         .join("");
     }
 
-    function renderPillarsRow(data) {
+    function renderPillarsRow(data, pillarTotals) {
       const row = document.getElementById("pillarsRow");
+      const totalsMap = pillarTotals.reduce((acc, p) => {
+        acc[p.id] = p;
+        return acc;
+      }, {});
+
       row.innerHTML = data.pillars
         .map(pillar => {
+          const t = totalsMap[pillar.id] || { total: 0, openRoles: 0 };
           const groupsHtml = renderGroups(pillar.groups || []);
           let innerHtml = "";
           if (pillar.innerPillars && pillar.innerPillars.length) {
@@ -1652,6 +1930,7 @@
               '<div class="inner-pillars">' +
               pillar.innerPillars
                 .map(inner => {
+                  const innerTotals = sumGroups(inner.groups || []);
                   const innerGroupsHtml = renderGroups(inner.groups || []);
                   return `
                     <div class="inner-pillar" data-inner="${inner.id}">
@@ -1667,7 +1946,9 @@
                           }
                         </div>
                         <div class="inner-pillar-meta">
-                          Inner pillar / team
+                          ${innerTotals.total} filled${
+                            innerTotals.openRoles ? ` • ${innerTotals.openRoles} open` : ""
+                          }
                         </div>
                         <button class="inner-toggle" type="button" data-open="true" aria-label="Collapse team">
                           ▴
@@ -1687,6 +1968,10 @@
           return `
             <article class="pillar" data-pillar="${pillar.id}">
               <header class="pillar-header">
+                <div class="pillar-total">
+                  <span class="dot"></span>
+                  Total: ${t.total}${t.openRoles ? ` (+${t.openRoles} open)` : ""}
+                </div>
                 <div class="pillar-title">${pillar.name}</div>
                 <div class="pillar-tagline">
                   <span class="tag-person">
@@ -1716,7 +2001,7 @@
         .join("");
     }
 
-    // ========= 3. Interactions =========
+    // ========= 4. Interactions =========
     function initInteractions() {
       const toggles = document.querySelectorAll(".toggle");
       const innerToggles = document.querySelectorAll(".inner-toggle");
@@ -1875,10 +2160,12 @@
       });
     }
 
-    // ========= 4. Init =========
+    // ========= 5. Init =========
     (function init() {
+      const { globalFilled, globalOpen, pillarTotals } = computeAllTotals(orgData);
       renderRootCard(orgData);
-      renderPillarsRow(orgData);
+      renderTotalsBar(pillarTotals, globalFilled, globalOpen);
+      renderPillarsRow(orgData, pillarTotals);
       initInteractions();
     })();
   </script>
