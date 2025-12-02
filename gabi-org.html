@@ -748,251 +748,274 @@
 
   <script>
     // ===== 1. ORG DATA for RG Domain (image-based, aggregated) =====
-    const orgData = {
-      head: {
-        name: "RG Domain",
-        initials: "RG",
-        role: "Responsible Gaming – Romania & Poland",
-        pillarsLabel: "Pillars",
-        description:
-          "RG1–RG4 & Production Owners (Romania) • Customer Protection, Code Busters & RG Cross Team (Poland)"
-      },
-      pillars: [
-        // ROMANIA – RG1
+ const orgData = {
+  head: {
+    name: "RG Domain",
+    initials: "RG",
+    role: "Responsible Gaming – Romania & Poland",
+    pillarsLabel: "Pillars",
+    description:
+      "RG1–RG4 & Production Owners (Romania) • Customer Protection Group (Poland)"
+  },
+  pillars: [
+    // === ROMANIA – same as before ===
+    {
+      id: "rg1",
+      name: "RG1 – Romania",
+      lead: { name: "Bogdan Chiriac", title: "TL" },
+      meta: ".NET / FE DEV, QA, Webiz, Poland SII",
+      groups: [
         {
-          id: "rg1",
-          name: "RG1 – Romania",
-          lead: { name: "Bogdan Chiriac", title: "TL" },
-          meta: ".NET / FE DEV, QA, Webiz, Poland SII",
-          groups: [
+          label: "Developers",
+          nodes: [
             {
-              label: "Developers",
-              nodes: [
-                {
-                  title: "RG1 Developers",
-                  role: ".NET / FE DEV",
-                  headcount: 3,
-                  openCount: 0,
-                  note: "Bianca, Andrei, Sealia – mix of .NET and FE DEV"
-                },
-                {
-                  title: "Open FE Developer",
-                  role: "FE DEV (Open)",
-                  headcount: 0,
-                  openCount: 1,
-                  note: "Open FE DEV role (Poland SII)"
-                }
-              ]
+              title: "RG1 Developers",
+              role: ".NET / FE DEV",
+              headcount: 3,
+              openCount: 0,
+              note: "Bianca, Andrei, Sealia – mix of .NET and FE DEV"
             },
             {
-              label: "QA & Webiz",
-              nodes: [
-                {
-                  title: "RG1 QA",
-                  role: "QA / SM",
-                  headcount: 3,
-                  openCount: 0,
-                  note: "Cristina (QA/SM), Anca, Daria"
-                },
-                {
-                  title: "Webiz QA",
-                  role: "QA (Webiz)",
-                  headcount: 1,
-                  openCount: 0,
-                  note: "Ruzanna – Webiz QA"
-                }
-              ]
+              title: "Open FE Developer",
+              role: "FE DEV (Open)",
+              headcount: 0,
+              openCount: 1,
+              note: "Open FE DEV role (Poland SII)"
             }
-          ],
-          innerPillars: []
+          ]
         },
-
-        // ROMANIA – RG2
         {
-          id: "rg2",
-          name: "RG2 – Romania",
-          lead: { name: "George Chiriuta", title: "TL" },
-          meta: ".NET / FE DEV, QA, Webiz",
-          groups: [
+          label: "QA & Webiz",
+          nodes: [
             {
-              label: "Developers",
-              nodes: [
-                {
-                  title: "RG2 Developers",
-                  role: ".NET / FE DEV",
-                  headcount: 4,
-                  openCount: 0,
-                  note: "Alexandru, Gabriel, Marius (FE), Stefan – core devs"
-                }
-              ]
+              title: "RG1 QA",
+              role: "QA / SM",
+              headcount: 3,
+              openCount: 0,
+              note: "Cristina (QA/SM), Anca, Daria"
             },
             {
-              label: "QA & Webiz",
-              nodes: [
-                {
-                  title: "RG2 QA",
-                  role: "QA",
-                  headcount: 3,
-                  openCount: 0,
-                  note: "Liviu, Alexandru, Vlad"
-                },
-                {
-                  title: "Webiz QA / SM",
-                  role: "QA / SM (Webiz)",
-                  headcount: 1,
-                  openCount: 0,
-                  note: "Naira – Webiz QA/SM"
-                }
-              ]
+              title: "Webiz QA",
+              role: "QA (Webiz)",
+              headcount: 1,
+              openCount: 0,
+              note: "Ruzanna – Webiz QA"
             }
-          ],
-          innerPillars: []
-        },
+          ]
+        }
+      ],
+      innerPillars: []
+    },
 
-        // ROMANIA – RG3
+    {
+      id: "rg2",
+      name: "RG2 – Romania",
+      lead: { name: "George Chiriuta", title: "TL" },
+      meta: ".NET / FE DEV, QA, Webiz",
+      groups: [
         {
-          id: "rg3",
-          name: "RG3 – Romania",
-          lead: { name: "Gabriel Tanasescu", title: "TL" },
-          meta: ".NET DEV, RO SII, QA",
-          groups: [
+          label: "Developers",
+          nodes: [
             {
-              label: "Developers",
-              nodes: [
-                {
-                  title: "RG3 Developers",
-                  role: ".NET DEV",
-                  headcount: 2,
-                  openCount: 0,
-                  note: "Larisa + RO SII dev (Andreea)"
-                },
-                {
-                  title: "Open Developer",
-                  role: ".NET DEV (Open)",
-                  headcount: 0,
-                  openCount: 1,
-                  note: "Open dev role as shown in chart"
-                }
-              ]
-            },
-            {
-              label: "QA",
-              nodes: [
-                {
-                  title: "RG3 QA",
-                  role: "QA",
-                  headcount: 2,
-                  openCount: 0,
-                  note: "Ovidiu & Alina – QA"
-                }
-              ]
+              title: "RG2 Developers",
+              role: ".NET / FE DEV",
+              headcount: 4,
+              openCount: 0,
+              note: "Alexandru, Gabriel, Marius (FE), Stefan – core devs"
             }
-          ],
-          innerPillars: []
+          ]
         },
-
-        // ROMANIA – RG4
         {
-          id: "rg4",
-          name: "RG4 – Romania",
-          lead: { name: "Bogdan Hardau", title: "TL" },
-          meta: "RO SII .NET DEV & QA",
-          groups: [
+          label: "QA & Webiz",
+          nodes: [
             {
-              label: "Developers (RO SII)",
-              nodes: [
-                {
-                  title: "RG4 Developers",
-                  role: ".NET DEV (RO SII)",
-                  headcount: 5,
-                  openCount: 0,
-                  note: "Tudor, Ovidiu, Mircea, Laurentiu, Ali – all RO SII devs"
-                }
-              ]
+              title: "RG2 QA",
+              role: "QA",
+              headcount: 3,
+              openCount: 0,
+              note: "Liviu, Alexandru, Vlad"
             },
             {
-              label: "QA (RO SII)",
-              nodes: [
-                {
-                  title: "RG4 QA",
-                  role: "QA (RO SII)",
-                  headcount: 3,
-                  openCount: 0,
-                  note: "Vlad, Cristian, Gabriel – RO SII QA"
-                }
-              ]
+              title: "Webiz QA / SM",
+              role: "QA / SM (Webiz)",
+              headcount: 1,
+              openCount: 0,
+              note: "Naira – Webiz QA/SM"
             }
-          ],
-          innerPillars: []
-        },
+          ]
+        }
+      ],
+      innerPillars: []
+    },
 
-        // ROMANIA – Production Owners & Modernization
+    {
+      id: "rg3",
+      name: "RG3 – Romania",
+      lead: { name: "Gabriel Tanasescu", title: "TL" },
+      meta: ".NET DEV, RO SII, QA",
+      groups: [
         {
-          id: "production-modernization",
-          name: "Production Owners & Modernization – Romania",
-          lead: { name: "Alexandru Negru", title: "TL" },
-          meta: "DEV • QA • TLS • QA Automation (RO SII + Open)",
-          groups: [
+          label: "Developers",
+          nodes: [
             {
-              label: "Developers",
-              nodes: [
-                {
-                  title: "Modernization DEV",
-                  role: "DEV (.NET / FE)",
-                  headcount: 2,
-                  openCount: 0,
-                  note: "Merdin & Viorel – RO SII devs"
-                }
-              ]
+              title: "RG3 Developers",
+              role: ".NET DEV",
+              headcount: 2,
+              openCount: 0,
+              note: "Larisa + RO SII dev (Andreea)"
             },
             {
-              label: "QA & TLS",
-              nodes: [
-                {
-                  title: "QA",
-                  role: "QA",
-                  headcount: 1,
-                  openCount: 0,
-                  note: "Ciprian – QA"
-                },
-                {
-                  title: "TLS",
-                  role: "TLS",
-                  headcount: 2,
-                  openCount: 0,
-                  note: "Cristian Balta, Madalin-Mihai – TLS"
-                }
-              ]
-            },
-            {
-              label: "QA Automation",
-              nodes: [
-                {
-                  title: "Open QA Automation",
-                  role: "QA Automation (Open)",
-                  headcount: 0,
-                  openCount: 1,
-                  note: "Open QA automation role"
-                },
-                {
-                  title: "QA Automation (RO SII)",
-                  role: "QA Automation",
-                  headcount: 2,
-                  openCount: 0,
-                  note: "Alexandru Dumitru, Cristian Istrate – RO SII"
-                }
-              ]
+              title: "Open Developer",
+              role: ".NET DEV (Open)",
+              headcount: 0,
+              openCount: 1,
+              note: "Open dev role as shown in chart"
             }
-          ],
-          innerPillars: []
+          ]
         },
+        {
+          label: "QA",
+          nodes: [
+            {
+              title: "RG3 QA",
+              role: "QA",
+              headcount: 2,
+              openCount: 0,
+              note: "Ovidiu & Alina – QA"
+            }
+          ]
+        }
+      ],
+      innerPillars: []
+    },
 
-        // POLAND – Customer Protection
+    {
+      id: "rg4",
+      name: "RG4 – Romania",
+      lead: { name: "Bogdan Hardau", title: "TL" },
+      meta: "RO SII .NET DEV & QA",
+      groups: [
+        {
+          label: "Developers (RO SII)",
+          nodes: [
+            {
+              title: "RG4 Developers",
+              role: ".NET DEV (RO SII)",
+              headcount: 5,
+              openCount: 0,
+              note: "Tudor, Ovidiu, Mircea, Laurentiu, Ali – all RO SII devs"
+            }
+          ]
+        },
+        {
+          label: "QA (RO SII)",
+          nodes: [
+            {
+              title: "RG4 QA",
+              role: "QA (RO SII)",
+              headcount: 3,
+              openCount: 0,
+              note: "Vlad, Cristian, Gabriel – RO SII QA"
+            }
+          ]
+        }
+      ],
+      innerPillars: []
+    },
+
+    {
+      id: "production-modernization",
+      name: "Production Owners & Modernization – Romania",
+      lead: { name: "Alexandru Negru", title: "TL" },
+      meta: "DEV • QA • TLS • QA Automation (RO SII + Open)",
+      groups: [
+        {
+          label: "Developers",
+          nodes: [
+            {
+              title: "Modernization DEV",
+              role: "DEV (.NET / FE)",
+              headcount: 2,
+              openCount: 0,
+              note: "Merdin & Viorel – RO SII devs"
+            }
+          ]
+        },
+        {
+          label: "QA & TLS",
+          nodes: [
+            {
+              title: "QA",
+              role: "QA",
+              headcount: 1,
+              openCount: 0,
+              note: "Ciprian – QA"
+            },
+            {
+              title: "TLS",
+              role: "TLS",
+              headcount: 2,
+              openCount: 0,
+              note: "Cristian Balta, Madalin-Mihai – TLS"
+            }
+          ]
+        },
+        {
+          label: "QA Automation",
+          nodes: [
+            {
+              title: "Open QA Automation",
+              role: "QA Automation (Open)",
+              headcount: 0,
+              openCount: 1,
+              note: "Open QA automation role"
+            },
+            {
+              title: "QA Automation (RO SII)",
+              role: "QA Automation",
+              headcount: 2,
+              openCount: 0,
+              note: "Alexandru Dumitru, Cristian Istrate – RO SII"
+            }
+          ]
+        }
+      ],
+      innerPillars: []
+    },
+
+    // === POLAND – NEW PILLAR FOR MIKOLAJ ===
+    {
+      id: "customer-protection-group",
+      name: "Customer Protection Group – Poland",
+      lead: { name: "Mikolaj Stanozak", title: "EM / Group Manager" },
+      meta: "Customer Protection • Code Busters • RG Cross Team • Principal Engineer",
+      groups: [
+        {
+          label: "Leadership",
+          nodes: [
+            {
+              title: "Mikolaj Stanozak",
+              role: "EM / Group Manager",
+              headcount: 1,
+              openCount: 0,
+              note: "Group manager for Customer Protection, Code Busters & RG Cross Team"
+            },
+            {
+              title: "Mateusz",
+              role: "Principal Engineer",
+              headcount: 1,
+              openCount: 0,
+              note: "Principal engineer in the Customer Protection group"
+            }
+          ]
+        }
+      ],
+      innerPillars: [
+        // Inner team: Customer Protection
         {
           id: "customer-protection",
-          name: "Customer Protection – Poland",
+          name: "Customer Protection",
           lead: { name: "Damian Garncarek", title: "SETL" },
-          meta: "FE / SFE / Java DEV • SSDIT • Poland SII",
           groups: [
             {
               label: "Developers",
@@ -1018,16 +1041,14 @@
                 }
               ]
             }
-          ],
-          innerPillars: []
+          ]
         },
 
-        // POLAND – Code Busters
+        // Inner team: Code Busters
         {
           id: "code-busters",
-          name: "Code Busters – Poland",
+          name: "Code Busters",
           lead: { name: "Pawel Piatek", title: "TL" },
-          meta: "SFE DEV • SSDIT",
           groups: [
             {
               label: "Developers",
@@ -1053,16 +1074,14 @@
                 }
               ]
             }
-          ],
-          innerPillars: []
+          ]
         },
 
-        // POLAND – RG Cross Team
+        // Inner team: RG Cross Team
         {
           id: "rg-cross-team",
-          name: "RG Cross Team – Poland",
-          lead: { name: "Mateusz Baranski", title: "TL (with Principal)" },
-          meta: ".NET / FE DEV • QA • SSDIT • Poland SII",
+          name: "RG Cross Team",
+          lead: { name: "Mateusz Baranski", title: "TL" },
           groups: [
             {
               label: "Developers (Poland SII)",
@@ -1100,11 +1119,13 @@
                 }
               ]
             }
-          ],
-          innerPillars: []
+          ]
         }
       ]
-    };
+    }
+  ]
+};
+
 
     // ===== 2. Totals helpers =====
     function sumGroups(groups = []) {
