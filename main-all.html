@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Core Director – Yariv Postan</title>
+  <title>Customer Services Tech – Yariv Postan Org Overview</title>
   <style>
     :root {
       --bg: #f4f7fb;
@@ -39,7 +39,7 @@
     }
 
     .app-shell {
-      max-width: 1800px;
+      max-width: 1900px;
       margin: 0 auto;
       width: 100%;
     }
@@ -82,10 +82,128 @@
       color: var(--accent);
     }
 
-    .subtitle {
-      font-size: 12px;
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 7px 30px 7px 30px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 13px;
+      outline: none;
+      min-width: 220px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .search-input::placeholder {
       color: var(--text-muted);
     }
+
+    .search-icon {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    .clear-search {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      cursor: pointer;
+      opacity: 0.6;
+      display: none;
+    }
+
+    .search-input:not(:placeholder-shown) ~ .clear-search {
+      display: block;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      padding: 7px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast);
+      box-shadow: 0 8px 18px rgba(38, 154, 188, 0.35);
+    }
+
+    .btn span.icon {
+      font-size: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.25);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--primary-dark);
+      border-style: solid;
+      border-color: var(--border-strong);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      background: #f5fbff;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      margin-top: 6px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      color: var(--text-muted);
+    }
+
+    .pill-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .pill-dot-lead { background: var(--primary); }
+    .pill-dot-team { background: #16a34a; }
+    .pill-dot-open { background: #dc2626; }
 
     .root-card {
       background: #ffffff;
@@ -96,7 +214,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 12px;
+      margin-top: 8px;
     }
 
     .avatar {
@@ -142,7 +260,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .root-name {
@@ -195,7 +313,7 @@
       box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
       overflow-x: hidden;
       overflow-y: auto;
-      max-height: calc(100vh - 240px);
+      max-height: calc(100vh - 260px);
     }
 
     .pillars-row {
@@ -206,10 +324,9 @@
       gap: 12px;
     }
 
-    /* Pillars for each Head of */
     .pillar {
-      flex: 1 1 260px;
-      max-width: 360px;
+      flex: 1 1 210px;
+      max-width: 240px;          /* 5 pillars fit comfortably on wide screens */
       border-radius: 16px;
       border: 1px solid var(--border-subtle);
       background: #ffffff;
@@ -222,6 +339,12 @@
         box-shadow var(--transition-fast),
         border-color var(--transition-fast),
         background var(--transition-fast);
+      white-space: normal !important;
+    }
+
+    .pillar * {
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .pillar:hover {
@@ -231,82 +354,246 @@
     }
 
     .pillar-header {
+      position: relative;
       padding: 10px 12px 8px;
       border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
       background: linear-gradient(
         135deg,
         rgba(38, 154, 188, 0.08),
         rgba(11, 11, 37, 0.02)
       );
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
     }
 
     .pillar-title {
       font-size: 13px;
       font-weight: 700;
+      line-height: 1.3;
+      padding-right: 30px;
       color: var(--accent);
     }
 
-    .pillar-role {
+    .pillar-tagline {
       font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag-person {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      font-size: 10px;
+    }
+
+    .tag-person span.badge {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .tag-metric {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    .toggle {
+      position: absolute;
+      right: 8px;
+      top: 10px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      cursor: pointer;
+      transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
       color: var(--text-muted);
     }
 
-    .pillar-meta {
-      font-size: 10px;
-      color: var(--text-muted);
+    .toggle:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: var(--primary);
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .toggle[data-open="true"] {
+      background: #f0f9ff;
+      border-color: var(--primary);
+      color: var(--primary-dark);
     }
 
     .pillar-body {
+      position: relative;
+      padding: 6px 8px 10px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      padding: 8px;
+      gap: 4px;
+      font-size: 11px;
     }
 
-    .pillar-info {
+    .children {
+      max-height: 9999px;
+      overflow-y: visible;
+      transition: max-height 220ms ease-out, opacity 160ms ease-out;
+      opacity: 1;
+    }
+
+    .children.collapsed {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .group-label {
+      margin: 4px 2px 2px;
+      padding: 2px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 9px;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .group-label::before {
+      content: "";
+      width: 14px;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        rgba(148, 163, 184, 0.45),
+        rgba(38, 154, 188, 0.9)
+      );
+      border-radius: 99px;
+    }
+
+    .node {
+      border-radius: 12px;
+      padding: 6px 7px;
+      margin: 3px 2px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .node:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+      border-color: var(--primary);
+      background: #f9fafb;
+    }
+
+    .node-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .node-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .node-role {
       font-size: 10px;
       color: var(--text-muted);
-      padding: 4px 6px;
-      border-radius: 10px;
-      background: #f9fafb;
-      border: 1px dashed var(--border-subtle);
     }
 
-    .iframe-wrapper {
-      border-radius: 12px;
-      overflow: hidden;
+    .node-meta {
+      font-size: 9px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    .node-chip {
+      padding: 2px 6px;
+      border-radius: var(--radius-pill);
+      font-size: 9px;
       border: 1px solid var(--border-subtle);
       background: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .iframe-wrapper iframe {
-      display: block;
-      width: 100%;
-      height: 420px; /* adjust as you like */
-      border: none;
+    .node-chip.team {
+      border-color: #d1fae5;
+      background: #ecfdf5;
+      color: #166534;
     }
 
-    .open-link {
-      font-size: 10px;
-      text-align: right;
-      margin-top: 4px;
+    .node-chip.open {
+      border-color: #fecaca;
+      background: #fef2f2;
+      color: #b91c1c;
     }
 
-    .open-link a {
-      color: var(--primary-dark);
-      text-decoration: none;
-      font-weight: 600;
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--primary);
     }
 
-    .open-link a:hover {
-      text-decoration: underline;
+    .badge-dot.open {
+      background: #dc2626;
     }
 
-    /* Wide screens: force 4 pillars on one row, no horizontal scroll */
-    @media (min-width: 1400px) {
+    .node-count {
+      font-size: 9px;
+      opacity: 0.85;
+    }
+
+    .search-hit {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 1px rgba(38, 154, 188, 0.5),
+        0 0 14px rgba(38, 154, 188, 0.35) !important;
+      background: #eff6ff;
+    }
+
+    .search-fade {
+      opacity: 0.25;
+      filter: grayscale(0.3);
+    }
+
+    @media (min-width: 1500px) {
       .chart-shell {
         max-height: none;
       }
@@ -315,7 +602,7 @@
         justify-content: space-between;
       }
       .pillar {
-        flex: 0 0 calc((100% - 36px) / 4); /* 4 pillars, 3 gaps * 12px */
+        flex: 0 0 calc(100% / 5 - 12px); /* 5 pillars per row on very wide screens */
         max-width: none;
       }
     }
@@ -332,155 +619,476 @@
 </head>
 <body>
   <div class="app-shell">
-
     <header class="app-header">
       <div class="title-group">
         <div class="title-pill">
           <span class="title-pill-dot"></span>
-          Group Org – Unified View
+          Customer Services Tech – Org Overview
         </div>
-        <div class="subtitle">
-          Top-level view: Yariv Postan &amp; domain heads, with their cascaded org charts.
+        <div class="title">Domains reporting to Yariv Postan</div>
+      </div>
+      <div class="controls">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            id="search"
+            class="search-input"
+            type="text"
+            placeholder="Search by domain, head, area…"
+            autocomplete="off"
+          />
+          <span id="clearSearch" class="clear-search">✕</span>
         </div>
+        <button id="toggleAllBtn" class="btn btn-secondary" type="button">
+          <span class="icon">▾</span>
+          Toggle all pillars
+        </button>
       </div>
     </header>
 
-    <!-- Top-level manager: Yariv -->
-    <section class="root-card">
-      <div class="avatar">
-        <div class="avatar-inner">YP</div>
-        <div class="avatar-badge">★</div>
+    <section id="rootCard" class="root-card"></section>
+
+    <section class="legend">
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-lead"></span>
+        Domain Head / EM
       </div>
-      <div class="root-main">
-        <div class="root-name">Yariv Postan</div>
-        <div class="root-role">Manager of Oren, Aharon, Shmuel &amp; Eran domains</div>
-        <div class="root-meta">
-          <div class="root-chip">
-            <span class="dot"></span>
-            4 Heads of / Domains
-          </div>
-          <div>
-            Customer Services &amp; Unified Client • Cashiers &amp; Payments •
-            Onboarding &amp; Digital Marketing • Additional CS &amp; UC domains
-          </div>
-        </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-team"></span>
+        Sub-domains / key areas
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-open"></span>
+        Link out to detailed org chart
       </div>
     </section>
 
-    <!-- Combined pillars -->
-    <main class="chart-shell">
-      <div class="pillars-row">
-
-        <!-- Oren pillar -->
-        <article class="pillar">
-          <header class="pillar-header">
-            <div class="pillar-title">Oren</div>
-            <div class="pillar-role">Head of Customer Services &amp; Unified Client</div>
-            <div class="pillar-meta">
-              Based on oren-org.html – full org chart embedded below.
-            </div>
-          </header>
-          <div class="pillar-body">
-            <div class="pillar-info">
-              Includes Customer Services, Unified Client 1 &amp; 2 and related sub-teams as defined in the original org chart.
-            </div>
-            <div class="iframe-wrapper">
-              <iframe
-                src="https://shmuelda.github.io/oren-org.html"
-                title="Oren – Customer Services & Unified Client Org"
-              ></iframe>
-            </div>
-            <div class="open-link">
-              <a href="https://shmuelda.github.io/oren-org.html" target="_blank" rel="noopener noreferrer">
-                Open full page ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Aharon pillar -->
-        <article class="pillar">
-          <header class="pillar-header">
-            <div class="pillar-title">Aharon</div>
-            <div class="pillar-role">Head of WH Customer Offer, Bonus Platform &amp; 888 Tech</div>
-            <div class="pillar-meta">
-              Based on aharon-org.html – full org chart embedded below.
-            </div>
-          </header>
-          <div class="pillar-body">
-            <div class="pillar-info">
-              Covers WH Customer Offer, Bonus Platform, Platform Infra, DBA, CRM 888 and QA Automation 888.
-            </div>
-            <div class="iframe-wrapper">
-              <iframe
-                src="https://shmuelda.github.io/aharon-org.html"
-                title="Aharon – WH Customer Offer & Bonus Platform Org"
-              ></iframe>
-            </div>
-            <div class="open-link">
-              <a href="https://shmuelda.github.io/aharon-org.html" target="_blank" rel="noopener noreferrer">
-                Open full page ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Shmuel pillar -->
-        <article class="pillar">
-          <header class="pillar-header">
-            <div class="pillar-title">Shmuel</div>
-            <div class="pillar-role">Head of Onboarding &amp; Digital Marketing</div>
-            <div class="pillar-meta">
-              Based on shmuel-org.html – full org chart embedded below.
-            </div>
-          </header>
-          <div class="pillar-body">
-            <div class="pillar-info">
-              Funnel &amp; CX Management, Site Infra, Automation &amp; AI, Adtech, and WH Onboarding &amp; CX Management.
-            </div>
-            <div class="iframe-wrapper">
-              <iframe
-                src="https://shmuelda.github.io/shmuel-org.html"
-                title="Shmuel – Onboarding & Digital Marketing Org"
-              ></iframe>
-            </div>
-            <div class="open-link">
-              <a href="https://shmuelda.github.io/shmuel-org.html" target="_blank" rel="noopener noreferrer">
-                Open full page ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Eran pillar -->
-        <article class="pillar">
-          <header class="pillar-header">
-            <div class="pillar-title">Eran</div>
-            <div class="pillar-role">Head of Payments Engineering &amp; Fraud</div>
-            <div class="pillar-meta">
-              Based on eran-org.html – full org chart embedded below.
-            </div>
-          </header>
-          <div class="pillar-body">
-            <div class="pillar-info">
-              Payments, Cashier and Fraud teams
-            </div>
-            <div class="iframe-wrapper">
-              <iframe
-                src="https://shmuelda.github.io/eran-org.html"
-                title="Eran – Org Chart"
-              ></iframe>
-            </div>
-            <div class="open-link">
-              <a href="https://shmuelda.github.io/eran-org.html" target="_blank" rel="noopener noreferrer">
-                Open full page ↗
-              </a>
-            </div>
-          </div>
-        </article>
-
-      </div>
+    <main class="chart-shell" id="orgChart">
+      <div id="pillarsRow" class="pillars-row"></div>
     </main>
   </div>
+
+  <script>
+    // ===== 1. ORG DATA =====
+    const orgData = {
+      head: {
+        name: "Yariv Postan",
+        initials: "YP",
+        role: "Customer Services Technology – Group Manager",
+        pillarsLabel: "Domains",
+        description:
+          "Onboarding & Digital Marketing • WH Customer Offer & Platform • Payments & Cashier • Customer Services & Unified Client • Responsible Gaming"
+      },
+      pillars: [
+        {
+          id: "oren-domain",
+          name: "Customer Services & Unified Client",
+          lead: { name: "Oren", title: "Head of Customer Services & Unified Client" },
+          meta: "Contact centre, UC1/UC2, Poland CS",
+          groups: [
+            {
+              label: "Domain Head",
+              nodes: [
+                {
+                  title: "Oren",
+                  role: "Head of CS & Unified Client",
+                  note: "Owns Customer Services tech and Unified Client experience"
+                }
+              ]
+            },
+            {
+              label: "Key Pillars",
+              nodes: [
+                { title: "Customer Services GM (Poland)", role: "Krzysztof & CS teams" },
+                { title: "UC1 & UC2 squads", role: "Unified Client product squads" },
+                { title: "Back-office & QA teams", role: "Support tools & QA" }
+              ]
+            },
+            {
+              label: "Full Org",
+              nodes: [
+                {
+                  title: "View detailed org chart",
+                  role: "oren-org.html",
+                  note:
+                    "Open full org structure",
+                  link: "oren-org.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "aharon-domain",
+          name: "WH Customer Offer & 888 Platform",
+          lead: { name: "Aharon", title: "Head of WH Customer Offer & 888 Platform" },
+          meta: "CO & Bonus Platform • Platform Infra • DBA • CRM 888 • QA Automation",
+          groups: [
+            {
+              label: "Domain Head",
+              nodes: [
+                {
+                  title: "Aharon",
+                  role: "Head of WH Customer Offer & 888 Platform",
+                  note:
+                    "Owns WH Customer Offer, Bonus Platform, Platform Infra, DBA & CRM 888"
+                }
+              ]
+            },
+            {
+              label: "Key Pillars",
+              nodes: [
+                { title: "WH Customer Offer & Bonus Platform", role: "CO/BP domain" },
+                { title: "Platform Infra & DBA", role: "Core platform infrastructure" },
+                { title: "CRM 888 & QA Automation 888", role: "Marketing tooling & QA" }
+              ]
+            },
+            {
+              label: "Full Org",
+              nodes: [
+                {
+                  title: "View detailed org chart",
+                  role: "aharon-org.html",
+                  note: "Open full org structure",
+                  link: "aharon-org.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "shmuel-domain",
+          name: "Onboarding & Digital Marketing",
+          lead: { name: "Shmuel Daniel", title: "Head of Onboarding & Digital Marketing" },
+          meta: "Funnels & CX • Site Infra • Adtech • WH Onboarding & CX",
+          groups: [
+            {
+              label: "Domain Head",
+              nodes: [
+                {
+                  title: "Shmuel Daniel",
+                  role: "Head of Onboarding & Digital Marketing",
+                  note:
+                    "Owns onboarding funnels, CX, marketing tech and WH onboarding experience"
+                }
+              ]
+            },
+            {
+              label: "Key Pillars",
+              nodes: [
+                { title: "Funnel & CX Management", role: "Acquisition & conversion" },
+                { title: "Site Infrastructure & Automation", role: "Web platform & AI" },
+                { title: "Adtech", role: "Marketing technology and tracking" },
+                { title: "WH Onboarding & CX", role: "WH specific onboarding flows" }
+              ]
+            },
+            {
+              label: "Full Org",
+              nodes: [
+                {
+                  title: "View detailed org chart",
+                  role: "shmuel-org.html",
+                  note: "Open full org structure",
+                  link: "shmuel-org.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "eran-domain",
+          name: "Payments & Cashier",
+          lead: { name: "Eran", title: "Head of Payments & Cashier Domain" },
+          meta: "Cashier squads • PSP • TLS • Fraud & WH",
+          groups: [
+            {
+              label: "Domain Head",
+              nodes: [
+                {
+                  title: "Eran",
+                  role: "Head of Payments & Cashier",
+                  note:
+                    "Owns cashier experience, PSP integrations, TLS and fraud-related squads"
+                }
+              ]
+            },
+            {
+              label: "Key Pillars",
+              nodes: [
+                { title: "Cashier 1 & Cashier 2", role: "Core cashier product squads" },
+                { title: "Unified Cashier & PSP", role: "Unified cashier & payment providers" },
+                { title: "TLS & Modernization", role: "Tech leadership & modernization" },
+                { title: "WH & Fraud", role: "WH specific + fraud tooling" }
+              ]
+            },
+            {
+              label: "Full Org",
+              nodes: [
+                {
+                  title: "View detailed org chart",
+                  role: "eran-org.html",
+                  note: "Open full org structure",
+                  link: "eran-org.html"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          id: "rg-domain",
+          name: "Responsible Gaming Domain",
+          lead: { name: "Gabriela", title: "Head of Responsible Gaming Domain" },
+          meta: "Romania RG squads • Production Owners & Modernization • Poland Customer Protection Group",
+          groups: [
+            {
+              label: "Domain Head",
+              nodes: [
+                {
+                  title: "Gabriela",
+                  role: "Head of RG Domain",
+                  note:
+                    "Owns Responsible Gaming technology across Romania and Poland"
+                }
+              ]
+            },
+            {
+              label: "Key Pillars",
+              nodes: [
+                { title: "RG1–RG4 (Romania)", role: "Core RG squads in Romania" },
+                {
+                  title: "Production Owners & Modernization (RO)",
+                  role: "Product ownership & modernization"
+                },
+                {
+                  title: "Customer Protection Group (Poland)",
+                  role: "Customer Protection, Code Busters, RG Cross Team"
+                }
+              ]
+            },
+            {
+              label: "Full Org",
+              nodes: [
+                {
+                  title: "View detailed org chart",
+                  role: "rg-org.html",
+                  note: "Open full RG domain org structure",
+                  link: "rg-org.html"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    // ===== 2. Rendering helpers =====
+    function renderRootCard(data) {
+      const rootCard = document.getElementById("rootCard");
+      const pillarsCount = data.pillars.length;
+      rootCard.innerHTML = `
+        <div class="avatar">
+          <div class="avatar-inner">${data.head.initials}</div>
+          <div class="avatar-badge">★</div>
+        </div>
+        <div class="root-main">
+          <div class="root-name">${data.head.name}</div>
+          <div class="root-role">${data.head.role}</div>
+          <div class="root-meta">
+            <div class="root-chip">
+              <span class="dot"></span>
+              ${pillarsCount} ${data.head.pillarsLabel}
+            </div>
+            <div>${data.head.description}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderGroups(groups) {
+      if (!groups || !groups.length) return "";
+      return groups
+        .map(group => {
+          const nodesHtml = group.nodes
+            .map(node => {
+              const hasLink = !!node.link;
+              const titleHtml = hasLink
+                ? `<a href="${node.link}" target="_blank" style="color:inherit;text-decoration:underline;">${node.title}</a>`
+                : node.title;
+
+              return `
+                <div class="node" data-node>
+                  <div class="node-main">
+                    <div>
+                      <div class="node-title">${titleHtml}</div>
+                      <div class="node-role">${node.role || ""}</div>
+                    </div>
+                  </div>
+                  <div class="node-meta">
+                    <span class="node-count">${node.note || ""}</span>
+                  </div>
+                </div>
+              `;
+            })
+            .join("");
+
+          return `
+            <div class="group">
+              <div class="group-label">${group.label}</div>
+              ${nodesHtml}
+            </div>
+          `;
+        })
+        .join("");
+    }
+
+    function renderPillarsRow(data) {
+      const row = document.getElementById("pillarsRow");
+      row.innerHTML = data.pillars
+        .map(pillar => {
+          const childrenHtml = renderGroups(pillar.groups || []);
+          return `
+            <article class="pillar" data-pillar="${pillar.id}">
+              <header class="pillar-header">
+                <div class="pillar-title">${pillar.name}</div>
+                <div class="pillar-tagline">
+                  <span class="tag-person">
+                    <span class="badge"></span>
+                    ${
+                      pillar.lead && pillar.lead.name
+                        ? `Led by: <strong>${pillar.lead.name}</strong>${
+                            pillar.lead.title ? ", " + pillar.lead.title : ""
+                          }`
+                        : "No direct lead listed"
+                    }
+                  </span>
+                  <span class="tag-metric">${pillar.meta || ""}</span>
+                </div>
+                <button class="toggle" type="button" data-open="true" aria-label="Collapse pillar">
+                  ▴
+                </button>
+              </header>
+              <div class="pillar-body">
+                <div class="children">
+                  ${childrenHtml}
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join("");
+    }
+
+    // ===== 3. Interactions =====
+    function initInteractions() {
+      const toggles = document.querySelectorAll(".toggle");
+      const searchInput = document.getElementById("search");
+      const clearSearch = document.getElementById("clearSearch");
+      const toggleAllBtn = document.getElementById("toggleAllBtn");
+      const orgChart = document.getElementById("orgChart");
+
+      // Outer pillar toggles
+      toggles.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const pillar = btn.closest(".pillar");
+          const children = pillar.querySelector(".children");
+          const isOpen = btn.getAttribute("data-open") === "true";
+          if (isOpen) {
+            children.classList.add("collapsed");
+            btn.setAttribute("data-open", "false");
+            btn.textContent = "▾";
+          } else {
+            children.classList.remove("collapsed");
+            btn.setAttribute("data-open", "true");
+            btn.textContent = "▴";
+          }
+        });
+      });
+
+      // Toggle all pillars
+      toggleAllBtn.addEventListener("click", () => {
+        const allChildren = document.querySelectorAll(".pillar .children");
+        const allToggles = document.querySelectorAll(".toggle");
+        const openStates = Array.from(allToggles).map(t =>
+          t.getAttribute("data-open")
+        );
+        const allOpen = openStates.every(s => s === "true");
+        const newStateOpen = !allOpen;
+
+        allChildren.forEach(ch =>
+          ch.classList.toggle("collapsed", !newStateOpen)
+        );
+        allToggles.forEach(btn => {
+          btn.setAttribute("data-open", newStateOpen ? "true" : "false");
+          btn.textContent = newStateOpen ? "▴" : "▾";
+        });
+      });
+
+      function normalise(str) {
+        return str
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "");
+      }
+
+      function applySearchFilter(query) {
+        const nodes = orgChart.querySelectorAll("[data-node], .pillar");
+        const trimmed = query.trim();
+        if (!trimmed) {
+          nodes.forEach(el => {
+            el.classList.remove("search-hit", "search-fade");
+          });
+          return;
+        }
+        const q = normalise(trimmed);
+        const hits = [];
+        nodes.forEach(el => {
+          const text = normalise(el.textContent || "");
+          const isHit = text.includes(q);
+          if (isHit) hits.push(el);
+        });
+        if (!hits.length) {
+          nodes.forEach(el => {
+            el.classList.remove("search-hit");
+            el.classList.add("search-fade");
+          });
+          return;
+        }
+        nodes.forEach(el => {
+          el.classList.remove("search-hit", "search-fade");
+        });
+        const hitSet = new Set(hits);
+        nodes.forEach(el => {
+          if (hitSet.has(el)) {
+            el.classList.add("search-hit");
+          } else {
+            el.classList.add("search-fade");
+          }
+        });
+      }
+
+      searchInput.addEventListener("input", e => {
+        applySearchFilter(e.target.value);
+      });
+
+      clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        applySearchFilter("");
+        searchInput.focus();
+      });
+
+      orgChart.querySelectorAll("[data-node]").forEach(node => {
+        node.addEventListener("click", () => {
+          node.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+    }
+
+    // ===== 4. Init =====
+    (function init() {
+      renderRootCard(orgData);
+      renderPillarsRow(orgData);
+      initInteractions();
+    })();
+  </script>
 </body>
 </html>
