@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Core – Yariv Postan Org Overview</title>
+  <title>Core – Full Org Overview (Yariv Postan)</title>
   <style>
     :root {
       --bg: #f4f7fb;
@@ -23,7 +23,9 @@
       --transition-fast: 160ms ease-out;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -103,7 +105,9 @@
       box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
 
-    .search-input::placeholder { color: var(--text-muted); }
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
 
     .search-icon {
       position: absolute;
@@ -150,7 +154,9 @@
       box-shadow: 0 8px 18px rgba(38, 154, 188, 0.35);
     }
 
-    .btn span.icon { font-size: 12px; }
+    .btn span.icon {
+      font-size: 12px;
+    }
 
     .btn:hover {
       transform: translateY(-1px);
@@ -195,6 +201,7 @@
       height: 9px;
       border-radius: 50%;
     }
+
     .pill-dot-lead { background: var(--primary); }
     .pill-dot-team { background: #16a34a; }
     .pill-dot-open { background: #dc2626; }
@@ -298,14 +305,13 @@
       background: var(--primary);
     }
 
-    /* Totals bar */
     .totals-bar {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
       align-items: center;
       justify-content: space-between;
-      margin-top: 8px;
+      margin-top: 6px;
       font-size: 11px;
     }
 
@@ -360,7 +366,7 @@
       box-shadow: 0 8px 22px rgba(15, 23, 42, 0.12);
       overflow-x: hidden;
       overflow-y: auto;
-      max-height: calc(100vh - 300px);
+      max-height: calc(100vh - 260px);
     }
 
     .pillars-row {
@@ -372,8 +378,8 @@
     }
 
     .pillar {
-      flex: 1 1 210px;
-      max-width: 240px;
+      flex: 1 1 260px;
+      max-width: 340px;
       border-radius: 16px;
       border: 1px solid var(--border-subtle);
       background: #ffffff;
@@ -389,7 +395,10 @@
       white-space: normal !important;
     }
 
-    .pillar * { max-width: 100%; box-sizing: border-box; }
+    .pillar * {
+      max-width: 100%;
+      box-sizing: border-box;
+    }
 
     .pillar:hover {
       transform: translateY(-3px);
@@ -510,227 +519,30 @@
 
     .pillar-body {
       position: relative;
-      padding: 6px 8px 10px;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 4px;
       font-size: 11px;
     }
 
-    .children {
-      max-height: 9999px;
-      overflow-y: visible;
+    .embedded-wrapper {
+      max-height: 640px;
       transition: max-height 220ms ease-out, opacity 160ms ease-out;
       opacity: 1;
+      overflow: hidden;
+      border-top: 1px solid var(--border-subtle);
     }
 
-    .children.collapsed {
+    .embedded-wrapper.collapsed {
       max-height: 0;
       opacity: 0;
-      overflow: hidden;
+      border-top: none;
     }
 
-    .group-label {
-      margin: 4px 2px 2px;
-      padding: 2px 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 9px;
-      color: var(--text-muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .group-label::before {
-      content: "";
-      width: 14px;
-      height: 1px;
-      background: linear-gradient(
-        to right,
-        rgba(148, 163, 184, 0.45),
-        rgba(38, 154, 188, 0.9)
-      );
-      border-radius: 99px;
-    }
-
-    .node {
-      border-radius: 12px;
-      padding: 6px 7px;
-      margin: 3px 2px;
-      border: 1px solid var(--border-subtle);
-      background: #ffffff;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition:
-        transform var(--transition-fast),
-        box-shadow var(--transition-fast),
-        border-color var(--transition-fast),
-        background var(--transition-fast);
-    }
-
-    .node:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
-      border-color: var(--primary);
-      background: #f9fafb;
-    }
-
-    .node-main {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-    }
-
-    .node-title {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    .node-role {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .node-meta {
-      font-size: 9px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 2px;
-    }
-
-    .node-count {
-      font-size: 9px;
-      opacity: 0.85;
-    }
-
-    .node-chip {
-      padding: 2px 6px;
-      border-radius: var(--radius-pill);
-      font-size: 9px;
-      border: 1px solid var(--border-subtle);
-      background: #f9fafb;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--primary);
-    }
-
-    .inner-pillars {
-      margin-top: 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .inner-pillar {
-      border-radius: 12px;
-      border: 1px dashed var(--border-strong);
-      background: #f9fafb;
-      padding: 5px 6px 4px;
-    }
-
-    .inner-pillar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .inner-header-main {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .inner-pillar-title {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    .inner-pillar-sub {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .inner-pillar-meta {
-      font-size: 10px;
-      color: var(--text-muted);
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    .inner-toggle {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      background: #ffffff;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      cursor: pointer;
-      margin-left: 4px;
-      transition:
-        background var(--transition-fast),
-        transform var(--transition-fast),
-        border-color var(--transition-fast),
-        box-shadow var(--transition-fast);
-      color: var(--text-muted);
-    }
-
-    .inner-toggle:hover {
-      background: #f3f4f6;
-      transform: translateY(-1px);
-      border-color: var(--primary);
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
-    }
-
-    .inner-toggle[data-open="true"] {
-      background: #f0f9ff;
-      border-color: var(--primary);
-      color: var(--primary-dark);
-    }
-
-    .inner-children {
-      max-height: 600px;
-      overflow-y: auto;
-      transition: max-height 200ms ease-out, opacity 150ms ease-out;
-      opacity: 1;
-      margin-top: 4px;
-    }
-
-    .inner-children.collapsed {
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-    }
-
-    .inner-pillar .group-label {
-      margin-top: 2px;
-      margin-bottom: 0;
-      font-size: 9px;
-    }
-
-    .inner-pillar .node {
-      margin: 3px 0;
+    .embedded-frame {
+      width: 100%;
+      height: 640px;
+      border: 0;
     }
 
     .search-hit {
@@ -746,20 +558,26 @@
     }
 
     @media (min-width: 1500px) {
-      .chart-shell { max-height: none; }
+      .chart-shell {
+        max-height: none;
+      }
       .pillars-row {
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
         justify-content: space-between;
       }
       .pillar {
-        flex: 0 0 calc(100% / 5 - 12px);
+        flex: 0 0 calc(20% - 12px); /* 5 pillars per row on very wide screens */
         max-width: none;
       }
     }
 
     @media (max-width: 720px) {
-      body { padding: 16px; }
-      .chart-shell { max-height: none; }
+      body {
+        padding: 16px;
+      }
+      .chart-shell {
+        max-height: none;
+      }
     }
   </style>
 </head>
@@ -771,7 +589,7 @@
           <span class="title-pill-dot"></span>
           Core – Org Overview
         </div>
-        <div class="title">Domains reporting to Yariv Postan</div>
+        <div class="title">Yariv Postan – Core Director</div>
       </div>
       <div class="controls">
         <div class="search-box">
@@ -780,14 +598,14 @@
             id="search"
             class="search-input"
             type="text"
-            placeholder="Search by domain, pillar, team, person…"
+            placeholder="Search by pillar or head of…"
             autocomplete="off"
           />
           <span id="clearSearch" class="clear-search">✕</span>
         </div>
         <button id="toggleAllBtn" class="btn btn-secondary" type="button">
           <span class="icon">▾</span>
-          Toggle all
+          Toggle all domains
         </button>
       </div>
     </header>
@@ -797,15 +615,15 @@
     <section class="legend">
       <div class="legend-item">
         <span class="pill-dot pill-dot-lead"></span>
-        Domain Head / TL / EM
+        Head of / Domain Owner
       </div>
       <div class="legend-item">
         <span class="pill-dot pill-dot-team"></span>
-        Inner pillars / teams
+        Filled headcount (incl. TLs)
       </div>
       <div class="legend-item">
         <span class="pill-dot pill-dot-open"></span>
-        Links to detailed org charts
+        Open positions
       </div>
     </section>
 
@@ -820,1002 +638,99 @@
   </div>
 
   <script>
-    // ========= 1. ORG DATA: Yariv (Core) with 5 domains =========
-    // headcount = filled roles, openCount = open positions
+    // ===== 1. ORG DATA FOR YARIV CORE VIEW =====
+    // NOTE: Please update totalFilled / totalOpen with the real numbers
+    // from each detailed org chart (incl. TLs, head of, etc.)
+
     const orgData = {
       head: {
         name: "Yariv Postan",
         initials: "YP",
-        role: "Core Director – Customer Services Technology",
+        role: "Core Director",
         pillarsLabel: "Domains",
         description:
-          "Onboarding & Digital Marketing • WH Customer Offer & 888 Platform • Payments & Cashier • Customer Services & Unified Client • Responsible Gaming Domain"
+          "Onboarding & Digital Marketing • Customer Services & Unified Client • Oren Domain • Eran Domain • Responsible Gaming"
       },
       pillars: [
-        // ====== Oren domain ======
+        {
+          id: "onboarding-digital",
+          name: "Onboarding & Digital Marketing",
+          headOf: "Shmuel Daniel",
+          headRole: "Head of Onboarding & Digital Marketing",
+          totalFilled: 0,           // <-- put real filled headcount here
+          totalOpen: 0,             // <-- open roles
+          iframeSrc: "https://shmuelda.github.io/shmuel-org.html",
+          meta: "Funnel & CX • Site Infra • Automation & AI • Adtech • WH Onboarding • WH CX"
+        },
+        {
+          id: "customer-services-unified",
+          name: "Customer Services & Unified Client",
+          headOf: "Aharon",
+          headRole: "Head of WH Customer Offer, Bonus Platform & 888 Tech",
+          totalFilled: 0,           // <-- from aharon-org totals
+          totalOpen: 0,
+          iframeSrc: "https://shmuelda.github.io/aharon-org.html",
+          meta: "WH Customer Offer & Bonus Platform • Platform Infra • DBA • CRM 888 • QA Automation 888"
+        },
         {
           id: "oren-domain",
-          name: "Customer Services & Unified Client",
-          lead: { name: "Oren", title: "Head of Customer Services & Unified Client" },
-          meta: "Contact centres • UC1/UC2 • Customer Services Poland",
-          groups: [
-            {
-              label: "Domain Head",
-              nodes: [
-                {
-                  title: "Oren",
-                  role: "Head of Customer Services & Unified Client",
-                  note:
-                    "Owns global Customer Services tech and Unified Client (UC) product",
-                  headcount: 1,
-                  openCount: 0
-                }
-              ]
-            },
-            {
-              label: "Navigation",
-              nodes: [
-                {
-                  title: "Open detailed CS & UC org chart",
-                  role: "oren-org.html",
-                  note: "Full org for Customer Services & Unified Client",
-                  link: "oren-org.html",
-                  headcount: 0,
-                  openCount: 0
-                }
-              ]
-            }
-          ],
-          innerPillars: [
-            {
-              id: "cs-poland",
-              name: "Customer Services – Poland",
-              lead: { name: "Krzysztof", title: "Customer Services GM (PL)" },
-              meta: "RG Eagles / Dragons / QA / DEV",
-              groups: [
-                {
-                  label: "Team Leaders",
-                  nodes: [
-                    { title: "Robert", role: "CR Eagles TL (RO)", note: "Owns CR Eagles team", headcount: 1, openCount: 0 },
-                    { title: "Natalia", role: "CR Dragons TL (PL)", note: "Owns CR Dragons team", headcount: 1, openCount: 0 },
-                    { title: "Bogdan", role: "CASAP+BO QA TL (RO)", note: "Owns QA team", headcount: 1, openCount: 0 },
-                    { title: "Iulia", role: "CASAP+BO DEV TL (RO)", note: "Owns DEV team", headcount: 1, openCount: 0 }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "uc2",
-              name: "Unified Client – UC2",
-              lead: { name: "Razvan", title: "TL UC2 (RO)" },
-              meta: "",
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "UC2 Squad",
-                      role: "Unified Client 2",
-                      note: "Razvan TL with FE/BE devs & QA",
-                      headcount: 0,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "uc1",
-              name: "Unified Client – UC1",
-              lead: { name: "Maoz", title: "TL UC1 (IL)" },
-              meta: "",
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "UC1 Squad",
-                      role: "Unified Client 1",
-                      note:
-                        "Maoz TL (IL) with dev teams in RO; includes automation open position",
-                      headcount: 0,
-                      openCount: 1
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          name: "Oren Domain",
+          headOf: "Oren",
+          headRole: "Head of [Oren’s domain]",
+          totalFilled: 0,           // <-- fill from oren-org
+          totalOpen: 0,
+          iframeSrc: "https://shmuelda.github.io/oren-org.html",
+          meta: "As per Oren domain org chart"
         },
-
-        // ====== Aharon domain ======
-        {
-          id: "aharon-domain",
-          name: "WH Customer Offer & 888 Platform",
-          lead: { name: "Aharon", title: "Head of WH Customer Offer & 888 Platform" },
-          meta: "WH Customer Offer • Bonus Platform • Platform Infra • DBA • CRM 888 • QA Automation 888",
-          groups: [
-            {
-              label: "Domain Head",
-              nodes: [
-                {
-                  title: "Aharon",
-                  role: "Head of WH Customer Offer & 888 Platform",
-                  note:
-                    "Owns WH Customer Offer & Bonus Platform, Platform Infra, DBA, CRM 888 and QA Automation 888",
-                  headcount: 1,
-                  openCount: 0
-                }
-              ]
-            },
-            {
-              label: "Navigation",
-              nodes: [
-                {
-                  title: "Open detailed Aharon org chart",
-                  role: "aharon-org.html",
-                  note: "Full org for WH Customer Offer & 888 Platform",
-                  link: "aharon-org.html",
-                  headcount: 0,
-                  openCount: 0
-                }
-              ]
-            }
-          ],
-          innerPillars: [
-            {
-              id: "wh-co-bp",
-              name: "WH Customer Offer & Bonus Platform",
-              lead: { name: "Group Manager", title: "GM & TL for CO team" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "WH Customer Offer Team",
-                      role: "CO squad",
-                      note:
-                        "6 total: 3 perm + 3 CLCM contractors; 1 open position (backfill for 1 dev who left)",
-                      headcount: 6,
-                      openCount: 1
-                    },
-                    {
-                      title: "Bonus Platform Team",
-                      role: "Bonus Platform",
-                      note: "12 total: 7 perm + 5 CLCM contractor",
-                      headcount: 12,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "platform-infra",
-              name: "Platform Infrastructure",
-              lead: { name: "Platform Infra GM", title: "Group Manager" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "Platform Infra 1",
-                      role: "Team incl. TL",
-                      note: "8 total (incl. TL) + 1 open position (backfill)",
-                      headcount: 8,
-                      openCount: 1
-                    },
-                    {
-                      title: "Platform Infra 2",
-                      role: "Team incl. TL",
-                      note: "7 total (incl. TL)",
-                      headcount: 7,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "dba-teams",
-              name: "DBA",
-              lead: { name: "Sharon & Avida", title: "DBA TLs" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "Sharon Team",
-                      role: "DBA TL",
-                      note: "8 total (incl. TL); 1 is Webiz",
-                      headcount: 8,
-                      openCount: 0
-                    },
-                    {
-                      title: "Avida Team",
-                      role: "DBA TL",
-                      note: "7 total (incl. TL); 1 open Webiz position",
-                      headcount: 7,
-                      openCount: 1
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "crm-888",
-              name: "CRM 888",
-              lead: { name: "CRM 888 GM", title: "Group Manager" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "CRM1",
-                      role: "Team incl. TL & SLS",
-                      note: "9 FTE (incl. TL and 1 SLS) + 1 open",
-                      headcount: 9,
-                      openCount: 1
-                    },
-                    {
-                      title: "CRM2 Webiz",
-                      role: "Webiz team",
-                      note: "4 total (incl. TL); Webiz team",
-                      headcount: 4,
-                      openCount: 0
-                    },
-                    {
-                      title: "CRM3",
-                      role: "Dev & QA",
-                      note:
-                        "8 total; 3 Dev + 2 QA dedicated to Bloomreach (QA Automation tracked separately)",
-                      headcount: 8,
-                      openCount: 0
-                    },
-                    {
-                      title: "888 4",
-                      role: "Team incl. TL",
-                      note: "4 FTE including TL",
-                      headcount: 4,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "qa-auto-888",
-              name: "QA Automation 888",
-              lead: { name: "QA Automation TL", title: "Team Lead" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "QA Automation 888 Team",
-                      role: "QA Automation",
-                      note: "4 people including TL + 1 open QA Automation position",
-                      headcount: 4,
-                      openCount: 1
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-
-        // ====== Shmuel domain ======
-        {
-          id: "shmuel-domain",
-          name: "Onboarding & Digital Marketing",
-          lead: { name: "Shmuel Daniel", title: "Head of Onboarding & Digital Marketing" },
-          meta: "Funnels & CX • Site Infra • Automation & AI • Adtech • WH Onboarding & CX",
-          groups: [
-            {
-              label: "Domain Head",
-              nodes: [
-                {
-                  title: "Shmuel Daniel",
-                  role: "Head of Onboarding & Digital Marketing",
-                  note:
-                    "Owns funnels, CX, site infra & automation, adtech and WH onboarding & CX",
-                  headcount: 1,
-                  openCount: 0
-                }
-              ]
-            },
-            {
-              label: "Navigation",
-              nodes: [
-                {
-                  title: "Open detailed Shmuel org chart",
-                  role: "shmuel-org.html",
-                  note: "Full org for Onboarding & Digital Marketing",
-                  link: "shmuel-org.html",
-                  headcount: 0,
-                  openCount: 0
-                }
-              ]
-            }
-          ],
-          innerPillars: [
-            {
-              id: "funnel-cx",
-              name: "Funnel & CX Management",
-              lead: { name: "Oana R", title: "Funnel & CX GM" },
-              groups: [
-                {
-                  label: "Teams & TLs",
-                  nodes: [
-                    {
-                      title: "SLS Team",
-                      role: "SLS (2 people)",
-                      note: "Direct team reporting to Oana",
-                      headcount: 2,
-                      openCount: 0
-                    },
-                    {
-                      title: "Funnel 1 – Moshe S",
-                      role: "Funnel 1 TL",
-                      note: "Manages Funnel 1 squad (6 people)",
-                      headcount: 6,
-                      openCount: 0
-                    },
-                    {
-                      title: "Funnel 2 – Marian C",
-                      role: "Funnel 2 TL",
-                      note: "Manages 5 people + 3 SII",
-                      headcount: 8,
-                      openCount: 0
-                    },
-                    {
-                      title: "Funnel 3 – Adrian I",
-                      role: "Funnel 3 TL",
-                      note: "Manages 9 people",
-                      headcount: 9,
-                      openCount: 0
-                    },
-                    {
-                      title: "CX 888 TL (Open)",
-                      role: "CX 888 TL",
-                      note: "Will manage 5 people",
-                      headcount: 0,
-                      openCount: 1
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "site-infra",
-              name: "Site Infrastructure",
-              lead: { name: "Liron W", title: "Site Infra" },
-              groups: [
-                {
-                  label: "Site Infra",
-                  nodes: [
-                    {
-                      title: "Site Infrastructure",
-                      role: "Core site stack",
-                      note: "Owns web runtime, performance and tooling",
-                      headcount: 0,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "automation-ai",
-              name: "Automation & AI",
-              lead: { name: "Cosmin L", title: "Automation & AI TL" },
-              groups: [
-                {
-                  label: "Automation & AI",
-                  nodes: [
-                    {
-                      title: "Automation & AI Team",
-                      role: "Automation & AI",
-                      note: "Cosmin TL managing dedicated AI/automation squad (3 people)",
-                      headcount: 3,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "adtech",
-              name: "Adtech",
-              lead: { name: "Sabin B", title: "Adtech TL" },
-              groups: [
-                {
-                  label: "Adtech Team",
-                  nodes: [
-                    {
-                      title: "Adtech Squad",
-                      role: "Ad technology",
-                      note: "Sabin TL managing 3 people",
-                      headcount: 3,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "wh-onboarding-cx",
-              name: "WH Onboarding & CX",
-              lead: { name: "Marcin I", title: "WH Onboarding GM" },
-              groups: [
-                {
-                  label: "Teams & TLs",
-                  nodes: [
-                    {
-                      title: "WH Onboarding Principals",
-                      role: "Principals",
-                      note: "2 senior onboarding principals",
-                      headcount: 2,
-                      openCount: 0
-                    },
-                    {
-                      title: "Bart – WH Volcanics TL",
-                      role: "WH Volcanics TL",
-                      note: "Manages 5 people",
-                      headcount: 5,
-                      openCount: 0
-                    },
-                    {
-                      title: "Customer Ver TL (Open)",
-                      role: "Customer Ver TL",
-                      note: "Will manage 9 people + 1 SII SCV",
-                      headcount: 0,
-                      openCount: 1
-                    },
-                    {
-                      title: "Michel Z – WH CX TL",
-                      role: "WH CX TL",
-                      note: "Manages 3 people + 3 open positions",
-                      headcount: 3,
-                      openCount: 3
-                    },
-                    {
-                      title: "Vasyl S – WH Onboarding TL",
-                      role: "WH Onboarding TL",
-                      note: "Manages 4 people + 4 SII CLCM",
-                      headcount: 8,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-
-        // ====== Eran domain ======
         {
           id: "eran-domain",
-          name: "Payments & Cashier",
-          lead: { name: "Eran", title: "Head of Payments & Cashier Domain" },
-          meta: "Cashier squads • Unified Cashier • PSP • TLS • Modernization • WH • Fraud",
-          groups: [
-            {
-              label: "Domain Head",
-              nodes: [
-                {
-                  title: "Eran",
-                  role: "Head of Payments & Cashier",
-                  note:
-                    "Owns cashier experiences, PSP integrations, TLS, modernization, WH and fraud",
-                  headcount: 1,
-                  openCount: 0
-                }
-              ]
-            },
-            {
-              label: "Navigation",
-              nodes: [
-                {
-                  title: "Open detailed Payments & Cashier org chart",
-                  role: "eran-org.html",
-                  note: "Full org for Payments & Cashier",
-                  link: "eran-org.html",
-                  headcount: 0,
-                  openCount: 0
-                }
-              ]
-            }
-          ],
-          innerPillars: [
-            {
-              id: "cashier1",
-              name: "Cashier 1",
-              lead: { name: "Cashier 1 TL", title: "TL" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "Cashier 1",
-                      role: "Cashier squad",
-                      note: "6 people focusing on core cashier flows",
-                      headcount: 6,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "cashier2",
-              name: "Cashier 2",
-              lead: { name: "Cashier 2 TL", title: "TL" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "Cashier 2",
-                      role: "Cashier squad",
-                      note: "8 people, extended cashier journeys",
-                      headcount: 8,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "unified-cashier",
-              name: "Unified Cashier",
-              lead: { name: "Unified Cashier TL", title: "TL" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "Unified Cashier",
-                      role: "UC squad",
-                      note: "7 people – cross-brand unified cashier",
-                      headcount: 7,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "psp",
-              name: "PSP",
-              lead: { name: "PSP TL", title: "TL" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "PSP",
-                      role: "Payment Service Providers",
-                      note: "4 people – PSP integrations",
-                      headcount: 4,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "tls",
-              name: "TLS",
-              lead: { name: "TLS TL", title: "TL" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "TLS",
-                      role: "Tech leadership squad",
-                      note: "4 core + 1 Webiz contractor",
-                      headcount: 4,
-                      openCount: 1
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "modernization",
-              name: "Modernization",
-              lead: { name: "Modernization TL", title: "TL" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "Modernization",
-                      role: "Modernization squad",
-                      note: "6 people – platform modernization",
-                      headcount: 6,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "wh-payments",
-              name: "WH Payments",
-              lead: { name: "WH TL", title: "TL" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "WH Payments",
-                      role: "WH-specific squad",
-                      note: "4 people",
-                      headcount: 4,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "fraud",
-              name: "Fraud",
-              lead: { name: "Fraud TL", title: "TL" },
-              groups: [
-                {
-                  label: "Team",
-                  nodes: [
-                    {
-                      title: "Fraud",
-                      role: "Fraud squad",
-                      note: "5 people – fraud tooling and controls",
-                      headcount: 5,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          name: "Eran Domain",
+          headOf: "Eran",
+          headRole: "Head of [Eran’s domain]",
+          totalFilled: 0,           // <-- fill from eran-org
+          totalOpen: 0,
+          iframeSrc: "https://shmuelda.github.io/eran-org.html",
+          meta: "As per Eran domain org chart"
         },
-
-        // ====== Gabriela / RG domain ======
         {
           id: "rg-domain",
           name: "Responsible Gaming Domain",
-          lead: { name: "Gabriela", title: "Head of RG Domain" },
-          meta: "RG1–RG4 Romania • Production Owners & Modernization • Customer Protection Group Poland",
-          groups: [
-            {
-              label: "Domain Head",
-              nodes: [
-                {
-                  title: "Gabriela",
-                  role: "Head of Responsible Gaming Domain",
-                  note:
-                    "Owns Responsible Gaming technology in RO & PL (RG teams and Customer Protection Group)",
-                  headcount: 1,
-                  openCount: 0
-                }
-              ]
-            },
-            {
-              label: "Navigation",
-              nodes: [
-                {
-                  title: "Open detailed RG org chart",
-                  role: "rg-org.html",
-                  note: "Full org for RG Domain",
-                  link: "rg-org.html",
-                  headcount: 0,
-                  openCount: 0
-                }
-              ]
-            }
-          ],
-          innerPillars: [
-            {
-              id: "rg1",
-              name: "RG1 – Romania",
-              lead: { name: "Bogdan Chiriac", title: "TL" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "RG1 DEV",
-                      role: ".NET / FE DEV",
-                      note: "3 devs + 1 open FE dev (Poland SII)",
-                      headcount: 3,
-                      openCount: 1
-                    },
-                    {
-                      title: "RG1 QA & Webiz",
-                      role: "QA / SM / Webiz",
-                      note: "QA/SM + QA + QA + 1 Webiz QA (total 4)",
-                      headcount: 4,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "rg2",
-              name: "RG2 – Romania",
-              lead: { name: "George Chiriuta", title: "TL" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "RG2 DEV",
-                      role: ".NET / FE DEV",
-                      note: "4 devs (.NET / FE)",
-                      headcount: 4,
-                      openCount: 0
-                    },
-                    {
-                      title: "RG2 QA & Webiz",
-                      role: "QA / Webiz",
-                      note: "3 QA + 1 Webiz QA/SM (total 4)",
-                      headcount: 4,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "rg3",
-              name: "RG3 – Romania",
-              lead: { name: "Gabriel Tanasescu", title: "TL" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "RG3 DEV",
-                      role: ".NET DEV + RO SII",
-                      note: "2 devs + 1 open dev",
-                      headcount: 2,
-                      openCount: 1
-                    },
-                    {
-                      title: "RG3 QA",
-                      role: "QA",
-                      note: "2 QA",
-                      headcount: 2,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "rg4",
-              name: "RG4 – Romania",
-              lead: { name: "Bogdan Hardau", title: "TL" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "RG4 DEV (RO SII)",
-                      role: ".NET DEV RO SII",
-                      note: "5 devs",
-                      headcount: 5,
-                      openCount: 0
-                    },
-                    {
-                      title: "RG4 QA (RO SII)",
-                      role: "QA RO SII",
-                      note: "3 QA",
-                      headcount: 3,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "rg-modernization",
-              name: "Production Owners & Modernization – RO",
-              lead: { name: "Alexandru Negru", title: "TL" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "Modernization DEV",
-                      role: "DEV",
-                      note: "2 RO SII devs",
-                      headcount: 2,
-                      openCount: 0
-                    },
-                    {
-                      title: "QA & TLS",
-                      role: "QA / TLS",
-                      note: "1 QA + 2 TLS (total 3)",
-                      headcount: 3,
-                      openCount: 0
-                    },
-                    {
-                      title: "QA Automation",
-                      role: "QA Automation",
-                      note:
-                        "2 RO SII QA Automation + 1 open QA Automation role",
-                      headcount: 2,
-                      openCount: 1
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "cust-protection-group",
-              name: "Customer Protection Group – Poland",
-              lead: { name: "Mikolaj Stanozak", title: "EM / Group Manager" },
-              groups: [
-                {
-                  label: "Leadership",
-                  nodes: [
-                    {
-                      title: "Mikolaj Stanozak",
-                      role: "EM / Group Manager",
-                      note:
-                        "Group manager for Customer Protection, Code Busters & RG Cross Team",
-                      headcount: 1,
-                      openCount: 0
-                    },
-                    {
-                      title: "Mateusz",
-                      role: "Principal Engineer",
-                      note: "Principal engineer in RG domain",
-                      headcount: 1,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "customer-protection-team",
-              name: "Customer Protection",
-              lead: { name: "Damian Garncarek", title: "SETL" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "Customer Protection Dev",
-                      role: "FE / SFE / Java DEV",
-                      note:
-                        "8 devs (mix of FE, SFE and Java incl. Poland SII contractors)",
-                      headcount: 8,
-                      openCount: 0
-                    },
-                    {
-                      title: "Customer Protection SSDIT",
-                      role: "SSDIT",
-                      note: "3 SSDIT",
-                      headcount: 3,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "code-busters",
-              name: "Code Busters",
-              lead: { name: "Pawel Piatek", title: "TL" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "Code Busters Dev",
-                      role: "SFE DEV",
-                      note: "4 SFE devs",
-                      headcount: 4,
-                      openCount: 0
-                    },
-                    {
-                      title: "Code Busters SSDIT",
-                      role: "SSDIT",
-                      note: "1 SSDIT",
-                      headcount: 1,
-                      openCount: 0
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "rg-cross-pl",
-              name: "RG Cross Team – Poland",
-              lead: { name: "Mateusz Baranski", title: "TL" },
-              groups: [
-                {
-                  label: "Teams",
-                  nodes: [
-                    {
-                      title: "RG Cross Dev",
-                      role: ".NET / FE DEV (Poland SII)",
-                      note: "5 devs",
-                      headcount: 5,
-                      openCount: 0
-                    },
-                    {
-                      title: "RG Cross QA",
-                      role: "QA / QA Auto",
-                      note: "2 QA / QA Auto",
-                      headcount: 2,
-                      openCount: 0
-                    },
-                    {
-                      title: "Open DEV/QA SSDIT",
-                      role: "DEV / QA SSDIT (Open)",
-                      note: "Open Poland SII role",
-                      headcount: 0,
-                      openCount: 1
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          headOf: "Gabriela",
+          headRole: "Head of Responsible Gaming Domain",
+          totalFilled: 0,           // <-- from RG org totals
+          totalOpen: 0,
+          iframeSrc: "https://shmuelda.github.io/rg-org.html",
+          meta: "RG1–RG4 • Production Owners & Modernization • Customer Protection Group"
         }
       ]
     };
 
-    // ========= 2. Totals helpers =========
-    function sumGroups(groups = []) {
-      let total = 0;
-      let openRoles = 0;
-      groups.forEach(group => {
-        group.nodes.forEach(node => {
-          total += node.headcount || 0;
-          openRoles += node.openCount || 0;
-        });
-      });
-      return { total, openRoles };
-    }
-
-    function computePillarTotals(pillar) {
-      let { total, openRoles } = sumGroups(pillar.groups || []);
-      if (pillar.innerPillars) {
-        pillar.innerPillars.forEach(inner => {
-          const t = sumGroups(inner.groups || []);
-          total += t.total;
-          openRoles += t.openRoles;
-        });
-      }
-      return { total, openRoles };
-    }
-
+    // ===== 2. Totals helpers (domain-level only) =====
     function computeAllTotals(data) {
       let globalFilled = 0;
       let globalOpen = 0;
+
       const pillarTotals = data.pillars.map(p => {
-        const t = computePillarTotals(p);
-        globalFilled += t.total;
-        globalOpen += t.openRoles;
-        return { id: p.id, name: p.name, total: t.total, openRoles: t.openRoles };
+        const filled = p.totalFilled || 0;
+        const open = p.totalOpen || 0;
+        globalFilled += filled;
+        globalOpen += open;
+        return {
+          id: p.id,
+          name: p.name,
+          filled,
+          open
+        };
       });
+
       return { globalFilled, globalOpen, pillarTotals };
     }
 
-    // ========= 3. Rendering =========
+    // ===== 3. Rendering =====
     function renderRootCard(data) {
       const rootCard = document.getElementById("rootCard");
-      const pillarsCount = data.pillars.length;
+      const domainsCount = data.pillars.length;
+
       rootCard.innerHTML = `
         <div class="avatar">
           <div class="avatar-inner">${data.head.initials}</div>
@@ -1827,7 +742,7 @@
           <div class="root-meta">
             <div class="root-chip">
               <span class="dot"></span>
-              ${pillarsCount} ${data.head.pillarsLabel}
+              ${domainsCount} ${data.head.pillarsLabel}
             </div>
             <div>${data.head.description}</div>
           </div>
@@ -1844,7 +759,9 @@
           p => `
           <div class="totals-chip">
             <span class="dot"></span>
-            ${p.name}: <strong>${p.total}</strong>${p.openRoles ? ` (+${p.openRoles} open)` : ""}
+            ${p.name}: <strong>${p.filled}</strong>${
+              p.open ? ` (+${p.open} open)` : ""
+            }
           </div>
         `
         )
@@ -1857,62 +774,6 @@
       `;
     }
 
-    function renderGroups(groups) {
-      if (!groups || !groups.length) return "";
-      return groups
-        .map(group => {
-          const nodesHtml = group.nodes
-            .map(node => {
-              const hasLink = !!node.link;
-              const titleHtml = hasLink
-                ? `<a href="${node.link}" target="_blank" style="color:inherit;text-decoration:underline;">${node.title}</a>`
-                : node.title;
-
-              const filled = node.headcount || 0;
-              const open = node.openCount || 0;
-              let metaText = node.note || "";
-              if (!metaText && (filled || open)) {
-                metaText = `Headcount: ${filled}${open ? ` (+${open} open)` : ""}`;
-              }
-
-              return `
-                <div class="node" data-node>
-                  <div class="node-main">
-                    <div>
-                      <div class="node-title">${titleHtml}</div>
-                      <div class="node-role">${node.role || ""}</div>
-                    </div>
-                    <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
-                      ${
-                        filled
-                          ? `<div class="node-chip"><span class="badge-dot"></span>${filled}</div>`
-                          : ""
-                      }
-                      ${
-                        open
-                          ? `<div class="node-chip" style="border-color:#fecaca;background:#fef2f2;"><span class="badge-dot" style="background:#dc2626;"></span>+${open}</div>`
-                          : ""
-                      }
-                    </div>
-                  </div>
-                  <div class="node-meta">
-                    <span class="node-count">${metaText}</span>
-                  </div>
-                </div>
-              `;
-            })
-            .join("");
-
-          return `
-            <div class="group">
-              <div class="group-label">${group.label}</div>
-              ${nodesHtml}
-            </div>
-          `;
-        })
-        .join("");
-    }
-
     function renderPillarsRow(data, pillarTotals) {
       const row = document.getElementById("pillarsRow");
       const totalsMap = pillarTotals.reduce((acc, p) => {
@@ -1922,77 +783,43 @@
 
       row.innerHTML = data.pillars
         .map(pillar => {
-          const t = totalsMap[pillar.id] || { total: 0, openRoles: 0 };
-          const groupsHtml = renderGroups(pillar.groups || []);
-          let innerHtml = "";
-          if (pillar.innerPillars && pillar.innerPillars.length) {
-            innerHtml =
-              '<div class="inner-pillars">' +
-              pillar.innerPillars
-                .map(inner => {
-                  const innerTotals = sumGroups(inner.groups || []);
-                  const innerGroupsHtml = renderGroups(inner.groups || []);
-                  return `
-                    <div class="inner-pillar" data-inner="${inner.id}">
-                      <div class="inner-pillar-header">
-                        <div class="inner-header-main">
-                          <div class="inner-pillar-title">${inner.name}</div>
-                          ${
-                            inner.lead && inner.lead.name
-                              ? `<div class="inner-pillar-sub">${inner.lead.name}${
-                                  inner.lead.title ? " – " + inner.lead.title : ""
-                                }</div>`
-                              : ""
-                          }
-                        </div>
-                        <div class="inner-pillar-meta">
-                          ${innerTotals.total} filled${
-                            innerTotals.openRoles ? ` • ${innerTotals.openRoles} open` : ""
-                          }
-                        </div>
-                        <button class="inner-toggle" type="button" data-open="true" aria-label="Collapse team">
-                          ▴
-                        </button>
-                      </div>
-                      <div class="inner-children">
-                        ${innerGroupsHtml}
-                      </div>
-                    </div>
-                  `;
-                })
-                .join("") +
-              "</div>";
-          }
-          const childrenHtml = groupsHtml + innerHtml;
-
+          const t = totalsMap[pillar.id] || { filled: 0, open: 0 };
           return `
             <article class="pillar" data-pillar="${pillar.id}">
               <header class="pillar-header">
                 <div class="pillar-total">
                   <span class="dot"></span>
-                  Total: ${t.total}${t.openRoles ? ` (+${t.openRoles} open)` : ""}
+                  Total: ${t.filled}${
+                    t.open ? ` (+${t.open} open)` : ""
+                  }
                 </div>
                 <div class="pillar-title">${pillar.name}</div>
                 <div class="pillar-tagline">
                   <span class="tag-person">
                     <span class="badge"></span>
-                    ${
-                      pillar.lead && pillar.lead.name
-                        ? `Led by: <strong>${pillar.lead.name}</strong>${
-                            pillar.lead.title ? ", " + pillar.lead.title : ""
-                          }`
-                        : "No direct lead listed"
+                    Head of: <strong>${pillar.headOf}</strong>${
+                      pillar.headRole ? `, ${pillar.headRole}` : ""
                     }
                   </span>
                   <span class="tag-metric">${pillar.meta || ""}</span>
                 </div>
-                <button class="toggle" type="button" data-open="true" aria-label="Collapse pillar">
+                <button
+                  class="toggle"
+                  type="button"
+                  data-open="true"
+                  aria-label="Collapse domain chart"
+                >
                   ▴
                 </button>
               </header>
               <div class="pillar-body">
-                <div class="children">
-                  ${childrenHtml}
+                <div class="embedded-wrapper">
+                  <iframe
+                    class="embedded-frame"
+                    src="${pillar.iframeSrc}"
+                    loading="lazy"
+                    title="${pillar.name} – Org Chart"
+                  ></iframe>
                 </div>
               </div>
             </article>
@@ -2001,76 +828,47 @@
         .join("");
     }
 
-    // ========= 4. Interactions =========
+    // ===== 4. Interactions =====
     function initInteractions() {
       const toggles = document.querySelectorAll(".toggle");
-      const innerToggles = document.querySelectorAll(".inner-toggle");
       const searchInput = document.getElementById("search");
       const clearSearch = document.getElementById("clearSearch");
       const toggleAllBtn = document.getElementById("toggleAllBtn");
       const orgChart = document.getElementById("orgChart");
 
-      // Outer pillar toggles
+      // Pillar (domain) collapse / expand
       toggles.forEach(btn => {
         btn.addEventListener("click", () => {
           const pillar = btn.closest(".pillar");
-          const children = pillar.querySelector(".children");
+          const wrapper = pillar.querySelector(".embedded-wrapper");
           const isOpen = btn.getAttribute("data-open") === "true";
+
           if (isOpen) {
-            children.classList.add("collapsed");
+            wrapper.classList.add("collapsed");
             btn.setAttribute("data-open", "false");
             btn.textContent = "▾";
           } else {
-            children.classList.remove("collapsed");
+            wrapper.classList.remove("collapsed");
             btn.setAttribute("data-open", "true");
             btn.textContent = "▴";
           }
         });
       });
 
-      // Inner team toggles
-      innerToggles.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const wrapper = btn.closest(".inner-pillar");
-          const children = wrapper.querySelector(".inner-children");
-          const isOpen = btn.getAttribute("data-open") === "true";
-          if (isOpen) {
-            children.classList.add("collapsed");
-            btn.setAttribute("data-open", "false");
-            btn.textContent = "▾";
-          } else {
-            children.classList.remove("collapsed");
-            btn.setAttribute("data-open", "true");
-            btn.textContent = "▴";
-          }
-        });
-      });
-
-      // Toggle all
+      // Toggle all domains at once
       toggleAllBtn.addEventListener("click", () => {
-        const allOuter = document.querySelectorAll(".pillar .children");
-        const outerToggles = document.querySelectorAll(".toggle");
-        const innerChildren = document.querySelectorAll(".inner-children");
-        const innerTogglesAll = document.querySelectorAll(".inner-toggle");
-
-        const openStates = Array.from(outerToggles).map(t =>
+        const allWrappers = document.querySelectorAll(".embedded-wrapper");
+        const allToggles = document.querySelectorAll(".toggle");
+        const openStates = Array.from(allToggles).map(t =>
           t.getAttribute("data-open")
         );
         const allOpen = openStates.every(s => s === "true");
         const newStateOpen = !allOpen;
 
-        allOuter.forEach(ch =>
-          ch.classList.toggle("collapsed", !newStateOpen)
+        allWrappers.forEach(w =>
+          w.classList.toggle("collapsed", !newStateOpen)
         );
-        outerToggles.forEach(btn => {
-          btn.setAttribute("data-open", newStateOpen ? "true" : "false");
-          btn.textContent = newStateOpen ? "▴" : "▾";
-        });
-
-        innerChildren.forEach(ch =>
-          ch.classList.toggle("collapsed", !newStateOpen)
-        );
-        innerTogglesAll.forEach(btn => {
+        allToggles.forEach(btn => {
           btn.setAttribute("data-open", newStateOpen ? "true" : "false");
           btn.textContent = newStateOpen ? "▴" : "▾";
         });
@@ -2084,61 +882,39 @@
       }
 
       function applySearchFilter(query) {
-        const nodes = orgChart.querySelectorAll("[data-node], .pillar, .inner-pillar");
+        const pillars = orgChart.querySelectorAll(".pillar");
         const trimmed = query.trim();
+
         if (!trimmed) {
-          nodes.forEach(el => {
+          pillars.forEach(el => {
             el.classList.remove("search-hit", "search-fade");
           });
           return;
         }
+
         const q = normalise(trimmed);
         const hits = [];
-        nodes.forEach(el => {
+
+        pillars.forEach(el => {
           const text = normalise(el.textContent || "");
-          const isHit = text.includes(q);
-          if (isHit) hits.push(el);
+          if (text.includes(q)) hits.push(el);
         });
+
         if (!hits.length) {
-          nodes.forEach(el => {
+          pillars.forEach(el => {
             el.classList.remove("search-hit");
             el.classList.add("search-fade");
           });
           return;
         }
-        nodes.forEach(el => {
-          el.classList.remove("search-hit", "search-fade");
-        });
+
         const hitSet = new Set(hits);
-        nodes.forEach(el => {
+        pillars.forEach(el => {
+          el.classList.remove("search-hit", "search-fade");
           if (hitSet.has(el)) {
             el.classList.add("search-hit");
           } else {
             el.classList.add("search-fade");
-          }
-        });
-
-        // Ensure matching nodes' pillars and inner teams are expanded
-        hits.forEach(hit => {
-          const pillar = hit.closest(".pillar");
-          if (pillar) {
-            const children = pillar.querySelector(".children");
-            const toggle = pillar.querySelector(".toggle");
-            if (children && children.classList.contains("collapsed")) {
-              children.classList.remove("collapsed");
-              toggle.setAttribute("data-open", "true");
-              toggle.textContent = "▴";
-            }
-          }
-          const inner = hit.closest(".inner-pillar");
-          if (inner) {
-            const innerChildren = inner.querySelector(".inner-children");
-            const innerToggle = inner.querySelector(".inner-toggle");
-            if (innerChildren && innerChildren.classList.contains("collapsed")) {
-              innerChildren.classList.remove("collapsed");
-              innerToggle.setAttribute("data-open", "true");
-              innerToggle.textContent = "▴";
-            }
           }
         });
       }
@@ -2152,15 +928,9 @@
         applySearchFilter("");
         searchInput.focus();
       });
-
-      orgChart.querySelectorAll("[data-node]").forEach(node => {
-        node.addEventListener("click", () => {
-          node.scrollIntoView({ behavior: "smooth", block: "center" });
-        });
-      });
     }
 
-    // ========= 5. Init =========
+    // ===== 5. Init =====
     (function init() {
       const { globalFilled, globalOpen, pillarTotals } = computeAllTotals(orgData);
       renderRootCard(orgData);
