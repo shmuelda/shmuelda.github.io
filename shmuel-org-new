@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Onboarding & Digital Marketing – Org Chart (Dynamic)</title>
+  <style>
+    :root {
+      /* Evoke-inspired palette */
+      --bg: #f4f7fb;
+      --bg-alt: #ffffff;
+      --primary: #269abc;        /* Eastern Blue */
+      --primary-dark: #1a6f86;
+      --primary-soft: rgba(38, 154, 188, 0.08);
+      --accent: #0b0b25;         /* deep navy */
+      --accent-soft: rgba(11, 11, 37, 0.06);
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-subtle: #e5e7eb;
+      --border-strong: #cbd5e1;
+      --shadow-soft: 0 8px 22px rgba(15, 23, 42, 0.12);
+      --shadow-elevated: 0 14px 32px rgba(15, 23, 42, 0.16);
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-pill: 999px;
+      --transition-fast: 160ms ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #ffffff 0, #f4f7fb 55%, #edf2fb 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+    }
+
+    .app-shell {
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .app-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .title-pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .title-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-box {
+      position: relative;
+    }
+
+    .search-input {
+      padding: 7px 30px 7px 30px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 13px;
+      outline: none;
+      min-width: 210px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 9px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      opacity: 0.6;
+    }
+
+    .clear-search {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      cursor: pointer;
+      opacity: 0.6;
+      display: none;
+    }
+
+    .search-input:not(:placeholder-shown) ~ .clear-search {
+      display: block;
+    }
+
+    .btn {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      padding: 7px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast);
+      box-shadow: 0 8px 18px rgba(38, 154, 188, 0.35);
+    }
+
+    .btn span.icon {
+      font-size: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.25);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--primary-dark);
+      border-style: solid;
+      border-color: var(--border-strong);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      background: #f5fbff;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+      color: var(--text-muted);
+    }
+
+    .pill-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+
+    .pill-dot-lead {
+      background: var(--primary);
+    }
+
+    .pill-dot-team {
+      background: #16a34a;
+    }
+
+    .pill-dot-open {
+      background: #dc2626;
+    }
+
+    .pill-dot-sii {
+      background: #f59e0b;
+    }
+
+    .root-card {
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 14px 18px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      padding: 3px;
+      position: relative;
+    }
+
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary-dark);
+      letter-spacing: 0.12em;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #16a34a;
+      border: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #ffffff;
+    }
+
+    .root-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .root-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--accent);
+    }
+
+    .root-role {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .root-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .root-chip {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary-soft);
+      padding: 3px 9px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: #f0f9ff;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .root-chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .totals-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      font-size: 11px;
+    }
+
+    .totals-pillars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .totals-chip {
+      padding: 4px 9px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .totals-chip span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .totals-main {
+      padding: 4px 11px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      background: #f0f9ff;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary-dark);
+    }
+
+    .totals-main strong {
+      color: var(--accent);
+    }
+
+    .chart-shell {
+      margin-top: 8px;
+      background: #ffffff;
+      border-radius: var(--radius-xl);
+      padding: 18px 16px 18px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      overflow: auto;
+      max-height: calc(100vh - 210px);
+    }
+
+    .pillars-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .pillar {
+      flex: 1 1 220px;
+      max-width: 280px;
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .pillar:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .pillar-header {
+      position: relative;
+      padding: 11px 12px 9px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: linear-gradient(
+        135deg,
+        rgba(38, 154, 188, 0.08),
+        rgba(11, 11, 37, 0.02)
+      );
+    }
+
+    .pillar-total {
+      align-self: flex-start;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--primary);
+      background: #ffffff;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pillar-total span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .pillar-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      padding-right: 30px;
+      color: var(--accent);
+    }
+
+    .pillar-tagline {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag-person {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      font-size: 10px;
+    }
+
+    .tag-person span.badge {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .tag-metric {
+      font-size: 10px;
+      opacity: 0.8;
+    }
+
+    .chip-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: var(--radius-pill);
+      border: 1px solid #fecaca;
+      padding: 2px 6px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #b91c1c;
+      background: #fef2f2;
+    }
+
+    .chip-open span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #dc2626;
+    }
+
+    .toggle {
+      position: absolute;
+      right: 8px;
+      top: 10px;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      cursor: pointer;
+      transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+      color: var(--text-muted);
+    }
+
+    .toggle:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: var(--primary);
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .toggle[data-open="true"] {
+      background: #f0f9ff;
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .pillar-body {
+      position: relative;
+      padding: 6px 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+    }
+
+    .children {
+      max-height: 460px;
+      overflow: hidden;
+      transition: max-height 220ms ease-out, opacity 160ms ease-out;
+      opacity: 1;
+    }
+
+    .children.collapsed {
+      max-height: 0;
+      opacity: 0;
+    }
+
+    .group-label {
+      margin: 4px 2px 2px;
+      padding: 2px 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 9px;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .group-label::before {
+      content: "";
+      width: 14px;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        rgba(148, 163, 184, 0.45),
+        rgba(38, 154, 188, 0.9)
+      );
+      border-radius: 99px;
+    }
+
+    .node {
+      border-radius: 12px;
+      padding: 6px 7px;
+      margin: 3px 2px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    }
+
+    .node:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+      border-color: var(--primary);
+      background: #f9fafb;
+    }
+
+    .node-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .node-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .node-role {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .node-meta {
+      font-size: 9px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    .node-chip {
+      padding: 2px 6px;
+      border-radius: var(--radius-pill);
+      font-size: 9px;
+      border: 1px solid var(--border-subtle);
+      background: #f9fafb;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .node-chip.team {
+      border-color: #d1fae5;
+      background: #ecfdf5;
+      color: #166534;
+    }
+
+    .node-chip.sii {
+      border-color: #fef3c7;
+      background: #fffbeb;
+      color: #92400e;
+    }
+
+    .node-chip.open {
+      border-color: #fecaca;
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--primary);
+    }
+
+    .badge-dot.open {
+      background: #dc2626;
+    }
+
+    .badge-dot.sii {
+      background: #f59e0b;
+    }
+
+    .node-count {
+      font-size: 9px;
+      opacity: 0.85;
+    }
+
+    .search-hit {
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 1px rgba(38, 154, 188, 0.5),
+        0 0 14px rgba(38, 154, 188, 0.35) !important;
+      background: #eff6ff;
+    }
+
+    .search-fade {
+      opacity: 0.25;
+      filter: grayscale(0.3);
+    }
+
+    /* Wide screens: all pillars in one row */
+    @media (min-width: 1500px) {
+      .chart-shell {
+        max-height: none;
+      }
+
+      .pillars-row {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+      }
+
+      .pillar {
+        flex: 0 0 calc(100% / 6 - 10px);
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 16px;
+      }
+
+      .chart-shell {
+        max-height: none;
+      }
+
+      .app-header {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="title-group">
+        <div class="title-pill">
+          <span class="title-pill-dot"></span>
+          Onboarding &amp; Digital Marketing – Org Map
+        </div>
+        
+      </div>
+
+      <div class="controls">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input
+            id="search"
+            class="search-input"
+            type="text"
+            placeholder="Search by name, role, pillar…"
+            autocomplete="off"
+          />
+          <span id="clearSearch" class="clear-search">✕</span>
+        </div>
+
+        <button id="toggleAllBtn" class="btn btn-secondary" type="button">
+          <span class="icon">▾</span>
+          Toggle all pillars
+        </button>
+      </div>
+    </header>
+
+    <section id="rootCard" class="root-card"></section>
+
+    <section class="legend">
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-lead"></span>
+        Lead / GM / TL
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-team"></span>
+        Team headcount
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-open"></span>
+        Open role
+      </div>
+      <div class="legend-item">
+        <span class="pill-dot pill-dot-sii"></span>
+        SII / specialised capacity
+      </div>
+    </section>
+
+    <section class="totals-bar">
+      <div id="pillarTotals" class="totals-pillars"></div>
+      <div id="globalTotal" class="totals-main"></div>
+    </section>
+
+    <main class="chart-shell" id="orgChart">
+      <div id="pillarsRow" class="pillars-row"></div>
+    </main>
+  </div>
+
+  <script>
+    // === 1. Org structure: edit only this object to change the chart ===
+   const orgData = {
+  head: {
+    name: "Shmuel Daniel",
+    initials: "SD",
+    role: "Head of Onboarding & Digital Marketing",
+    pillarsLabel: "Domains",
+    description: "Funnel 888 • Site Infra • CX WH • WH Onboarding • WH Volcanics • WH Customer Verification"
+  },
+
+  pillars: [
+    // ---------------------------
+    // 1. FUNNEL 888 (OANA R)
+    // ---------------------------
+    {
+      id: "funnel-888",
+      name: "Funnel 888",
+      headOf: "Oana R",
+      headRole: "Group Manager – Funnel 888",
+      totalFilled: 31,   // 7 + 8 + 8 + 1 + 3 + 2 + 2
+      totalOpen: 0,
+
+      teams: [
+        { name: "Funnel 1", count: 7 },
+        { name: "Funnel 2", count: 8 },
+        { name: "Funnel 3", count: 8 },
+        { name: "SLS", count: 1 },
+        { name: "CX 888", count: 3 },
+
+        // New placement:
+        { name: "Automation – Cosmin L", count: 2 },
+        { name: "Adtech (moved here)", count: 2 }
+      ]
+    },
+
+    // ---------------------------
+    // 2. SITE INFRA
+    // ---------------------------
+    {
+      id: "site-infra",
+      name: "Site Infrastructure",
+      headOf: "Liron",
+      headRole: "Site Infra Lead",
+      totalFilled: 0, // you can update
+      totalOpen: 0,
+
+      teams: [
+        { name: "Site Infra Team", count: 0 }
+      ]
+    },
+
+    // ---------------------------
+    // 3. CX WH
+    // ---------------------------
+    {
+      id: "cx-wh",
+      name: "CX WH",
+      headOf: "",
+      headRole: "",
+      totalFilled: 4,
+      totalOpen: 0,
+
+      teams: [
+        { name: "CX WH Team", count: 4 }
+      ]
+    },
+
+    // ---------------------------
+    // 4. WH ONBOARDING
+    // ---------------------------
+    {
+      id: "wh-onboarding",
+      name: "WH Onboarding",
+      headOf: "Vasyl",
+      headRole: "WH Onboarding TL",
+      totalFilled: 5,
+      totalOpen: 0,
+
+      teams: [
+        { name: "WH Onboarding Team", count: 5 }
+      ]
+    },
+
+    // ---------------------------
+    // 5. WH VOLCANICS
+    // ---------------------------
+    {
+      id: "wh-volcanics",
+      name: "WH Volcanics",
+      headOf: "",
+      headRole: "Team Leader",
+      totalFilled: 7,
+      totalOpen: 0,
+
+      teams: [
+        { name: "WH Volcanics Team", count: 7 }
+      ]
+    },
+
+    // ---------------------------
+    // 6. WH CUSTOMER VERIFICATION
+    // ---------------------------
+    {
+      id: "wh-customer-verification",
+      name: "WH Customer Verification",
+      headOf: "Marcin",
+      headRole: "Team Leader",
+      totalFilled: 9,
+      totalOpen: 0,
+
+      teams: [
+        { name: "Customer Verification Team", count: 9 }
+      ]
+    }
+  ]
+};
+
+
+    // === 2. Helpers to compute totals from orgData ===
+    function computePillarTotals(pillar) {
+      let total = 0;
+      let openRoles = 0;
+
+      pillar.groups.forEach(group => {
+        group.nodes.forEach(node => {
+          total += (node.headcount || 0) + (node.siiCount || 0);
+          openRoles += node.openCount || 0;
+        });
+      });
+
+      return { total, openRoles };
+    }
+
+    function computeAllTotals(data) {
+      let globalTotal = 0;
+      const pillarTotals = data.pillars.map(p => {
+        const t = computePillarTotals(p);
+        globalTotal += t.total;
+        return { id: p.id, name: p.name, total: t.total, openRoles: t.openRoles };
+      });
+      return { globalTotal, pillarTotals };
+    }
+
+    // === 3. Rendering functions ===
+    function renderRootCard(data, totals) {
+      const rootCard = document.getElementById("rootCard");
+      const pillarsCount = data.pillars.length;
+
+      rootCard.innerHTML = `
+        <div class="avatar">
+          <div class="avatar-inner">${data.head.initials}</div>
+          <div class="avatar-badge">★</div>
+        </div>
+        <div class="root-main">
+          <div class="root-name">${data.head.name}</div>
+          <div class="root-role">${data.head.role}</div>
+          <div class="root-meta">
+            <div class="root-chip">
+              <span class="dot"></span>
+              ${pillarsCount} ${data.head.pillarsLabel}
+            </div>
+            <div>${data.head.description}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTotalsBar(pillarTotals, globalTotal) {
+      const pillarTotalsContainer = document.getElementById("pillarTotals");
+      const globalTotalContainer = document.getElementById("globalTotal");
+
+      pillarTotalsContainer.innerHTML = pillarTotals
+        .map(
+          p => `
+          <div class="totals-chip">
+            <span class="dot"></span>
+            ${p.name}: <strong>${p.total}</strong>
+          </div>
+        `
+        )
+        .join("");
+
+      globalTotalContainer.innerHTML = `
+        Total headcount (excl. open roles): <strong>${globalTotal}</strong>
+      `;
+    }
+
+    function renderPillarsRow(data, pillarTotals) {
+      const row = document.getElementById("pillarsRow");
+
+      const pillarTotalsMap = pillarTotals.reduce((acc, p) => {
+        acc[p.id] = p;
+        return acc;
+      }, {});
+
+      const pillarHtml = data.pillars
+        .map(pillar => {
+          const t = pillarTotalsMap[pillar.id] || { total: 0, openRoles: 0 };
+          const groupsHtml = pillar.groups
+            .map(group => {
+              const nodesHtml = group.nodes
+                .map(node => {
+                  const h = node.headcount || 0;
+                  const s = node.siiCount || 0;
+                  const o = node.openCount || 0;
+
+                  const chips = [];
+                  if (h > 0) {
+                    chips.push(`
+                      <div class="node-chip team">
+                        <span class="badge-dot"></span>
+                        ${h} ${h === 1 ? "Person" : "People"}
+                      </div>
+                    `);
+                  }
+                  if (s > 0) {
+                    chips.push(`
+                      <div class="node-chip sii">
+                        <span class="badge-dot sii"></span>
+                        +${s} SII
+                      </div>
+                    `);
+                  }
+                  if (o > 0) {
+                    chips.push(`
+                      <div class="node-chip open">
+                        <span class="badge-dot open"></span>
+                        +${o} Open
+                      </div>
+                    `);
+                  }
+
+                  const metaText =
+                    node.note ||
+                    `Headcount: ${h}${s > 0 ? ` + ${s} SII` : ""}${
+                      o > 0 ? ` (${o} open roles)` : ""
+                    }`;
+
+                  return `
+                    <div class="node" data-node>
+                      <div class="node-main">
+                        <div>
+                          <div class="node-title">${node.title}</div>
+                          <div class="node-role">${node.role}</div>
+                        </div>
+                        <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+                          ${chips.join("")}
+                        </div>
+                      </div>
+                      <div class="node-meta">
+                        <span class="node-count">${metaText}</span>
+                      </div>
+                    </div>
+                  `;
+                })
+                .join("");
+
+              return `
+                <div class="group">
+                  <div class="group-label">${group.label}</div>
+                  ${nodesHtml}
+                </div>
+              `;
+            })
+            .join("");
+
+          return `
+            <article class="pillar" data-pillar="${pillar.id}">
+              <header class="pillar-header">
+                <div class="pillar-total">
+                  <span class="dot"></span>
+                  Total: ${t.total}
+                </div>
+                <div class="pillar-title">${pillar.name}</div>
+                <div class="pillar-tagline">
+                  <span class="tag-person">
+                    <span class="badge"></span>
+                    ${
+                      pillar.lead && pillar.lead.name
+                        ? `Led by: <strong>${pillar.lead.name}</strong>${pillar.lead.title ? ", " + pillar.lead.title : ""}`
+                        : "No direct lead listed"
+                    }
+                  </span>
+                  <span class="tag-metric">${pillar.meta || ""}</span>
+                </div>
+                <button class="toggle" type="button" data-open="true" aria-label="Collapse pillar">
+                  ▴
+                </button>
+              </header>
+              <div class="pillar-body">
+                <div class="children">
+                  ${groupsHtml}
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join("");
+
+      row.innerHTML = pillarHtml;
+    }
+
+    // === 4. Interactions: toggle pillars & search ===
+    function initInteractions() {
+      const toggles = document.querySelectorAll(".toggle");
+      const searchInput = document.getElementById("search");
+      const clearSearch = document.getElementById("clearSearch");
+      const toggleAllBtn = document.getElementById("toggleAllBtn");
+      const orgChart = document.getElementById("orgChart");
+
+      toggles.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const pillar = btn.closest(".pillar");
+          const children = pillar.querySelector(".children");
+          const isOpen = btn.getAttribute("data-open") === "true";
+
+          if (isOpen) {
+            children.classList.add("collapsed");
+            btn.setAttribute("data-open", "false");
+            btn.textContent = "▾";
+          } else {
+            children.classList.remove("collapsed");
+            btn.setAttribute("data-open", "true");
+            btn.textContent = "▴";
+          }
+        });
+      });
+
+      toggleAllBtn.addEventListener("click", () => {
+        const allChildren = document.querySelectorAll(".pillar .children");
+        const openStates = Array.from(document.querySelectorAll(".toggle")).map(t =>
+          t.getAttribute("data-open")
+        );
+        const allOpen = openStates.every(s => s === "true");
+        const newStateOpen = !allOpen;
+
+        allChildren.forEach(ch =>
+          ch.classList.toggle("collapsed", !newStateOpen)
+        );
+        document.querySelectorAll(".toggle").forEach(btn => {
+          btn.setAttribute("data-open", newStateOpen ? "true" : "false");
+          btn.textContent = newStateOpen ? "▴" : "▾";
+        });
+      });
+
+      function normalise(str) {
+        return str
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/\p{Diacritic}/gu, "");
+      }
+
+      function applySearchFilter(query) {
+        const nodes = orgChart.querySelectorAll("[data-node], .pillar");
+        const trimmed = query.trim();
+
+        if (!trimmed) {
+          nodes.forEach(el => {
+            el.classList.remove("search-hit", "search-fade");
+          });
+          return;
+        }
+
+        const q = normalise(trimmed);
+        const hits = [];
+
+        nodes.forEach(el => {
+          const text = normalise(el.textContent || "");
+          const isHit = text.includes(q);
+          if (isHit) hits.push(el);
+        });
+
+        if (!hits.length) {
+          nodes.forEach(el => {
+            el.classList.remove("search-hit");
+            el.classList.add("search-fade");
+          });
+          return;
+        }
+
+        nodes.forEach(el => {
+          el.classList.remove("search-hit", "search-fade");
+        });
+
+        const hitSet = new Set(hits);
+        nodes.forEach(el => {
+          if (hitSet.has(el)) {
+            el.classList.add("search-hit");
+          } else {
+            el.classList.add("search-fade");
+          }
+        });
+
+        // Ensure any matching node's pillar is expanded
+        hits.forEach(hit => {
+          const pillar = hit.closest(".pillar");
+          if (!pillar) return;
+          const children = pillar.querySelector(".children");
+          const toggle = pillar.querySelector(".toggle");
+          if (children && children.classList.contains("collapsed")) {
+            children.classList.remove("collapsed");
+            toggle.setAttribute("data-open", "true");
+            toggle.textContent = "▴";
+          }
+        });
+      }
+
+      searchInput.addEventListener("input", e => {
+        applySearchFilter(e.target.value);
+      });
+
+      clearSearch.addEventListener("click", () => {
+        searchInput.value = "";
+        applySearchFilter("");
+        searchInput.focus();
+      });
+
+      orgChart.querySelectorAll("[data-node]").forEach(node => {
+        node.addEventListener("click", () => {
+          node.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+    }
+
+    // === 5. Bootstrapping ===
+    (function init() {
+      const { globalTotal, pillarTotals } = computeAllTotals(orgData);
+      renderRootCard(orgData, { globalTotal, pillarTotals });
+      renderTotalsBar(pillarTotals, globalTotal);
+      renderPillarsRow(orgData, pillarTotals);
+      initInteractions();
+    })();
+  </script>
+</body>
+</html>
