@@ -712,12 +712,10 @@
       .chart-shell {
         max-height: none;
       }
-
       .pillars-row {
         flex-wrap: nowrap;
         justify-content: space-between;
       }
-
       .pillar {
         flex: 0 0 calc(100% / 6 - 10px);
         max-width: none;
@@ -728,11 +726,9 @@
       body {
         padding: 16px;
       }
-
       .chart-shell {
         max-height: none;
       }
-
       .app-header {
         align-items: flex-start;
       }
@@ -747,9 +743,7 @@
           <span class="title-pill-dot"></span>
           Onboarding &amp; Digital Marketing – Org Map
         </div>
-        
       </div>
-
       <div class="controls">
         <div class="search-box">
           <span class="search-icon">🔍</span>
@@ -762,7 +756,6 @@
           />
           <span id="clearSearch" class="clear-search">✕</span>
         </div>
-
         <button id="toggleAllBtn" class="btn btn-secondary" type="button">
           <span class="icon">▾</span>
           Toggle all pillars
@@ -802,7 +795,7 @@
   </div>
 
   <script>
-    // === 1. Org structure: edit only this object to change the chart ===
+    // === 1. Org structure: same pattern as last HTML (head + pillars + groups/nodes) ===
     const orgData = {
       head: {
         name: "Shmuel Daniel",
@@ -864,7 +857,7 @@
                   role: "CX 888 TL",
                   headcount: 5,
                   siiCount: 0,
-                  openCount: 1, // TL role open (not counted in totals)
+                  openCount: 1, // TL role open (not counted as headcount)
                   note: "Future: CX 888 TL managing 5 People"
                 }
               ]
@@ -1007,14 +1000,12 @@
     function computePillarTotals(pillar) {
       let total = 0;
       let openRoles = 0;
-
-      pillar.groups.forEach(group => {
-        group.nodes.forEach(node => {
+      (pillar.groups || []).forEach(group => {
+        (group.nodes || []).forEach(node => {
           total += (node.headcount || 0) + (node.siiCount || 0);
           openRoles += node.openCount || 0;
         });
       });
-
       return { total, openRoles };
     }
 
@@ -1023,16 +1014,20 @@
       const pillarTotals = data.pillars.map(p => {
         const t = computePillarTotals(p);
         globalTotal += t.total;
-        return { id: p.id, name: p.name, total: t.total, openRoles: t.openRoles };
+        return {
+          id: p.id,
+          name: p.name,
+          total: t.total,
+          openRoles: t.openRoles
+        };
       });
       return { globalTotal, pillarTotals };
     }
 
     // === 3. Rendering functions ===
-    function renderRootCard(data, totals) {
+    function renderRootCard(data) {
       const rootCard = document.getElementById("rootCard");
       const pillarsCount = data.pillars.length;
-
       rootCard.innerHTML = `
         <div class="avatar">
           <div class="avatar-inner">${data.head.initials}</div>
@@ -1061,20 +1056,21 @@
           p => `
           <div class="totals-chip">
             <span class="dot"></span>
-            ${p.name}: <strong>${p.total}</strong>
+            ${p.name}: <strong>${p.total}</strong>${
+              p.openRoles ? ` (+${p.openRoles} open)` : ""
+            }
           </div>
         `
         )
         .join("");
 
       globalTotalContainer.innerHTML = `
-        Total headcount (excl. open roles): <strong>${globalTotal}</strong>
+        Total headcount (incl. SII, excl. open roles): <strong>${globalTotal}</strong>
       `;
     }
 
     function renderPillarsRow(data, pillarTotals) {
       const row = document.getElementById("pillarsRow");
-
       const pillarTotalsMap = pillarTotals.reduce((acc, p) => {
         acc[p.id] = p;
         return acc;
@@ -1083,15 +1079,15 @@
       const pillarHtml = data.pillars
         .map(pillar => {
           const t = pillarTotalsMap[pillar.id] || { total: 0, openRoles: 0 };
-          const groupsHtml = pillar.groups
+          const groupsHtml = (pillar.groups || [])
             .map(group => {
-              const nodesHtml = group.nodes
+              const nodesHtml = (group.nodes || [])
                 .map(node => {
                   const h = node.headcount || 0;
                   const s = node.siiCount || 0;
                   const o = node.openCount || 0;
-
                   const chips = [];
+
                   if (h > 0) {
                     chips.push(`
                       <div class="node-chip team">
@@ -1156,7 +1152,7 @@
               <header class="pillar-header">
                 <div class="pillar-total">
                   <span class="dot"></span>
-                  Total: ${t.total}
+                  Total: ${t.total}${t.openRoles ? ` (+${t.openRoles} open)` : ""}
                 </div>
                 <div class="pillar-title">${pillar.name}</div>
                 <div class="pillar-tagline">
@@ -1195,6 +1191,7 @@
       const toggleAllBtn = document.getElementById("toggleAllBtn");
       const orgChart = document.getElementById("orgChart");
 
+      // Individual pillar toggle
       toggles.forEach(btn => {
         btn.addEventListener("click", () => {
           const pillar = btn.closest(".pillar");
@@ -1213,9 +1210,11 @@
         });
       });
 
+      // Toggle all pillars
       toggleAllBtn.addEventListener("click", () => {
         const allChildren = document.querySelectorAll(".pillar .children");
-        const openStates = Array.from(document.querySelectorAll(".toggle")).map(t =>
+        const allToggles = document.querySelectorAll(".toggle");
+        const openStates = Array.from(allToggles).map(t =>
           t.getAttribute("data-open")
         );
         const allOpen = openStates.every(s => s === "true");
@@ -1224,12 +1223,14 @@
         allChildren.forEach(ch =>
           ch.classList.toggle("collapsed", !newStateOpen)
         );
-        document.querySelectorAll(".toggle").forEach(btn => {
+
+        allToggles.forEach(btn => {
           btn.setAttribute("data-open", newStateOpen ? "true" : "false");
           btn.textContent = newStateOpen ? "▴" : "▾";
         });
       });
 
+      // Search
       function normalise(str) {
         return str
           .toLowerCase()
@@ -1240,7 +1241,6 @@
       function applySearchFilter(query) {
         const nodes = orgChart.querySelectorAll("[data-node], .pillar");
         const trimmed = query.trim();
-
         if (!trimmed) {
           nodes.forEach(el => {
             el.classList.remove("search-hit", "search-fade");
@@ -1250,7 +1250,6 @@
 
         const q = normalise(trimmed);
         const hits = [];
-
         nodes.forEach(el => {
           const text = normalise(el.textContent || "");
           const isHit = text.includes(q);
@@ -1312,7 +1311,7 @@
     // === 5. Bootstrapping ===
     (function init() {
       const { globalTotal, pillarTotals } = computeAllTotals(orgData);
-      renderRootCard(orgData, { globalTotal, pillarTotals });
+      renderRootCard(orgData);
       renderTotalsBar(pillarTotals, globalTotal);
       renderPillarsRow(orgData, pillarTotals);
       initInteractions();
