@@ -525,9 +525,10 @@
       font-size: 11px;
     }
 
+    /* IMPORTANT: allow full content; only collapsed state hides */
     .children {
-      max-height: 460px;
-      overflow: hidden;
+      max-height: 9999px;
+      overflow-y: visible;
       transition: max-height 220ms ease-out, opacity 160ms ease-out;
       opacity: 1;
     }
@@ -535,6 +536,7 @@
     .children.collapsed {
       max-height: 0;
       opacity: 0;
+      overflow: hidden;
     }
 
     .group-label {
@@ -666,6 +668,113 @@
       filter: grayscale(0.3);
     }
 
+    /* ===== Inner pillars (teams under Mikolaj) ===== */
+    .inner-pillars {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .inner-pillar {
+      border-radius: 12px;
+      border: 1px dashed var(--border-strong);
+      background: #f9fafb;
+      padding: 5px 6px 4px;
+    }
+
+    .inner-pillar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .inner-header-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .inner-pillar-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .inner-pillar-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .inner-pillar-meta {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .inner-pillar-meta strong {
+      color: var(--accent);
+    }
+
+    .inner-toggle {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      margin-left: 4px;
+      transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+      color: var(--text-muted);
+    }
+
+    .inner-toggle:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
+    }
+
+    .inner-toggle[data-open="true"] {
+      background: #f0f9ff;
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .inner-children {
+      max-height: 600px;
+      overflow-y: auto;
+      transition: max-height 200ms ease-out, opacity 150ms ease-out;
+      opacity: 1;
+      margin-top: 4px;
+    }
+
+    .inner-children.collapsed {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    .inner-pillar .group-label {
+      margin-top: 2px;
+      margin-bottom: 0;
+      font-size: 9px;
+    }
+
+    .inner-pillar .node {
+      margin: 3px 0;
+    }
+
     @media (min-width: 1500px) {
       .chart-shell {
         max-height: none;
@@ -748,350 +857,128 @@
 
   <script>
     // ===== 1. ORG DATA for RG Domain (image-based, aggregated) =====
- const orgData = {
-  head: {
-    name: "RG Domain",
-    initials: "RG",
-    role: "Responsible Gaming – Romania & Poland",
-    pillarsLabel: "Pillars",
-    description:
-      "RG1–RG4 & Production Owners (Romania) • Customer Protection Group (Poland)"
-  },
-  pillars: [
-    // === ROMANIA – same as before ===
-    {
-      id: "rg1",
-      name: "RG1 – Romania",
-      lead: { name: "Bogdan Chiriac", title: "TL" },
-      meta: ".NET / FE DEV, QA, Webiz, Poland SII",
-      groups: [
+    const orgData = {
+      head: {
+        name: "RG Domain",
+        initials: "RG",
+        role: "Responsible Gaming – Romania & Poland",
+        pillarsLabel: "Pillars",
+        description:
+          "RG1–RG4 & Production Owners (Romania) • Customer Protection Group (Poland)"
+      },
+      pillars: [
+        // === ROMANIA – same as before ===
         {
-          label: "Developers",
-          nodes: [
-            {
-              title: "RG1 Developers",
-              role: ".NET / FE DEV",
-              headcount: 3,
-              openCount: 0,
-              note: "Bianca, Andrei, Sealia – mix of .NET and FE DEV"
-            },
-            {
-              title: "Open FE Developer",
-              role: "FE DEV (Open)",
-              headcount: 0,
-              openCount: 1,
-              note: "Open FE DEV role (Poland SII)"
-            }
-          ]
-        },
-        {
-          label: "QA & Webiz",
-          nodes: [
-            {
-              title: "RG1 QA",
-              role: "QA / SM",
-              headcount: 3,
-              openCount: 0,
-              note: "Cristina (QA/SM), Anca, Daria"
-            },
-            {
-              title: "Webiz QA",
-              role: "QA (Webiz)",
-              headcount: 1,
-              openCount: 0,
-              note: "Ruzanna – Webiz QA"
-            }
-          ]
-        }
-      ],
-      innerPillars: []
-    },
-
-    {
-      id: "rg2",
-      name: "RG2 – Romania",
-      lead: { name: "George Chiriuta", title: "TL" },
-      meta: ".NET / FE DEV, QA, Webiz",
-      groups: [
-        {
-          label: "Developers",
-          nodes: [
-            {
-              title: "RG2 Developers",
-              role: ".NET / FE DEV",
-              headcount: 4,
-              openCount: 0,
-              note: "Alexandru, Gabriel, Marius (FE), Stefan – core devs"
-            }
-          ]
-        },
-        {
-          label: "QA & Webiz",
-          nodes: [
-            {
-              title: "RG2 QA",
-              role: "QA",
-              headcount: 3,
-              openCount: 0,
-              note: "Liviu, Alexandru, Vlad"
-            },
-            {
-              title: "Webiz QA / SM",
-              role: "QA / SM (Webiz)",
-              headcount: 1,
-              openCount: 0,
-              note: "Naira – Webiz QA/SM"
-            }
-          ]
-        }
-      ],
-      innerPillars: []
-    },
-
-    {
-      id: "rg3",
-      name: "RG3 – Romania",
-      lead: { name: "Gabriel Tanasescu", title: "TL" },
-      meta: ".NET DEV, RO SII, QA",
-      groups: [
-        {
-          label: "Developers",
-          nodes: [
-            {
-              title: "RG3 Developers",
-              role: ".NET DEV",
-              headcount: 2,
-              openCount: 0,
-              note: "Larisa + RO SII dev (Andreea)"
-            },
-            {
-              title: "Open Developer",
-              role: ".NET DEV (Open)",
-              headcount: 0,
-              openCount: 1,
-              note: "Open dev role as shown in chart"
-            }
-          ]
-        },
-        {
-          label: "QA",
-          nodes: [
-            {
-              title: "RG3 QA",
-              role: "QA",
-              headcount: 2,
-              openCount: 0,
-              note: "Ovidiu & Alina – QA"
-            }
-          ]
-        }
-      ],
-      innerPillars: []
-    },
-
-    {
-      id: "rg4",
-      name: "RG4 – Romania",
-      lead: { name: "Bogdan Hardau", title: "TL" },
-      meta: "RO SII .NET DEV & QA",
-      groups: [
-        {
-          label: "Developers (RO SII)",
-          nodes: [
-            {
-              title: "RG4 Developers",
-              role: ".NET DEV (RO SII)",
-              headcount: 5,
-              openCount: 0,
-              note: "Tudor, Ovidiu, Mircea, Laurentiu, Ali – all RO SII devs"
-            }
-          ]
-        },
-        {
-          label: "QA (RO SII)",
-          nodes: [
-            {
-              title: "RG4 QA",
-              role: "QA (RO SII)",
-              headcount: 3,
-              openCount: 0,
-              note: "Vlad, Cristian, Gabriel – RO SII QA"
-            }
-          ]
-        }
-      ],
-      innerPillars: []
-    },
-
-    {
-      id: "production-modernization",
-      name: "Production Owners & Modernization – Romania",
-      lead: { name: "Alexandru Negru", title: "TL" },
-      meta: "DEV • QA • TLS • QA Automation (RO SII + Open)",
-      groups: [
-        {
-          label: "Developers",
-          nodes: [
-            {
-              title: "Modernization DEV",
-              role: "DEV (.NET / FE)",
-              headcount: 2,
-              openCount: 0,
-              note: "Merdin & Viorel – RO SII devs"
-            }
-          ]
-        },
-        {
-          label: "QA & TLS",
-          nodes: [
-            {
-              title: "QA",
-              role: "QA",
-              headcount: 1,
-              openCount: 0,
-              note: "Ciprian – QA"
-            },
-            {
-              title: "TLS",
-              role: "TLS",
-              headcount: 2,
-              openCount: 0,
-              note: "Cristian Balta, Madalin-Mihai – TLS"
-            }
-          ]
-        },
-        {
-          label: "QA Automation",
-          nodes: [
-            {
-              title: "Open QA Automation",
-              role: "QA Automation (Open)",
-              headcount: 0,
-              openCount: 1,
-              note: "Open QA automation role"
-            },
-            {
-              title: "QA Automation (RO SII)",
-              role: "QA Automation",
-              headcount: 2,
-              openCount: 0,
-              note: "Alexandru Dumitru, Cristian Istrate – RO SII"
-            }
-          ]
-        }
-      ],
-      innerPillars: []
-    },
-
-    // === POLAND – NEW PILLAR FOR MIKOLAJ ===
-    {
-      id: "customer-protection-group",
-      name: "Customer Protection Group – Poland",
-      lead: { name: "Mikolaj Stanozak", title: "EM / Group Manager" },
-      meta: "Customer Protection • Code Busters • RG Cross Team • Principal Engineer",
-      groups: [
-        {
-          label: "Leadership",
-          nodes: [
-            {
-              title: "Mikolaj Stanozak",
-              role: "EM / Group Manager",
-              headcount: 1,
-              openCount: 0,
-              note: "Group manager for Customer Protection, Code Busters & RG Cross Team"
-            },
-            {
-              title: "Mateusz",
-              role: "Principal Engineer",
-              headcount: 1,
-              openCount: 0,
-              note: "Principal engineer in the Customer Protection group"
-            }
-          ]
-        }
-      ],
-      innerPillars: [
-        // Inner team: Customer Protection
-        {
-          id: "customer-protection",
-          name: "Customer Protection",
-          lead: { name: "Damian Garncarek", title: "SETL" },
+          id: "rg1",
+          name: "RG1 – Romania",
+          lead: { name: "Bogdan Chiriac", title: "TL" },
+          meta: ".NET / FE DEV, QA, Webiz, Poland SII",
           groups: [
             {
               label: "Developers",
               nodes: [
                 {
-                  title: "Customer Protection Developers",
-                  role: "FE / SFE / Java DEV",
-                  headcount: 8,
-                  openCount: 0,
-                  note: "Mix of FE, SFE and Java devs (incl. Poland SII contractors)"
-                }
-              ]
-            },
-            {
-              label: "SSDIT",
-              nodes: [
-                {
-                  title: "Customer Protection SSDIT",
-                  role: "SSDIT",
+                  title: "RG1 Developers",
+                  role: ".NET / FE DEV",
                   headcount: 3,
                   openCount: 0,
-                  note: "Kajal, Dominik, Adrian – SSDIT (incl. Poland SII)"
+                  note: "Bianca, Andrei, Sealia – mix of .NET and FE DEV"
+                },
+                {
+                  title: "Open FE Developer",
+                  role: "FE DEV (Open)",
+                  headcount: 0,
+                  openCount: 1,
+                  note: "Open FE DEV role (Poland SII)"
+                }
+              ]
+            },
+            {
+              label: "QA & Webiz",
+              nodes: [
+                {
+                  title: "RG1 QA",
+                  role: "QA / SM",
+                  headcount: 3,
+                  openCount: 0,
+                  note: "Cristina (QA/SM), Anca, Daria"
+                },
+                {
+                  title: "Webiz QA",
+                  role: "QA (Webiz)",
+                  headcount: 1,
+                  openCount: 0,
+                  note: "Ruzanna – Webiz QA"
                 }
               ]
             }
-          ]
+          ],
+          innerPillars: []
         },
 
-        // Inner team: Code Busters
         {
-          id: "code-busters",
-          name: "Code Busters",
-          lead: { name: "Pawel Piatek", title: "TL" },
+          id: "rg2",
+          name: "RG2 – Romania",
+          lead: { name: "George Chiriuta", title: "TL" },
+          meta: ".NET / FE DEV, QA, Webiz",
           groups: [
             {
               label: "Developers",
               nodes: [
                 {
-                  title: "Code Busters Developers",
-                  role: "SFE DEV",
+                  title: "RG2 Developers",
+                  role: ".NET / FE DEV",
                   headcount: 4,
                   openCount: 0,
-                  note: "Pavlo, Marcin, Damian, Jakub – SFE devs"
+                  note: "Alexandru, Gabriel, Marius (FE), Stefan – core devs"
                 }
               ]
             },
             {
-              label: "SSDIT",
+              label: "QA & Webiz",
               nodes: [
                 {
-                  title: "Code Busters SSDIT",
-                  role: "SSDIT",
+                  title: "RG2 QA",
+                  role: "QA",
+                  headcount: 3,
+                  openCount: 0,
+                  note: "Liviu, Alexandru, Vlad"
+                },
+                {
+                  title: "Webiz QA / SM",
+                  role: "QA / SM (Webiz)",
                   headcount: 1,
                   openCount: 0,
-                  note: "Artur – SSDIT"
+                  note: "Naira – Webiz QA/SM"
                 }
               ]
             }
-          ]
+          ],
+          innerPillars: []
         },
 
-        // Inner team: RG Cross Team
         {
-          id: "rg-cross-team",
-          name: "RG Cross Team",
-          lead: { name: "Mateusz Baranski", title: "TL" },
+          id: "rg3",
+          name: "RG3 – Romania",
+          lead: { name: "Gabriel Tanasescu", title: "TL" },
+          meta: ".NET DEV, RO SII, QA",
           groups: [
             {
-              label: "Developers (Poland SII)",
+              label: "Developers",
               nodes: [
                 {
-                  title: "RG Cross Developers",
-                  role: ".NET / FE DEV",
-                  headcount: 5,
+                  title: "RG3 Developers",
+                  role: ".NET DEV",
+                  headcount: 2,
                   openCount: 0,
-                  note: "Pawel, Darek, Milosz, Grzegorz, Jakub – all Poland SII devs"
+                  note: "Larisa + RO SII dev (Andreea)"
+                },
+                {
+                  title: "Open Developer",
+                  role: ".NET DEV (Open)",
+                  headcount: 0,
+                  openCount: 1,
+                  note: "Open dev role as shown in chart"
                 }
               ]
             },
@@ -1099,33 +986,255 @@
               label: "QA",
               nodes: [
                 {
-                  title: "RG Cross QA",
-                  role: "QA / QA Auto",
+                  title: "RG3 QA",
+                  role: "QA",
                   headcount: 2,
                   openCount: 0,
-                  note: "Adam (QA), Filip (QA Auto) – Poland SII"
+                  note: "Ovidiu & Alina – QA"
+                }
+              ]
+            }
+          ],
+          innerPillars: []
+        },
+
+        {
+          id: "rg4",
+          name: "RG4 – Romania",
+          lead: { name: "Bogdan Hardau", title: "TL" },
+          meta: "RO SII .NET DEV & QA",
+          groups: [
+            {
+              label: "Developers (RO SII)",
+              nodes: [
+                {
+                  title: "RG4 Developers",
+                  role: ".NET DEV (RO SII)",
+                  headcount: 5,
+                  openCount: 0,
+                  note: "Tudor, Ovidiu, Mircea, Laurentiu, Ali – all RO SII devs"
                 }
               ]
             },
             {
-              label: "SSDIT",
+              label: "QA (RO SII)",
               nodes: [
                 {
-                  title: "Open DEV/QA SSDIT",
-                  role: "DEV / QA SSDIT (Open)",
+                  title: "RG4 QA",
+                  role: "QA (RO SII)",
+                  headcount: 3,
+                  openCount: 0,
+                  note: "Vlad, Cristian, Gabriel – RO SII QA"
+                }
+              ]
+            }
+          ],
+          innerPillars: []
+        },
+
+        {
+          id: "production-modernization",
+          name: "Production Owners & Modernization – Romania",
+          lead: { name: "Alexandru Negru", title: "TL" },
+          meta: "DEV • QA • TLS • QA Automation (RO SII + Open)",
+          groups: [
+            {
+              label: "Developers",
+              nodes: [
+                {
+                  title: "Modernization DEV",
+                  role: "DEV (.NET / FE)",
+                  headcount: 2,
+                  openCount: 0,
+                  note: "Merdin & Viorel – RO SII devs"
+                }
+              ]
+            },
+            {
+              label: "QA & TLS",
+              nodes: [
+                {
+                  title: "QA",
+                  role: "QA",
+                  headcount: 1,
+                  openCount: 0,
+                  note: "Ciprian – QA"
+                },
+                {
+                  title: "TLS",
+                  role: "TLS",
+                  headcount: 2,
+                  openCount: 0,
+                  note: "Cristian Balta, Madalin-Mihai – TLS"
+                }
+              ]
+            },
+            {
+              label: "QA Automation",
+              nodes: [
+                {
+                  title: "Open QA Automation",
+                  role: "QA Automation (Open)",
                   headcount: 0,
                   openCount: 1,
-                  note: "Open DEV/QA SSDIT role (Poland SII)"
+                  note: "Open QA automation role"
+                },
+                {
+                  title: "QA Automation (RO SII)",
+                  role: "QA Automation",
+                  headcount: 2,
+                  openCount: 0,
+                  note: "Alexandru Dumitru, Cristian Istrate – RO SII"
+                }
+              ]
+            }
+          ],
+          innerPillars: []
+        },
+
+        // === POLAND – NEW PILLAR FOR MIKOLAJ ===
+        {
+          id: "customer-protection-group",
+          name: "Customer Protection Group – Poland",
+          lead: { name: "Mikolaj Stanozak", title: "EM / Group Manager" },
+          meta:
+            "Customer Protection • Code Busters • RG Cross Team • Principal Engineer",
+          groups: [
+            {
+              label: "Leadership",
+              nodes: [
+                {
+                  title: "Mikolaj Stanozak",
+                  role: "EM / Group Manager",
+                  headcount: 1,
+                  openCount: 0,
+                  note:
+                    "Group manager for Customer Protection, Code Busters & RG Cross Team"
+                },
+                {
+                  title: "Mateusz",
+                  role: "Principal Engineer",
+                  headcount: 1,
+                  openCount: 0,
+                  note: "Principal engineer in the Customer Protection group"
+                }
+              ]
+            }
+          ],
+          innerPillars: [
+            {
+              id: "customer-protection",
+              name: "Customer Protection",
+              lead: { name: "Damian Garncarek", title: "SETL" },
+              groups: [
+                {
+                  label: "Developers",
+                  nodes: [
+                    {
+                      title: "Customer Protection Developers",
+                      role: "FE / SFE / Java DEV",
+                      headcount: 8,
+                      openCount: 0,
+                      note:
+                        "Mix of FE, SFE and Java devs (incl. Poland SII contractors)"
+                    }
+                  ]
+                },
+                {
+                  label: "SSDIT",
+                  nodes: [
+                    {
+                      title: "Customer Protection SSDIT",
+                      role: "SSDIT",
+                      headcount: 3,
+                      openCount: 0,
+                      note: "Kajal, Dominik, Adrian – SSDIT (incl. Poland SII)"
+                    }
+                  ]
+                }
+              ]
+            },
+
+            {
+              id: "code-busters",
+              name: "Code Busters",
+              lead: { name: "Pawel Piatek", title: "TL" },
+              groups: [
+                {
+                  label: "Developers",
+                  nodes: [
+                    {
+                      title: "Code Busters Developers",
+                      role: "SFE DEV",
+                      headcount: 4,
+                      openCount: 0,
+                      note: "Pavlo, Marcin, Damian, Jakub – SFE devs"
+                    }
+                  ]
+                },
+                {
+                  label: "SSDIT",
+                  nodes: [
+                    {
+                      title: "Code Busters SSDIT",
+                      role: "SSDIT",
+                      headcount: 1,
+                      openCount: 0,
+                      note: "Artur – SSDIT"
+                    }
+                  ]
+                }
+              ]
+            },
+
+            {
+              id: "rg-cross-team",
+              name: "RG Cross Team",
+              lead: { name: "Mateusz Baranski", title: "TL" },
+              groups: [
+                {
+                  label: "Developers (Poland SII)",
+                  nodes: [
+                    {
+                      title: "RG Cross Developers",
+                      role: ".NET / FE DEV",
+                      headcount: 5,
+                      openCount: 0,
+                      note:
+                        "Pawel, Darek, Milosz, Grzegorz, Jakub – all Poland SII devs"
+                    }
+                  ]
+                },
+                {
+                  label: "QA",
+                  nodes: [
+                    {
+                      title: "RG Cross QA",
+                      role: "QA / QA Auto",
+                      headcount: 2,
+                      openCount: 0,
+                      note: "Adam (QA), Filip (QA Auto) – Poland SII"
+                    }
+                  ]
+                },
+                {
+                  label: "SSDIT",
+                  nodes: [
+                    {
+                      title: "Open DEV/QA SSDIT",
+                      role: "DEV / QA SSDIT (Open)",
+                      headcount: 0,
+                      openCount: 1,
+                      note: "Open DEV/QA SSDIT role (Poland SII)"
+                    }
+                  ]
                 }
               ]
             }
           ]
         }
       ]
-    }
-  ]
-};
-
+    };
 
     // ===== 2. Totals helpers =====
     function sumGroups(groups = []) {
@@ -1272,13 +1381,11 @@
         acc[p.id] = p;
         return acc;
       }, {});
-
       row.innerHTML = data.pillars
         .map(pillar => {
           const t = totalsMap[pillar.id] || { total: 0, openRoles: 0 };
           const groupsHtml = renderGroups(pillar.groups || []);
           let innerHtml = "";
-
           if (pillar.innerPillars && pillar.innerPillars.length) {
             innerHtml =
               '<div class="inner-pillars">' +
@@ -1317,9 +1424,7 @@
                 .join("") +
               "</div>";
           }
-
           const childrenHtml = groupsHtml + innerHtml;
-
           return `
             <article class="pillar" data-pillar="${pillar.id}">
               <header class="pillar-header">
@@ -1333,7 +1438,9 @@
                     <span class="badge"></span>
                     ${
                       pillar.lead && pillar.lead.name
-                        ? `Led by: <strong>${pillar.lead.name}</strong>${pillar.lead.title ? ", " + pillar.lead.title : ""}`
+                        ? `Led by: <strong>${pillar.lead.name}</strong>${
+                            pillar.lead.title ? ", " + pillar.lead.title : ""
+                          }`
                         : "No direct lead listed"
                     }
                   </span>
@@ -1357,6 +1464,7 @@
     // ===== 4. Interactions =====
     function initInteractions() {
       const toggles = document.querySelectorAll(".toggle");
+      const innerToggles = document.querySelectorAll(".inner-toggle");
       const searchInput = document.getElementById("search");
       const clearSearch = document.getElementById("clearSearch");
       const toggleAllBtn = document.getElementById("toggleAllBtn");
@@ -1380,7 +1488,25 @@
         });
       });
 
-      // Toggle all pillars (open/close)
+      // Inner team toggles
+      innerToggles.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const wrapper = btn.closest(".inner-pillar");
+          const children = wrapper.querySelector(".inner-children");
+          const isOpen = btn.getAttribute("data-open") === "true";
+          if (isOpen) {
+            children.classList.add("collapsed");
+            btn.setAttribute("data-open", "false");
+            btn.textContent = "▾";
+          } else {
+            children.classList.remove("collapsed");
+            btn.setAttribute("data-open", "true");
+            btn.textContent = "▴";
+          }
+        });
+      });
+
+      // Toggle all pillars + inner teams
       toggleAllBtn.addEventListener("click", () => {
         const allChildren = document.querySelectorAll(".pillar .children");
         const allToggles = document.querySelectorAll(".toggle");
@@ -1394,6 +1520,16 @@
           ch.classList.toggle("collapsed", !newStateOpen)
         );
         allToggles.forEach(btn => {
+          btn.setAttribute("data-open", newStateOpen ? "true" : "false");
+          btn.textContent = newStateOpen ? "▴" : "▾";
+        });
+
+        const allInnerChildren = document.querySelectorAll(".inner-children");
+        const allInnerToggles = document.querySelectorAll(".inner-toggle");
+        allInnerChildren.forEach(ch =>
+          ch.classList.toggle("collapsed", !newStateOpen)
+        );
+        allInnerToggles.forEach(btn => {
           btn.setAttribute("data-open", newStateOpen ? "true" : "false");
           btn.textContent = newStateOpen ? "▴" : "▾";
         });
@@ -1415,7 +1551,6 @@
           });
           return;
         }
-
         const q = normalise(trimmed);
         const hits = [];
         nodes.forEach(el => {
@@ -1423,7 +1558,6 @@
           const isHit = text.includes(q);
           if (isHit) hits.push(el);
         });
-
         if (!hits.length) {
           nodes.forEach(el => {
             el.classList.remove("search-hit");
@@ -1431,11 +1565,9 @@
           });
           return;
         }
-
         nodes.forEach(el => {
           el.classList.remove("search-hit", "search-fade");
         });
-
         const hitSet = new Set(hits);
         nodes.forEach(el => {
           if (hitSet.has(el)) {
